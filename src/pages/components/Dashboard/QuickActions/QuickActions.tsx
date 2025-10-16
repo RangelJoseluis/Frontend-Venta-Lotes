@@ -1,25 +1,31 @@
 import { Plus, FileText, Wallet } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './QuickActions.css';
 
 const QuickActions = () => {
+  const navigate = useNavigate();
+
   const actions = [
     {
       icon: Plus,
       title: 'Nuevo Lote',
       description: 'Agregar al inventario',
-      color: 'slate'
+      color: 'slate',
+      onClick: () => navigate('/lotes/nuevo')
     },
     {
       icon: FileText,
       title: 'Nueva Venta',
       description: 'Registrar venta',
-      color: 'emerald'
+      color: 'emerald',
+      onClick: () => alert('Próximamente: Nueva Venta')
     },
     {
       icon: Wallet,
       title: 'Registrar Pago',
       description: 'Aplicar a cuota',
-      color: 'amber'
+      color: 'amber',
+      onClick: () => alert('Próximamente: Registrar Pago')
     }
   ];
 
@@ -38,7 +44,11 @@ const QuickActions = () => {
           const currentColor = colorClasses[action.color as keyof typeof colorClasses];
 
           return (
-            <button key={action.title} className="quick-action-button group">
+            <button 
+              key={action.title} 
+              className="quick-action-button group"
+              onClick={action.onClick}
+            >
               <div className={`quick-action-icon ${currentColor.icon}`}>
                 <Icon className="quick-action-icon-svg" />
               </div>

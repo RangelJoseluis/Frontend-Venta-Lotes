@@ -9,7 +9,7 @@
 
 import httpClient from './http.service';
 import API_CONFIG from '../config/api.config';
-import type { EstadisticasLotes } from '../types';
+import type { EstadisticasLotes, CrearLoteDto } from '../types';
 
 /**
  * Respuesta del backend para estadísticas de lotes
@@ -60,6 +60,16 @@ export const lotesService = {
       superficieTotal: data.superficieTotal,
       valorTotal: data.valorTotal,
     };
+  },
+
+  /**
+   * Crear un nuevo lote
+   * Endpoint: POST /lotes
+   * Requiere autenticación (admin)
+   */
+  async crear(loteData: CrearLoteDto): Promise<any> {
+    const response = await httpClient.post('/lotes', loteData);
+    return response.data;
   },
 };
 

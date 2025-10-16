@@ -34,7 +34,9 @@ export interface Usuario {
 
 export type EstadoLote = 'disponible' | 'en_cuotas' | 'vendido';
 export type TipoTopografia = 'plano' | 'inclinado' | 'irregular';
-export type EstadoDocumentacion = 'completo' | 'pendiente' | 'en_proceso';
+export type EstadoDocumentacion = 'pendiente' | 'en_proceso' | 'completa' | 'observaciones';
+export type OrientacionLote = 'norte' | 'sur' | 'este' | 'oeste' | 'noreste' | 'noroeste' | 'sureste' | 'suroeste';
+export type VistaLote = 'ciudad' | 'montaña' | 'mar' | 'parque' | 'calle' | 'interior';
 
 export interface Lote {
   uid: string;
@@ -51,6 +53,34 @@ export interface Lote {
   modeloCasa?: ModeloCasa;
   creadoEn: string;
   actualizadoEn: string;
+}
+
+/**
+ * DTO para crear un nuevo lote
+ * Basado en el endpoint POST /lotes del backend
+ */
+export interface CrearLoteDto {
+  codigo: string;
+  anchoM: number;
+  largoM: number;
+  superficieM2: number;
+  idModeloCasa?: number;
+  precioLista: number;
+  direccion: string;
+  manzana: string;
+  numeroLote: string;
+  topografia: TipoTopografia;
+  orientacion?: OrientacionLote;
+  vista?: VistaLote;
+  estadoDocumentacion: EstadoDocumentacion;
+  estado: EstadoLote;
+  amueblado: boolean;
+  imagenesUrls?: string;
+  observaciones?: string;
+  ubicacionX?: number;
+  ubicacionY?: number;
+  geojson?: string;
+  fechaEntregaEstimada?: string;
 }
 
 export interface ModeloCasa {
