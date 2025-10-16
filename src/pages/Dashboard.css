@@ -1,0 +1,65 @@
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* En móvil, sin margen */
+.main-content.sidebar-open,
+.main-content.sidebar-closed {
+  margin-left: 0;
+}
+
+/* En desktop, aplicar margen según estado del sidebar */
+@media (min-width: 1024px) {
+  .main-content.sidebar-open {
+    margin-left: 18rem;
+  }
+
+  .main-content.sidebar-closed {
+    margin-left: 5rem;
+  }
+}
+
+.dashboard-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .dashboard-main {
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-main {
+    padding: 1.5rem;
+  }
+}
+
+.dashboard-content {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-content {
+    gap: 1.75rem;
+  }
+}

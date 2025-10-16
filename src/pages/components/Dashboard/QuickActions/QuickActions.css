@@ -1,0 +1,104 @@
+.quick-actions-container {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 640px) {
+  .quick-actions-container {
+    padding: 1.75rem;
+  }
+}
+
+.quick-actions-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin: 0 0 1.25rem 0;
+}
+
+@media (min-width: 640px) {
+  .quick-actions-title {
+    font-size: 1.25rem;
+  }
+}
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .quick-actions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+.quick-action-button {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.75rem;
+  text-align: left;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.quick-action-button:hover {
+  border-color: #2563eb;
+  background-color: #dbeafe;
+}
+
+.quick-action-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.quick-action-icon-svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.quick-action-content {
+  margin-left: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.quick-action-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.quick-action-description {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0.25rem 0 0 0;
+}
+
+/* Color utilities */
+.bg-slate-100 { background-color: #f1f5f9; }
+.text-slate-600 { color: #475569; }
+.bg-emerald-50 { background-color: #ecfdf5; }
+.text-emerald-600 { color: #059669; }
+.bg-amber-50 { background-color: #fffbeb; }
+.text-amber-600 { color: #d97706; }
+
+.group:hover .group-hover\:bg-blue-100 { background-color: #dbeafe; }
+.group:hover .group-hover\:text-blue-600 { color: #2563eb; }
+.group:hover .group-hover\:bg-emerald-100 { background-color: #d1fae5; }
+.group:hover .group-hover\:bg-amber-100 { background-color: #fef3c7; }
