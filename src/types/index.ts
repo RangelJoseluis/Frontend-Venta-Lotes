@@ -64,7 +64,7 @@ export interface CrearLoteDto {
   anchoM: number;
   largoM: number;
   superficieM2: number;
-  idModeloCasa?: number;
+  modeloCasaUid?: string; // UID del modelo de casa (string UUID)
   precioLista: number;
   direccion: string;
   manzana: string;
@@ -81,8 +81,8 @@ export interface CrearLoteDto {
   ubicacionY?: number;
   geojson?: string;
   fechaEntregaEstimada?: string;
-  // IDs de servicios a asociar al lote
-  serviciosIds?: number[];
+  // UIDs de servicios a asociar al lote (strings UUID)
+  serviciosIds?: string[];
 }
 
 export interface ModeloCasa {

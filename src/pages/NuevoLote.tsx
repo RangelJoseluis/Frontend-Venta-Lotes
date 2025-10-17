@@ -57,7 +57,7 @@ const NuevoLote = () => {
   const [serviciosDisponibles, setServiciosDisponibles] = useState<Servicio[]>([]);
   const [serviciosSeleccionados, setServiciosSeleccionados] = useState<string[]>([]);
   const [modelosCasaDisponibles, setModelosCasaDisponibles] = useState<ModeloCasa[]>([]);
-  const [modeloCasaSeleccionado, setModeloCasaSeleccionado] = useState<number | null>(null);
+  const [modeloCasaSeleccionado, setModeloCasaSeleccionado] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -141,13 +141,13 @@ const NuevoLote = () => {
         largoM: Number(data.largoM),
         superficieM2: Number(data.superficieM2),
         precioLista: Number(data.precioLista),
-        idModeloCasa: modeloCasaSeleccionado || undefined,
+        modeloCasaUid: modeloCasaSeleccionado || undefined,
         serviciosIds: serviciosIds.length > 0 ? serviciosIds : undefined,
       };
 
       console.log('📤 Enviando datos del lote:', loteData);
-      console.log('🏠 Modelo de casa:', modeloCasaSeleccionado);
-      console.log('🔧 Servicios IDs a enviar:', serviciosIds);
+      console.log('🏠 Modelo de casa seleccionado (UID):', modeloCasaSeleccionado);
+      console.log('🔧 Servicios UIDs a enviar:', serviciosIds);
 
       await lotesService.crear(loteData);
       
@@ -283,7 +283,11 @@ const NuevoLote = () => {
               ) : (
                 <select
                   value={modeloCasaSeleccionado || ''}
-                  onChange={(e) => setModeloCasaSeleccionado(e.target.value ? Number(e.target.value) : null)}
+                  onChange={(e) => {
+                    const selectedUid = e.target.value;
+                    setModeloCasaSeleccionado(selectedUid);
+                    console.log('🏠 Modelo de casa seleccionado (UID):', selectedUid);
+                  }}
                   className="form-select"
                 >
                   <option value="">Sin modelo de casa</option>
