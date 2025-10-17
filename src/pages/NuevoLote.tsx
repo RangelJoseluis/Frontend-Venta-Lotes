@@ -4,7 +4,7 @@
  * Diseño limpio sin sidebar para mejor experiencia de usuario
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,6 +21,8 @@ import {
   MessageSquare 
 } from 'lucide-react';
 import { lotesService } from '../services/lotes.service';
+import { serviciosService, type Servicio } from '../services/servicios.service';
+import { modelosCasaService, type ModeloCasa } from '../services/modelos-casa.service';
 import { getErrorMessage } from '../services/http.service';
 import type { CrearLoteDto } from '../types';
 import './NuevoLote.css';
@@ -43,12 +45,19 @@ const loteSchema = z.object({
   amueblado: z.boolean(),
   imagenesUrls: z.string().optional(),
   observaciones: z.string().optional(),
+  modeloCasa: z.number().optional(),
 });
 
 type LoteFormData = z.infer<typeof loteSchema>;
 
 const NuevoLote = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [codigoLote, setCodigoLote] = useState<string>('');
+  const [serviciosDisponibles, setServiciosDisponibles] = useState<Servicio[]>([]);
+  const [serviciosSeleccionados, setServiciosSeleccionados] = useState<string[]>([]);
+  const [modelosCasaDisponibles, setModelosCasaDisponibles] = useState<ModeloCasa[]>([]);
+  const [modeloCasaSeleccionado, setModeloCasaSeleccionado] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -79,10 +88,52 @@ const NuevoLote = () => {
     }
   };
 
+  // Cargar código, servicios y modelos de casa al montar el componente
+  useEffect(() => {
+    const cargarDatosIniciales = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Cargar próximo código de lote
+        const codigo = await lotesService.obtenerProximoCodigo();
+        setCodigoLote(codigo);
+        setValue('codigo', codigo);
+
+        // Cargar servicios disponibles
+        const servicios = await serviciosService.obtenerActivos();
+        console.log('✅ Servicios cargados:', servicios.length, servicios);
+        setServiciosDisponibles(servicios);
+
+        // Cargar modelos de casa disponibles
+        const modelos = await modelosCasaService.obtenerActivos();
+        console.log('✅ Modelos de casa cargados:', modelos.length, modelos);
+        setModelosCasaDisponibles(modelos);
+      } catch (err) {
+        console.error('Error al cargar datos iniciales:', err);
+        setError('Error al cargar datos del formulario. Por favor, recarga la página.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    cargarDatosIniciales();
+  }, [setValue]);
+
   const onSubmit = async (data: LoteFormData) => {
     try {
       setIsSubmitting(true);
       setError(null);
+
+      // Los servicios seleccionados ya son UIDs, pero el backend espera IDs
+      // Necesitamos mapear UIDs a IDs usando el campo 'id' de cada servicio
+      console.log('🔍 DEBUG - serviciosSeleccionados (UIDs):', serviciosSeleccionados);
+      console.log('🔍 DEBUG - serviciosDisponibles:', serviciosDisponibles);
+      
+      // TEMPORAL: Enviar los UIDs como strings y el backend los resolverá
+      // TODO: El backend debe aceptar UIDs en lugar de IDs internos
+      const serviciosIds = serviciosSeleccionados as any;
+
+      console.log('🔍 DEBUG - serviciosIds finales a enviar:', serviciosIds);
 
       const loteData: CrearLoteDto = {
         ...data,
@@ -90,16 +141,33 @@ const NuevoLote = () => {
         largoM: Number(data.largoM),
         superficieM2: Number(data.superficieM2),
         precioLista: Number(data.precioLista),
+        idModeloCasa: modeloCasaSeleccionado || undefined,
+        serviciosIds: serviciosIds.length > 0 ? serviciosIds : undefined,
       };
 
+      console.log('📤 Enviando datos del lote:', loteData);
+      console.log('🏠 Modelo de casa:', modeloCasaSeleccionado);
+      console.log('🔧 Servicios IDs a enviar:', serviciosIds);
+
       await lotesService.crear(loteData);
+      
+      console.log('✅ Lote creado exitosamente');
       setSuccess(true);
       
       setTimeout(() => {
         navigate('/dashboard');
       }, 2000);
-    } catch (err) {
-      setError(getErrorMessage(err));
+    } catch (err: any) {
+      console.error('❌ Error al crear lote:', err);
+      
+      // Detectar error de código duplicado (409 CONFLICT)
+      if (err?.response?.status === 409) {
+        setError(
+          `⚠️ Código Duplicado: ${err.response.data.message || 'Ya existe un lote con este código. Por favor, use un código diferente.'}`
+        );
+      } else {
+        setError(getErrorMessage(err));
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -161,12 +229,19 @@ const NuevoLote = () => {
             </h2>
             <div className="form-grid form-grid-2">
               <div className="form-field">
-                <label className="form-label form-label-required">Código del Lote</label>
+                <label className="form-label form-label-required">
+                  Código del Lote
+                  <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 400, marginLeft: '0.5rem' }}>
+                    (Autogenerado)
+                  </span>
+                </label>
                 <input
                   {...register('codigo')}
                   type="text"
-                  placeholder="L001"
-                  className={`form-input ${errors.codigo ? 'error' : ''}`}
+                  placeholder="Cargando..."
+                  className="form-input calculated"
+                  readOnly
+                  style={{ backgroundColor: '#f8fafc', cursor: 'not-allowed' }}
                 />
                 {errors.codigo && (
                   <span className="form-error">
@@ -191,6 +266,115 @@ const NuevoLote = () => {
                   </span>
                 )}
               </div>
+            </div>
+
+            {/* Modelo de Casa */}
+            <div className="form-field" style={{ marginTop: '1rem' }}>
+              <label className="form-label">
+                Modelo de Casa
+                <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 400, marginLeft: '0.5rem' }}>
+                  (Opcional)
+                </span>
+              </label>
+              {isLoading ? (
+                <div style={{ padding: '0.75rem', textAlign: 'center', background: '#f8fafc', borderRadius: '0.5rem' }}>
+                  <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Cargando modelos...</span>
+                </div>
+              ) : (
+                <select
+                  value={modeloCasaSeleccionado || ''}
+                  onChange={(e) => setModeloCasaSeleccionado(e.target.value ? Number(e.target.value) : null)}
+                  className="form-select"
+                >
+                  <option value="">Sin modelo de casa</option>
+                  {modelosCasaDisponibles.map((modelo) => (
+                    <option key={modelo.id} value={modelo.id}>
+                      {modelo.nombre}
+                      {modelo.precio ? ` - $${modelo.precio.toLocaleString('es-CO')}` : ''}
+                      {modelo.superficieConstruida ? ` - ${modelo.superficieConstruida}m²` : ''}
+                      {modelo.numeroHabitaciones ? ` - ${modelo.numeroHabitaciones} hab.` : ''}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+
+            {/* Servicios Disponibles */}
+            <div className="form-field" style={{ marginTop: '1rem' }}>
+              <label className="form-label">
+                Servicios del Lote
+                <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 400, marginLeft: '0.5rem' }}>
+                  (Opcional - Seleccione los servicios disponibles)
+                </span>
+              </label>
+              {isLoading ? (
+                <div style={{ padding: '0.75rem', textAlign: 'center', background: '#f8fafc', borderRadius: '0.5rem' }}>
+                  <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Cargando servicios...</span>
+                </div>
+              ) : (
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
+                  gap: '0.75rem',
+                  padding: '1rem',
+                  background: '#f8fafc',
+                  borderRadius: '0.5rem',
+                  border: '1px solid #e2e8f0'
+                }}>
+                  {serviciosDisponibles.length === 0 ? (
+                    <span style={{ color: '#64748b', fontSize: '0.875rem' }}>No hay servicios disponibles</span>
+                  ) : (
+                    serviciosDisponibles.map((servicio) => (
+                      <label 
+                        key={servicio.uid} 
+                        style={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: '0.5rem',
+                          cursor: 'pointer',
+                          padding: '0.5rem',
+                          borderRadius: '0.375rem',
+                          transition: 'background 0.2s',
+                          background: serviciosSeleccionados.includes(servicio.uid) ? '#e0f2fe' : 'transparent'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = serviciosSeleccionados.includes(servicio.uid) ? '#e0f2fe' : '#f1f5f9'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = serviciosSeleccionados.includes(servicio.uid) ? '#e0f2fe' : 'transparent'}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={serviciosSeleccionados.includes(servicio.uid)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setServiciosSeleccionados([...serviciosSeleccionados, servicio.uid]);
+                            } else {
+                              setServiciosSeleccionados(serviciosSeleccionados.filter(uid => uid !== servicio.uid));
+                            }
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <span style={{ fontSize: '0.875rem', color: '#1e293b', fontWeight: 500 }}>
+                          {servicio.nombre}
+                        </span>
+                        {servicio.esencial && (
+                          <span style={{ 
+                            fontSize: '0.625rem', 
+                            padding: '0.125rem 0.375rem', 
+                            background: '#fef3c7', 
+                            color: '#92400e',
+                            borderRadius: '0.25rem',
+                            fontWeight: 600
+                          }}>
+                            ESENCIAL
+                          </span>
+                        )}
+                      </label>
+                    ))
+                  )}
+                </div>
+              )}
+              <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.5rem' }}>
+                💡 Seleccione los servicios que estarán disponibles en este lote (agua, luz, gas, etc.)
+              </p>
             </div>
           </div>
 

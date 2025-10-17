@@ -81,6 +81,8 @@ export interface CrearLoteDto {
   ubicacionY?: number;
   geojson?: string;
   fechaEntregaEstimada?: string;
+  // IDs de servicios a asociar al lote
+  serviciosIds?: number[];
 }
 
 export interface ModeloCasa {

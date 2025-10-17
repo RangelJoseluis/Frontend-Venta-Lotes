@@ -71,6 +71,16 @@ export const lotesService = {
     const response = await httpClient.post('/lotes', loteData);
     return response.data;
   },
+
+  /**
+   * Obtener próximo código de lote disponible
+   * Endpoint: GET /lotes/proximo-codigo
+   * Requiere autenticación (admin)
+   */
+  async obtenerProximoCodigo(): Promise<string> {
+    const response = await httpClient.get<{ codigo: string }>('/lotes/proximo-codigo');
+    return response.data.codigo;
+  },
 };
 
 export default lotesService;

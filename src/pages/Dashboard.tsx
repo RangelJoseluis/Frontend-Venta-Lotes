@@ -35,12 +35,23 @@ const Dashboard = () => {
       try {
         setLoading(true);
         setError(null);
+        
+        console.log('🔄 Cargando estadísticas del backend...');
+        console.log('📍 URL:', 'http://localhost:3000/lotes/estadisticas');
+        console.log('🔑 Token:', localStorage.getItem('accessToken') ? 'Presente' : 'NO PRESENTE');
+        
         const data = await lotesService.getEstadisticas();
+        
+        console.log('✅ Estadísticas recibidas:', data);
         setStats(data);
       } catch (err) {
         const errorMsg = getErrorMessage(err);
         setError(errorMsg);
-        console.error('Error al cargar estadísticas:', err);
+        console.error('❌ Error al cargar estadísticas:', err);
+        console.error('📋 Detalles del error:', {
+          message: errorMsg,
+          error: err
+        });
       } finally {
         setLoading(false);
       }
