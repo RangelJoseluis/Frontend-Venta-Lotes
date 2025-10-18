@@ -1,43 +1,157 @@
-import { useState } from 'react';
-import { DollarSign, Calendar, FileText, User, Home } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import { DollarSign, Calendar, FileText, User, Home, CheckCircle, AlertCircle } from 'lucide-react';
+import { crearVenta } from '../services/ventas.service';
+import { obtenerClientes } from '../services/clientes.service';
+import { lotesService } from '../services/lotes.service';
+import { getErrorMessage } from '../services/http.service';
+import type { CrearVentaDto, Cliente } from '../types';
 import './FormularioCrearVenta.css';
+
+interface Lote {
+  uid: string;
+  codigo: string;
+  precioLista: number | string; // Puede venir como string del backend
+  estado: string;
+  direccion?: string;
+  manzana?: string;
+  numeroLote?: string;
+}
 
 interface VentaFormData {
   loteUid: string;
   clienteUid: string;
   precioVenta: string;
-  modalidadPago: string;
+  modalidadPago: 'contado' | 'cuotas';
   cantidadCuotas: string;
   montoInicial: string;
   observaciones: string;
 }
 
 export default function FormularioCrearVenta() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<VentaFormData>({
     loteUid: '',
     clienteUid: '',
     precioVenta: '',
     modalidadPago: 'cuotas',
-    cantidadCuotas: '',
+    cantidadCuotas: '24',
     montoInicial: '',
     observaciones: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const [lotes, setLotes] = useState<Lote[]>([]);
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-    const payload = {
-      loteUid: formData.loteUid,
-      clienteUid: formData.clienteUid,
-      precioVenta: Number(formData.precioVenta),
-      modalidadPago: formData.modalidadPago,
-      cantidadCuotas: Number(formData.cantidadCuotas),
-      montoInicial: Number(formData.montoInicial),
-      observaciones: formData.observaciones,
+  // Opciones formateadas para react-select
+  const lotesOptions = lotes.map(lote => {
+    // Parsear precio a número (puede venir como string del backend)
+    const precio = typeof lote.precioLista === 'string' 
+      ? parseFloat(lote.precioLista) 
+      : lote.precioLista;
+    
+    return {
+      value: lote.uid,
+      label: `${lote.codigo} - ${lote.manzana ? `Manzana ${lote.manzana}` : ''} ${lote.numeroLote ? `#${lote.numeroLote}` : ''} - $${Math.round(precio).toLocaleString('es-CO')}`
+    };
+  });
+
+  const clientesOptions = clientes.map(cliente => ({
+    value: cliente.uid,
+    label: `${cliente.nombres} ${cliente.apellidos} - Doc: ${cliente.documento} - Tel: ${cliente.telefono}`
+  }));
+
+  // Cargar lotes y clientes al montar el componente
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        setIsLoading(true);
+        
+        const [lotesData, clientesData] = await Promise.all([
+          lotesService.obtenerLotesDisponibles(), // Usar endpoint específico de lotes disponibles
+          obtenerClientes()
+        ]);
+
+        // Ya no necesitamos filtrar, el backend devuelve solo disponibles
+        setLotes(lotesData);
+        setClientes(clientesData);
+
+        console.log('✅ Lotes disponibles cargados:', lotesData.length);
+        console.log('✅ Clientes cargados:', clientesData.length);
+      } catch (err) {
+        console.error('❌ Error al cargar datos:', err);
+        setError('Error al cargar lotes y clientes. Por favor, recargue la página.');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    console.log('Datos de venta:', payload);
-    alert('Venta registrada exitosamente');
+    cargarDatos();
+  }, []);
+
+  // Actualizar precio de venta cuando se selecciona un lote
+  useEffect(() => {
+    if (formData.loteUid) {
+      const loteSeleccionado = lotes.find(l => l.uid === formData.loteUid);
+      if (loteSeleccionado && !formData.precioVenta) {
+        // Parsear explícitamente a número (puede venir como string del backend)
+        const precioNumerico = typeof loteSeleccionado.precioLista === 'string' 
+          ? parseFloat(loteSeleccionado.precioLista)
+          : loteSeleccionado.precioLista;
+        
+        // Redondear para eliminar decimales
+        const precioRedondeado = Math.round(precioNumerico);
+        
+        console.log('💰 Precio autocompletado:', precioRedondeado.toLocaleString('es-CO'));
+        
+        setFormData(prev => ({
+          ...prev,
+          precioVenta: precioRedondeado.toString()
+        }));
+      }
+    }
+  }, [formData.loteUid, lotes]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      setIsSubmitting(true);
+      setError(null);
+
+      const ventaData: CrearVentaDto = {
+        loteUid: formData.loteUid,
+        clienteUid: formData.clienteUid,
+        precioVenta: Number(formData.precioVenta),
+        modalidadPago: formData.modalidadPago,
+        cantidadCuotas: formData.modalidadPago === 'cuotas' ? Number(formData.cantidadCuotas) : undefined,
+        montoInicial: Number(formData.montoInicial),
+        observaciones: formData.observaciones || undefined,
+      };
+
+      console.log('📤 Enviando datos de venta:', ventaData);
+
+      const ventaCreada = await crearVenta(ventaData);
+      
+      console.log('✅ Venta creada exitosamente:', ventaCreada);
+      setSuccess(true);
+
+      // Redirigir al dashboard después de 2 segundos
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
+
+    } catch (err: any) {
+      console.error('❌ Error al crear venta:', err);
+      setError(getErrorMessage(err));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -85,33 +199,63 @@ export default function FormularioCrearVenta() {
               <div className="formulario-grid">
                 <div className="formulario-field">
                   <label htmlFor="loteUid" className="formulario-label">
-                    ID del Lote <span className="formulario-required">*</span>
+                    Lote <span className="formulario-required">*</span>
                   </label>
-                  <input
-                    type="text"
+                  <Select
                     id="loteUid"
                     name="loteUid"
-                    value={formData.loteUid}
-                    onChange={handleChange}
-                    placeholder="b8351632-ead8-4a61-a498-7701a9d4ba7b"
-                    className="formulario-input"
-                    required
+                    options={lotesOptions}
+                    value={lotesOptions.find(option => option.value === formData.loteUid) || null}
+                    onChange={(selectedOption) => {
+                      const value = selectedOption?.value || '';
+                      setFormData(prev => ({ ...prev, loteUid: value }));
+                    }}
+                    placeholder="Seleccione un lote"
+                    isLoading={isLoading}
+                    isDisabled={isSubmitting}
+                    isClearable
+                    isSearchable
+                    noOptionsMessage={() => 'No hay lotes disponibles'}
+                    loadingMessage={() => 'Cargando lotes...'}
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        minHeight: '44px',
+                        borderColor: '#e2e8f0',
+                        '&:hover': { borderColor: '#cbd5e1' }
+                      })
+                    }}
                   />
                 </div>
 
                 <div className="formulario-field">
                   <label htmlFor="clienteUid" className="formulario-label">
-                    ID del Cliente <span className="formulario-required">*</span>
+                    Cliente <span className="formulario-required">*</span>
                   </label>
-                  <input
-                    type="text"
+                  <Select
                     id="clienteUid"
                     name="clienteUid"
-                    value={formData.clienteUid}
-                    onChange={handleChange}
-                    placeholder="01dfba3c-e996-4c63-8419-d4b2cf94e52b"
-                    className="formulario-input"
-                    required
+                    options={clientesOptions}
+                    value={clientesOptions.find(option => option.value === formData.clienteUid) || null}
+                    onChange={(selectedOption) => {
+                      const value = selectedOption?.value || '';
+                      setFormData(prev => ({ ...prev, clienteUid: value }));
+                    }}
+                    placeholder="Seleccione un cliente"
+                    isLoading={isLoading}
+                    isDisabled={isSubmitting}
+                    isClearable
+                    isSearchable
+                    noOptionsMessage={() => 'No hay clientes disponibles'}
+                    loadingMessage={() => 'Cargando clientes...'}
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        minHeight: '44px',
+                        borderColor: '#e2e8f0',
+                        '&:hover': { borderColor: '#cbd5e1' }
+                      })
+                    }}
                   />
                 </div>
               </div>
@@ -252,6 +396,39 @@ export default function FormularioCrearVenta() {
               </div>
             )}
 
+            {/* Mensajes de error y éxito */}
+            {error && (
+              <div style={{
+                padding: '1rem',
+                backgroundColor: '#fee',
+                border: '1px solid #fcc',
+                borderRadius: '0.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                color: '#c00'
+              }}>
+                <AlertCircle size={20} />
+                <span>{error}</span>
+              </div>
+            )}
+
+            {success && (
+              <div style={{
+                padding: '1rem',
+                backgroundColor: '#efe',
+                border: '1px solid #cfc',
+                borderRadius: '0.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                color: '#0a0'
+              }}>
+                <CheckCircle size={20} />
+                <span>¡Venta registrada exitosamente! Redirigiendo al dashboard...</span>
+              </div>
+            )}
+
             <div className="formulario-actions">
               <button
                 type="button"
@@ -260,16 +437,18 @@ export default function FormularioCrearVenta() {
                   clienteUid: '',
                   precioVenta: '',
                   modalidadPago: 'cuotas',
-                  cantidadCuotas: '',
+                  cantidadCuotas: '24',
                   montoInicial: '',
                   observaciones: '',
                 })}
                 className="formulario-btn formulario-btn-secondary"
+                disabled={isSubmitting}
               >
                 Limpiar
               </button>
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="formulario-btn formulario-btn-primary"
               >
                 Registrar Venta

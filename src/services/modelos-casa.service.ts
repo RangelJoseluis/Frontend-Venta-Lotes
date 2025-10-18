@@ -11,6 +11,7 @@ import httpClient from './http.service';
  */
 export interface ModeloCasa {
   id: number;
+  uid: string; // UUID público del modelo de casa
   nombre: string;
   descripcion?: string;
   precio: number;

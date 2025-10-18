@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import NuevoLote from './pages/NuevoLote';
+import FormularioCrearVenta from './pages/FormularioCrearVenta';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -54,6 +55,15 @@ function App() {
           element={
             <PrivateRoute>
               <NuevoLote />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/crear-venta"
+          element={
+            <PrivateRoute>
+              <FormularioCrearVenta />
             </PrivateRoute>
           }
         />

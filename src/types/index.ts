@@ -115,12 +115,31 @@ export interface Venta {
   estado: string;
 }
 
+/**
+ * DTO para crear una nueva venta
+ * Basado en el endpoint POST /ventas del backend
+ */
+export interface CrearVentaDto {
+  loteUid: string;
+  clienteUid: string;
+  precioVenta: number;
+  modalidadPago: 'contado' | 'cuotas';
+  cantidadCuotas?: number;
+  montoInicial: number;
+  observaciones?: string;
+}
+
 export interface Cliente {
   uid: string;
-  nombre: string;
-  email: string;
-  cedula: string;
+  usuarioUid: string;
+  nombres: string;
+  apellidos: string;
+  documento: string;
   telefono: string;
+  direccion?: string;
+  estado: string;
+  creadoEn?: string;
+  actualizadoEn?: string;
 }
 
 // ============================================================================

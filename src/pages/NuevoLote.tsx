@@ -292,7 +292,7 @@ const NuevoLote = () => {
                 >
                   <option value="">Sin modelo de casa</option>
                   {modelosCasaDisponibles.map((modelo) => (
-                    <option key={modelo.id} value={modelo.id}>
+                    <option key={modelo.uid} value={modelo.uid}>
                       {modelo.nombre}
                       {modelo.precio ? ` - $${modelo.precio.toLocaleString('es-CO')}` : ''}
                       {modelo.superficieConstruida ? ` - ${modelo.superficieConstruida}m²` : ''}

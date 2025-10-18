@@ -81,6 +81,30 @@ export const lotesService = {
     const response = await httpClient.get<{ codigo: string }>('/lotes/proximo-codigo');
     return response.data.codigo;
   },
+
+  /**
+   * Obtener todos los lotes
+   * Endpoint: GET /lotes
+   * Requiere autenticación
+   */
+  async obtenerTodos(): Promise<any[]> {
+    const response = await httpClient.get<any[]>(
+      API_CONFIG.ENDPOINTS.LOTES
+    );
+    return response.data;
+  },
+
+  /**
+   * Obtener solo lotes disponibles
+   * Endpoint: GET /lotes/disponibles
+   * Público (no requiere autenticación)
+   */
+  async obtenerLotesDisponibles(): Promise<any[]> {
+    const response = await httpClient.get<any[]>(
+      `${API_CONFIG.ENDPOINTS.LOTES}/disponibles`
+    );
+    return response.data;
+  }
 };
 
 export default lotesService;

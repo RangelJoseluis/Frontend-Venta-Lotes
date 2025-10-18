@@ -18,7 +18,7 @@ const QuickActions = () => {
       title: 'Nueva Venta',
       description: 'Registrar venta',
       color: 'emerald',
-      onClick: () => alert('Próximamente: Nueva Venta')
+      onClick: () => navigate('/crear-venta')
     },
     {
       icon: Wallet,
