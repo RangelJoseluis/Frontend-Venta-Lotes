@@ -33,12 +33,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   }, []);
 
   const navItems = [
-    { href: "#", icon: LayoutDashboard, label: "Panel de control", active: true },
+    { href: "/dashboard", icon: LayoutDashboard, label: "Panel de control", active: true },
     { href: "#", icon: Building2, label: "Lotes" },
     { href: "#", icon: FileText, label: "Ventas" },
     { href: "#", icon: Calculator, label: "Cuotas" },
     { href: "#", icon: Wallet, label: "Pagos" },
-    { href: "#", icon: Users, label: "Clientes" },
+    { href: "/clientes", icon: Users, label: "Clientes" },
     { href: "#", icon: BarChart3, label: "Reportajes" },
   ];
 
