@@ -1,0 +1,1186 @@
+para listar 
+http://localhost:3000/ventas
+
+response {
+    "ventas": [
+        {
+            "uid": "7aea0e9c-51dd-4e8e-b0b6-130fbb4f1d91",
+            "lote": {
+                "codigo": "L029",
+                "superficieM2": "299.85",
+                "anchoM": "15.00",
+                "largoM": "19.99",
+                "estado": "en_cuotas",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "3302345",
+                "nombres": "Rivera",
+                "apellidos": "Delgado",
+                "telefono": "+57 300 123 4589"
+            },
+            "fechaVenta": "2025-10-18T03:50:28.888Z",
+            "precioVenta": 1000000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 200000,
+            "montoPendiente": 800000,
+            "estado": "activa",
+            "observaciones": "Para vender",
+            "creadoEn": "2025-10-18T03:50:28.888Z",
+            "actualizadoEn": "2025-10-18T03:50:28.888Z",
+            "valorCuota": 33333.333333333336,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 20
+        },
+        {
+            "uid": "83eed669-6dde-4f30-9533-a05c786393cd",
+            "lote": {
+                "codigo": "L028",
+                "superficieM2": "300.00",
+                "anchoM": "15.00",
+                "largoM": "20.00",
+                "estado": "en_cuotas",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "1234567891",
+                "nombres": "prueba",
+                "apellidos": "prueba2",
+                "telefono": "+57 300 234 2342"
+            },
+            "fechaVenta": "2025-10-18T00:12:39.195Z",
+            "precioVenta": 900000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 20000,
+            "montoPendiente": 880000,
+            "estado": "activa",
+            "observaciones": "infp prueba venta",
+            "creadoEn": "2025-10-18T00:12:39.195Z",
+            "actualizadoEn": "2025-10-18T00:12:39.195Z",
+            "valorCuota": 36666.666666666664,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 2.2222222222222223
+        },
+        {
+            "uid": "f87e5837-61e7-4744-97ba-a524a9c0880d",
+            "lote": {
+                "codigo": "L011",
+                "superficieM2": "450.00",
+                "anchoM": "18.00",
+                "largoM": "25.00",
+                "estado": "en_cuotas",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "3302345",
+                "nombres": "Rivera",
+                "apellidos": "Delgado",
+                "telefono": "+57 300 123 4589"
+            },
+            "fechaVenta": "2025-10-18T00:03:17.892Z",
+            "precioVenta": 950000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 200000,
+            "montoPendiente": 750000,
+            "estado": "activa",
+            "observaciones": "fgdsgdfgdfg",
+            "creadoEn": "2025-10-18T00:03:17.892Z",
+            "actualizadoEn": "2025-10-18T00:03:17.892Z",
+            "valorCuota": 31250,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 21.052631578947366
+        },
+        {
+            "uid": "fa29c1c5-2640-4cac-824c-1008fd1e766a",
+            "lote": {
+                "codigo": "L025",
+                "superficieM2": "225.00",
+                "anchoM": "15.00",
+                "largoM": "15.00",
+                "estado": "en_cuotas"
+            },
+            "cliente": {
+                "documento": "3302345",
+                "nombres": "Rivera",
+                "apellidos": "Delgado",
+                "telefono": "+57 300 123 4589"
+            },
+            "fechaVenta": "2025-10-18T00:01:57.831Z",
+            "precioVenta": 1500000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 200000,
+            "montoPendiente": 1300000,
+            "estado": "activa",
+            "observaciones": "pruebaaaaaaaaaaaaaaaaa",
+            "creadoEn": "2025-10-18T00:01:57.831Z",
+            "actualizadoEn": "2025-10-18T00:01:57.831Z",
+            "valorCuota": 54166.666666666664,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 13.333333333333334
+        },
+        {
+            "uid": "240aec13-d03e-4484-825f-c337bd8bd692",
+            "lote": {
+                "codigo": "L003",
+                "superficieM2": "450.00",
+                "anchoM": "18.00",
+                "largoM": "25.00",
+                "estado": "disponible",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "123456789",
+                "nombres": "kalid",
+                "apellidos": "Perez",
+                "telefono": "+57 300 123 4567"
+            },
+            "fechaVenta": "2025-10-17T23:47:07.192Z",
+            "precioVenta": 950000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 200000,
+            "montoPendiente": 750000,
+            "estado": "activa",
+            "observaciones": null,
+            "creadoEn": "2025-10-17T23:47:07.192Z",
+            "actualizadoEn": "2025-10-17T23:47:07.192Z",
+            "valorCuota": 31250,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 21.052631578947366
+        },
+        {
+            "uid": "bf1732c5-e404-46f6-b698-bc65a208a572",
+            "lote": {
+                "codigo": "L010",
+                "superficieM2": "450.00",
+                "anchoM": "18.00",
+                "largoM": "25.00",
+                "estado": "disponible",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "123456789",
+                "nombres": "kalid",
+                "apellidos": "Perez",
+                "telefono": "+57 300 123 4567"
+            },
+            "fechaVenta": "2025-10-15T03:53:13.736Z",
+            "precioVenta": 750000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 150000,
+            "montoPendiente": 600000,
+            "estado": "activa",
+            "observaciones": "Venta con plan de financiación a 2 años, cliente aprobado por crédito",
+            "creadoEn": "2025-10-15T03:53:13.736Z",
+            "actualizadoEn": "2025-10-15T03:53:13.736Z",
+            "valorCuota": 25000,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 20
+        },
+        {
+            "uid": "a5e3e175-ad40-461d-b364-ae1ac887e8b8",
+            "lote": {
+                "codigo": "L009",
+                "superficieM2": "450.00",
+                "anchoM": "18.00",
+                "largoM": "25.00",
+                "estado": "disponible",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "3302345",
+                "nombres": "Rivera",
+                "apellidos": "Delgado",
+                "telefono": "+57 300 123 4589"
+            },
+            "fechaVenta": "2025-10-14T23:04:44.976Z",
+            "precioVenta": 750000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 150000,
+            "montoPendiente": 600000,
+            "estado": "activa",
+            "observaciones": "Venta con plan de financiación a 2 años, cliente aprobado por crédito",
+            "creadoEn": "2025-10-14T23:04:44.976Z",
+            "actualizadoEn": "2025-10-14T23:04:44.976Z",
+            "valorCuota": 25000,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 20
+        },
+        {
+            "uid": "167807c9-2c21-4d64-b32a-00ff1170d893",
+            "lote": {
+                "codigo": "L008",
+                "superficieM2": "450.00",
+                "anchoM": "18.00",
+                "largoM": "25.00",
+                "estado": "disponible",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "123456789",
+                "nombres": "kalid",
+                "apellidos": "Perez",
+                "telefono": "+57 300 123 4567"
+            },
+            "fechaVenta": "2025-10-12T21:00:46.898Z",
+            "precioVenta": 750000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 150000,
+            "montoPendiente": 600000,
+            "estado": "activa",
+            "observaciones": "Venta con plan de financiación a 2 años, cliente aprobado por crédito",
+            "creadoEn": "2025-10-12T21:00:46.898Z",
+            "actualizadoEn": "2025-10-12T21:00:46.898Z",
+            "valorCuota": 25000,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 20
+        },
+        {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "lote": {
+                "codigo": "L006",
+                "superficieM2": "450.00",
+                "anchoM": "18.00",
+                "largoM": "25.00",
+                "estado": "en_cuotas",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "123456789",
+                "nombres": "kalid",
+                "apellidos": "Perez",
+                "telefono": "+57 300 123 4567"
+            },
+            "fechaVenta": "2025-10-08T23:54:11.511Z",
+            "precioVenta": 950000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 0,
+            "montoPendiente": 950000,
+            "estado": "activa",
+            "observaciones": "Lote vendido con plan de cuotas",
+            "creadoEn": "2025-10-08T23:54:11.511Z",
+            "actualizadoEn": "2025-10-08T23:54:11.511Z",
+            "valorCuota": 39583.333333333336,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 0
+        },
+        {
+            "uid": "4cdbb257-d07e-4ffc-ae91-ae30f7ec7686",
+            "lote": {
+                "codigo": "L005",
+                "superficieM2": "450.00",
+                "anchoM": "18.00",
+                "largoM": "25.00",
+                "estado": "en_cuotas",
+                "modeloCasa": {
+                    "nombre": "Casa Morderna 2025",
+                    "descripcion": "Casa moderna de 2 pisos con acabados premium"
+                }
+            },
+            "cliente": {
+                "documento": "123456789",
+                "nombres": "kalid",
+                "apellidos": "Perez",
+                "telefono": "+57 300 123 4567"
+            },
+            "fechaVenta": "2025-10-08T23:50:32.421Z",
+            "precioVenta": 950000,
+            "modalidadPago": "cuotas",
+            "cantidadCuotas": 24,
+            "montoInicial": 0,
+            "montoPendiente": 950000,
+            "estado": "activa",
+            "observaciones": "Lote vendido con plan de cuotas",
+            "creadoEn": "2025-10-08T23:50:32.421Z",
+            "actualizadoEn": "2025-10-08T23:50:32.421Z",
+            "valorCuota": 39583.333333333336,
+            "isActiva": true,
+            "isACuotas": true,
+            "porcentajeEnganche": 0
+        }
+    ],
+    "total": 13,
+    "pagina": 1,
+    "limite": 10,
+    "totalPaginas": 2
+}
+
+
+
+por id venta 
+http://localhost:3000/ventas/70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c 
+
+response {
+    "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+    "lote": {
+        "codigo": "L006",
+        "superficieM2": "450.00",
+        "anchoM": "18.00",
+        "largoM": "25.00",
+        "estado": "en_cuotas",
+        "modeloCasa": {
+            "nombre": "Casa Morderna 2025",
+            "descripcion": "Casa moderna de 2 pisos con acabados premium"
+        }
+    },
+    "cliente": {
+        "documento": "123456789",
+        "nombres": "kalid",
+        "apellidos": "Perez",
+        "telefono": "+57 300 123 4567"
+    },
+    "fechaVenta": "2025-10-08T23:54:11.511Z",
+    "precioVenta": 950000,
+    "modalidadPago": "cuotas",
+    "cantidadCuotas": 24,
+    "montoInicial": 0,
+    "montoPendiente": 950000,
+    "estado": "activa",
+    "observaciones": "Lote vendido con plan de cuotas",
+    "creadoEn": "2025-10-08T23:54:11.511Z",
+    "actualizadoEn": "2025-10-08T23:54:11.511Z",
+    "valorCuota": 39583.333333333336,
+    "isActiva": true,
+    "isACuotas": true,
+    "porcentajeEnganche": 0
+}
+
+
+
+
+
+get http://localhost:3000/cuotas/venta/70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c 
+
+response [
+    {
+        "uid": "ae046814-6b1f-4bf0-b103-bfe8343d508a",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 1,
+        "valor": 39583.33,
+        "montoPagado": 39583395.83,
+        "montoPendiente": 0,
+        "porcentajePagado": 100,
+        "fechaVencimiento": "2025-12-01",
+        "estado": "pagada",
+        "diasVencimiento": -43,
+        "estaPagada": true,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 1 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-15T03:03:37.686Z",
+        "resumen": "Cuota 1: $39583.33 (Pagado: $39583395.83, Pendiente: $0.00) - Estado: PAGADA - Vence: 2025-12-01",
+        "colorUI": {
+            "color": "success",
+            "background": "#d4edda",
+            "texto": "#155724"
+        }
+    },
+    {
+        "uid": "a3fc6b04-3b4b-483b-8351-d03191f5e965",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 2,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2025-12-31",
+        "estado": "pendiente",
+        "diasVencimiento": -73,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 2 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 2: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2025-12-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "29215ce2-0d75-483e-8f77-899f5148e3cf",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 3,
+        "valor": 39583.33,
+        "montoPagado": 395.83,
+        "montoPendiente": 39187.5,
+        "porcentajePagado": 0.9999916631571926,
+        "fechaVencimiento": "2026-01-31",
+        "estado": "parcial",
+        "diasVencimiento": -104,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": true,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 3 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-15T03:44:16.053Z",
+        "resumen": "Cuota 3: $39583.33 (Pagado: $395.83, Pendiente: $39187.50) - Estado: PARCIAL - Vence: 2026-01-31",
+        "colorUI": {
+            "color": "warning",
+            "background": "#fff3cd",
+            "texto": "#856404"
+        }
+    },
+    {
+        "uid": "41bf4b94-c223-4532-a009-94a60e9aa7ea",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 4,
+        "valor": 39583.33,
+        "montoPagado": 395.83,
+        "montoPendiente": 39187.5,
+        "porcentajePagado": 0.9999916631571926,
+        "fechaVencimiento": "2026-03-03",
+        "estado": "parcial",
+        "diasVencimiento": -135,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": true,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 4 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-15T03:49:40.410Z",
+        "resumen": "Cuota 4: $39583.33 (Pagado: $395.83, Pendiente: $39187.50) - Estado: PARCIAL - Vence: 2026-03-03",
+        "colorUI": {
+            "color": "warning",
+            "background": "#fff3cd",
+            "texto": "#856404"
+        }
+    },
+    {
+        "uid": "b8aa30e9-ab11-47c5-94c0-a0e8c5762a1f",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 5,
+        "valor": 39583.33,
+        "montoPagado": 395.83,
+        "montoPendiente": 39187.5,
+        "porcentajePagado": 0.9999916631571926,
+        "fechaVencimiento": "2026-03-31",
+        "estado": "parcial",
+        "diasVencimiento": -163,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": true,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 5 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-15T03:53:53.878Z",
+        "resumen": "Cuota 5: $39583.33 (Pagado: $395.83, Pendiente: $39187.50) - Estado: PARCIAL - Vence: 2026-03-31",
+        "colorUI": {
+            "color": "warning",
+            "background": "#fff3cd",
+            "texto": "#856404"
+        }
+    },
+    {
+        "uid": "6d3016a3-e132-47c3-8d48-c3e1bd037af5",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 6,
+        "valor": 39583.33,
+        "montoPagado": 395.83,
+        "montoPendiente": 39187.5,
+        "porcentajePagado": 0.9999916631571926,
+        "fechaVencimiento": "2026-05-01",
+        "estado": "parcial",
+        "diasVencimiento": -194,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": true,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 6 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-15T03:57:58.432Z",
+        "resumen": "Cuota 6: $39583.33 (Pagado: $395.83, Pendiente: $39187.50) - Estado: PARCIAL - Vence: 2026-05-01",
+        "colorUI": {
+            "color": "warning",
+            "background": "#fff3cd",
+            "texto": "#856404"
+        }
+    },
+    {
+        "uid": "66d50257-e0b3-4973-affb-082e6ec59784",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 7,
+        "valor": 39583.33,
+        "montoPagado": 395.83,
+        "montoPendiente": 39187.5,
+        "porcentajePagado": 0.9999916631571926,
+        "fechaVencimiento": "2026-05-31",
+        "estado": "parcial",
+        "diasVencimiento": -224,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": true,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 7 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-15T04:01:42.829Z",
+        "resumen": "Cuota 7: $39583.33 (Pagado: $395.83, Pendiente: $39187.50) - Estado: PARCIAL - Vence: 2026-05-31",
+        "colorUI": {
+            "color": "warning",
+            "background": "#fff3cd",
+            "texto": "#856404"
+        }
+    },
+    {
+        "uid": "f20c6f66-6c4f-4279-b65d-e54b82322f4b",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 8,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2026-07-01",
+        "estado": "pendiente",
+        "diasVencimiento": -255,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 8 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 8: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2026-07-01",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "e06a3af8-674a-4682-accb-48676c2d0e77",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 9,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2026-07-31",
+        "estado": "pendiente",
+        "diasVencimiento": -285,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 9 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 9: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2026-07-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "8b7cdf34-d863-4652-ae7d-510085886bc3",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 10,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2026-08-31",
+        "estado": "pendiente",
+        "diasVencimiento": -316,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 10 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 10: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2026-08-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "67387f2c-8601-454a-9fd1-98545626cf03",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 11,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2026-10-01",
+        "estado": "pendiente",
+        "diasVencimiento": -347,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 11 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 11: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2026-10-01",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "31dab79c-2ec8-4c85-91ef-8173d04bcb38",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 12,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2026-10-31",
+        "estado": "pendiente",
+        "diasVencimiento": -377,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 12 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 12: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2026-10-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "70bae0fb-c56f-476e-a033-eb82f6bc1a69",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 13,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2026-12-01",
+        "estado": "pendiente",
+        "diasVencimiento": -408,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 13 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 13: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2026-12-01",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "0f43689d-24cd-4181-a530-cb565ec892fe",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 14,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2026-12-31",
+        "estado": "pendiente",
+        "diasVencimiento": -438,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 14 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 14: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2026-12-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "b3976d2e-5f58-4985-9755-679e7cac16a3",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 15,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-01-31",
+        "estado": "pendiente",
+        "diasVencimiento": -469,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 15 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 15: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-01-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "88db99d1-abc1-48b6-930d-c7369f2ef936",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 16,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-03-03",
+        "estado": "pendiente",
+        "diasVencimiento": -500,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 16 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 16: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-03-03",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "154f2f15-f1e9-4be0-92da-baaf30fa5887",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 17,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-03-31",
+        "estado": "pendiente",
+        "diasVencimiento": -528,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 17 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 17: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-03-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "df117088-7906-41e8-add8-b1e0ed876c20",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 18,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-05-01",
+        "estado": "pendiente",
+        "diasVencimiento": -559,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 18 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 18: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-05-01",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "bf5ef3d1-3762-44d5-89ac-ea0103da1aef",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 19,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-05-31",
+        "estado": "pendiente",
+        "diasVencimiento": -589,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 19 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 19: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-05-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "b0fc5957-0dd4-49f8-a3cc-41d89e86b5ad",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 20,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-07-01",
+        "estado": "pendiente",
+        "diasVencimiento": -620,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 20 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 20: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-07-01",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "51d47350-a771-40dd-8834-41f3447f0991",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 21,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-07-31",
+        "estado": "pendiente",
+        "diasVencimiento": -650,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 21 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 21: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-07-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "e937e0ec-d5f1-48c5-88af-813f63db4a9d",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 22,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-08-31",
+        "estado": "pendiente",
+        "diasVencimiento": -681,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 22 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 22: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-08-31",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    },
+    {
+        "uid": "7d8e1e07-861a-44f2-8d60-618ea8e7981c",
+        "venta": {
+            "uid": "70f9ca4e-5cbe-4bcf-9200-1946a04bbc8c",
+            "codigo": "L006",
+            "cliente": "kalid Perez",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 23,
+        "valor": 39583.33,
+        "montoPagado": 0,
+        "montoPendiente": 39583.33,
+        "porcentajePagado": 0,
+        "fechaVencimiento": "2027-10-01",
+        "estado": "pendiente",
+        "diasVencimiento": -712,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": false,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 23 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-13T01:56:19.541Z",
+        "actualizadoEn": "2025-10-13T01:56:19.541Z",
+        "resumen": "Cuota 23: $39583.33 (Pagado: $0.00, Pendiente: $39583.33) - Estado: PENDIENTE - Vence: 2027-10-01",
+        "colorUI": {
+            "color": "info",
+            "background": "#d1ecf1",
+            "texto": "#0c5460"
+        }
+    }
+]
+
+
+
+Crear pago 
+post http://localhost:3000/pagos
+
+{
+  "cuotaUid": "733b0d22-9654-46f7-a28c-b787cfd84900",
+  "monto": 54166,
+  "fechaPago": "2025-09-23",
+  "metodoPago": "transferencia",
+  "referencia": "TEST-PAY-003" //Tambien configurar la referencia que se cree automantece pero que peuda modificarse si se deea en la ogica backend ya que no permite un referencia igual a outra referencias de tras coutas 
+}
+
+response {
+    "pago": {
+        "uid": "496ef196-6656-41b2-a344-00da7c16c00d",
+        "monto": 54166,
+        "montoFormateado": "$ 54.166",
+        "fechaPago": "2025-09-23",
+        "fechaPagoFormateada": "22 de septiembre de 2025",
+        "metodoPago": "transferencia",
+        "metodoPagoFormateado": "Transferencia",
+        "referencia": "TEST-PAY-003",
+        "observaciones": null,
+        "descripcion": "$ 54.166 - Transferencia (22 de septiembre de 2025) - Ref: TEST-PAY-003",
+        "requiereReferencia": true,
+        "creadoEn": "2025-10-19T00:42:57.042Z",
+        "actualizadoEn": "2025-10-19T00:42:57.042Z"
+    },
+    "cuotaActualizada": {
+        "uid": "733b0d22-9654-46f7-a28c-b787cfd84900",
+        "venta": {
+            "uid": "fa29c1c5-2640-4cac-824c-1008fd1e766a",
+            "codigo": "L025",
+            "cliente": "Rivera Delgado",
+            "modalidadPago": "cuotas"
+        },
+        "numeroCuota": 1,
+        "valor": 54166.67,
+        "montoPagado": 54166,
+        "montoPendiente": 0.6699999999982538,
+        "porcentajePagado": 99.9987630769992,
+        "fechaVencimiento": "2025-12-17",
+        "estado": "parcial",
+        "diasVencimiento": -59,
+        "estaPagada": false,
+        "estaVencida": false,
+        "tienePagoParcial": true,
+        "proximaAVencer": false,
+        "observaciones": "Cuota 1 de 24 - Generada automáticamente",
+        "creadoEn": "2025-10-18T05:01:57.852Z",
+        "actualizadoEn": "2025-10-19T00:42:57.050Z",
+        "resumen": "Cuota 1: $54166.67 (Pagado: $54166.00, Pendiente: $0.67) - Estado: PARCIAL - Vence: 2025-12-17",
+        "colorUI": {
+            "color": "warning",
+            "background": "#fff3cd",
+            "texto": "#856404"
+        }
+    },
+    "excedente": 0,
+    "mensaje": "Pago aplicado exitosamente."
+}
+
+get http://localhost:3000/pagos/cuota/6809ff78-5b53-4547-8103-e5a552e862cc  buscar pagos  Pagos por cuota específica
+
+response [
+    {
+        "uid": "2f4061f2-7d86-40c8-92c7-672b40732370",
+        "cuotaUid": "6809ff78-5b53-4547-8103-e5a552e862cc",
+        "monto": 25000,
+        "montoFormateado": "$ 25.000",
+        "fechaPago": "2025-10-13",
+        "fechaPagoFormateada": "12 de octubre de 2025",
+        "metodoPago": "efectivo",
+        "metodoPagoFormateado": "Efectivo",
+        "referencia": null,
+        "observaciones": "Pago de prueba - Cuota 1",
+        "descripcion": "$ 25.000 - Efectivo (12 de octubre de 2025)",
+        "requiereReferencia": false,
+        "creadoEn": "2025-10-15T08:55:11.272Z",
+        "actualizadoEn": "2025-10-15T08:55:11.272Z"
+    },
+    {
+        "uid": "f7fa7f5e-ec4f-40e3-9131-5d8335492b68",
+        "cuotaUid": "6809ff78-5b53-4547-8103-e5a552e862cc",
+        "monto": 25000,
+        "montoFormateado": "$ 25.000",
+        "fechaPago": "2025-10-13",
+        "fechaPagoFormateada": "12 de octubre de 2025",
+        "metodoPago": "efectivo",
+        "metodoPagoFormateado": "Efectivo",
+        "referencia": null,
+        "observaciones": "Pago de prueba - Cuota 1",
+        "descripcion": "$ 25.000 - Efectivo (12 de octubre de 2025)",
+        "requiereReferencia": false,
+        "creadoEn": "2025-10-15T08:58:36.072Z",
+        "actualizadoEn": "2025-10-15T08:58:36.072Z"
+    }
+]

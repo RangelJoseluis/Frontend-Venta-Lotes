@@ -25,7 +25,7 @@ const QuickActions = () => {
       title: 'Registrar Pago',
       description: 'Aplicar a cuota',
       color: 'amber',
-      onClick: () => alert('Próximamente: Registrar Pago')
+      onClick: () => navigate('/registrar-pago')
     }
   ];
 

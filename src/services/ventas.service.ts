@@ -5,7 +5,7 @@
 
 import httpClient from './http.service';
 import API_CONFIG from '../config/api.config';
-import type { CrearVentaDto, Venta } from '../types';
+import type { CrearVentaDto, Venta, VentasResponse } from '../types';
 
 /**
  * Crear una nueva venta
@@ -20,6 +20,17 @@ export const crearVenta = async (ventaData: CrearVentaDto): Promise<Venta> => {
  */
 export const obtenerVentas = async (): Promise<Venta[]> => {
   const response = await httpClient.get(API_CONFIG.ENDPOINTS.VENTAS);
+  return response.data;
+};
+
+/**
+ * Obtener ventas con paginación
+ * Endpoint: GET /ventas?pagina=1&limite=10
+ */
+export const obtenerVentasPaginadas = async (pagina: number = 1, limite: number = 10): Promise<VentasResponse> => {
+  const response = await httpClient.get<VentasResponse>(
+    `${API_CONFIG.ENDPOINTS.VENTAS}?pagina=${pagina}&limite=${limite}`
+  );
   return response.data;
 };
 

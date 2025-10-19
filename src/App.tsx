@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import NuevoLote from './pages/NuevoLote';
 import FormularioCrearVenta from './pages/FormularioCrearVenta';
+import RegistrarPago from './pages/RegistrarPago';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -64,6 +65,15 @@ function App() {
           element={
             <PrivateRoute>
               <FormularioCrearVenta />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/registrar-pago"
+          element={
+            <PrivateRoute>
+              <RegistrarPago />
             </PrivateRoute>
           }
         />

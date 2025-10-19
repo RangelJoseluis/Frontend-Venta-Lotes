@@ -179,21 +179,96 @@ export interface Cuota {
 // PAGOS
 // ============================================================================
 
-export type MetodoPago = 'efectivo' | 'transferencia' | 'cheque';
+export type MetodoPago = 'efectivo' | 'transferencia' | 'cheque' | 'tarjeta';
 
 export interface Pago {
   uid: string;
   cuota: {
     uid: string;
     numeroCuota: number;
+    venta?: {
+      uid: string;
+      codigo: string;
+      cliente: string;
+    };
   };
   monto: number;
   montoFormateado: string;
   fechaPago: string;
+  fechaPagoFormateada: string;
   metodoPago: MetodoPago;
+  metodoPagoFormateado: string;
   referencia?: string;
   observaciones?: string;
   descripcion: string;
+  requiereReferencia: boolean;
+  creadoEn: string;
+  actualizadoEn: string;
+}
+
+/**
+ * DTO para crear un nuevo pago
+ * Basado en el endpoint POST /pagos del backend
+ */
+export interface CrearPagoDto {
+  cuotaUid: string;
+  monto: number;
+  fechaPago?: string; // Opcional, por defecto es la fecha actual
+  metodoPago: MetodoPago;
+  referencia?: string;
+  observaciones?: string;
+}
+
+/**
+ * Respuesta al crear un pago
+ */
+export interface CrearPagoResponse {
+  pago: Pago;
+  cuotaActualizada: Cuota;
+  excedente: number;
+  mensaje: string;
+}
+
+/**
+ * Venta con información resumida para el selector de pagos
+ */
+export interface VentaResumen {
+  uid: string;
+  lote: {
+    codigo: string;
+    superficieM2: string;
+    estado: string;
+    modeloCasa?: {
+      nombre: string;
+      descripcion?: string;
+    };
+  };
+  cliente: {
+    documento: string;
+    nombres: string;
+    apellidos: string;
+    telefono: string;
+  };
+  fechaVenta: string;
+  precioVenta: number;
+  modalidadPago: 'contado' | 'cuotas';
+  cantidadCuotas?: number;
+  montoInicial: number;
+  montoPendiente: number;
+  estado: string;
+  valorCuota?: number;
+  porcentajeEnganche?: number;
+}
+
+/**
+ * Respuesta paginada de ventas
+ */
+export interface VentasResponse {
+  ventas: VentaResumen[];
+  total: number;
+  pagina: number;
+  limite: number;
+  totalPaginas: number;
 }
 
 // ============================================================================
