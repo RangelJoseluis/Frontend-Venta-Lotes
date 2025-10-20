@@ -6,6 +6,7 @@ import NuevoLote from './pages/NuevoLote';
 import FormularioCrearVenta from './pages/FormularioCrearVenta';
 import RegistrarPago from './pages/RegistrarPago';
 import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
+import Reportes from './pages/Reportes';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -84,6 +85,15 @@ function App() {
           element={
             <PrivateRoute>
               <GestionDeUsuariosCliente />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/reportes"
+          element={
+            <PrivateRoute>
+              <Reportes />
             </PrivateRoute>
           }
         />

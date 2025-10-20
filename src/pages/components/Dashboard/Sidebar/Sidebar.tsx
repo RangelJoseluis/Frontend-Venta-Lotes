@@ -39,7 +39,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     { href: "#", icon: Calculator, label: "Cuotas" },
     { href: "#", icon: Wallet, label: "Pagos" },
     { href: "/clientes", icon: Users, label: "Clientes" },
-    { href: "#", icon: BarChart3, label: "Reportajes" },
+    { href: "/reportes", icon: BarChart3, label: "Reportes" },
   ];
 
   return (

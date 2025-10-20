@@ -4,14 +4,25 @@ import Header from './components/Dashboard/Header/Header';
 import StatsGrid from './components/Dashboard/StatsGrid/StatsGrid';
 import ValueDistribution from './components/Dashboard/ValueDistribution/ValueDistribution';
 import QuickActions from './components/Dashboard/QuickActions/QuickActions';
+import RecentActivity from './components/Dashboard/RecentActivity/RecentActivity';
+import ImportantAlerts from './components/Dashboard/ImportantAlerts/ImportantAlerts';
 import LoadingSpinner from './components/Dashboard/UI/LoadingSpinner';
 import { lotesService } from '../services/lotes.service';
+import estadisticasVentasService from '../services/estadisticas-ventas.service';
+import estadisticasCuotasService from '../services/estadisticas-cuotas.service';
+import estadisticasPagosService from '../services/estadisticas-pagos.service';
 import { getErrorMessage } from '../services/http.service';
 import './Dashboard.css';
 import type { EstadisticasLotes } from '../types';
+import type { EstadisticasVentas } from '../services/estadisticas-ventas.service';
+import type { EstadisticasCuotas } from '../services/estadisticas-cuotas.service';
+import type { EstadisticasPagos } from '../services/estadisticas-pagos.service';
 
 const Dashboard = () => {
   const [stats, setStats] = useState<EstadisticasLotes | null>(null);
+  const [statsVentas, setStatsVentas] = useState<EstadisticasVentas | null>(null);
+  const [statsCuotas, setStatsCuotas] = useState<EstadisticasCuotas | null>(null);
+  const [statsPagos, setStatsPagos] = useState<EstadisticasPagos | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(() => {
@@ -28,7 +39,7 @@ const Dashboard = () => {
   }, [sidebarOpen]);
 
   /**
-   * Cargar estadísticas desde el backend
+   * Cargar todas las estadísticas desde el backend
    */
   useEffect(() => {
     const fetchEstadisticas = async () => {
@@ -37,13 +48,27 @@ const Dashboard = () => {
         setError(null);
         
         console.log('🔄 Cargando estadísticas del backend...');
-        console.log('📍 URL:', 'http://localhost:3000/lotes/estadisticas');
         console.log('🔑 Token:', localStorage.getItem('accessToken') ? 'Presente' : 'NO PRESENTE');
         
-        const data = await lotesService.getEstadisticas();
+        // Cargar estadísticas en paralelo
+        const [dataLotes, dataVentas, dataCuotas, dataPagos] = await Promise.all([
+          lotesService.getEstadisticas(),
+          estadisticasVentasService.obtenerEstadisticas(),
+          estadisticasCuotasService.obtenerEstadisticas(),
+          estadisticasPagosService.obtenerEstadisticasMesActual()
+        ]);
         
-        console.log('✅ Estadísticas recibidas:', data);
-        setStats(data);
+        console.log('✅ Todas las estadísticas cargadas:', {
+          lotes: dataLotes,
+          ventas: dataVentas,
+          cuotas: dataCuotas,
+          pagos: dataPagos
+        });
+        
+        setStats(dataLotes);
+        setStatsVentas(dataVentas);
+        setStatsCuotas(dataCuotas);
+        setStatsPagos(dataPagos);
       } catch (err) {
         const errorMsg = getErrorMessage(err);
         setError(errorMsg);
@@ -100,8 +125,20 @@ const Dashboard = () => {
         <main className="dashboard-main">
           <div className="dashboard-content">
             <StatsGrid stats={stats} />
-            <ValueDistribution stats={stats} />
+            
+            <div className="dashboard-grid-2">
+              <ValueDistribution stats={stats} />
+              <ImportantAlerts
+                cuotasVencidas={statsCuotas?.cuotasVencidas || 0}
+                cuotasProximasVencer={statsCuotas?.cuotasProximasAVencer || 0}
+                lotesDisponibles={stats?.disponibles || 0}
+                ventasActivas={statsVentas?.ventasActivas || 0}
+              />
+            </div>
+
             <QuickActions />
+
+            <RecentActivity />
           </div>
         </main>
       </div>
