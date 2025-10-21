@@ -9,9 +9,10 @@ interface ValueDistributionProps {
 const ValueDistribution = ({ stats }: ValueDistributionProps) => {
   if (!stats) return null;
 
-  const disponiblesPercent = ((stats.disponibles || 0) / (stats.totalLotes || 1) * 100);
-  const enCuotasPercent = ((stats.enCuotas || 0) / (stats.totalLotes || 1) * 100);
-  const vendidosPercent = ((stats.vendidos || 0) / (stats.totalLotes || 1) * 100);
+  // Variables removidas - ya no se usan las barras de distribución
+  // const disponiblesPercent = ((stats.disponibles || 0) / (stats.totalLotes || 1) * 100);
+  // const enCuotasPercent = ((stats.enCuotas || 0) / (stats.totalLotes || 1) * 100);
+  // const vendidosPercent = ((stats.vendidos || 0) / (stats.totalLotes || 1) * 100);
 
   const precioPromedio = (stats.valorTotal || 0) / (stats.totalLotes || 1) / 1000000;
   const precioPorM2 = (stats.valorTotal || 0) / (stats.superficieTotal || 1);
@@ -38,48 +39,8 @@ const ValueDistribution = ({ stats }: ValueDistributionProps) => {
           </div>
         </div>
       </div>
-
-      <div className="distribution-card">
-        <h3 className="distribution-title">Distribución de Lotes</h3>
-        <div className="distribution-bars">
-          <div className="distribution-bar">
-            <div className="bar-header">
-              <span className="bar-label">Disponibles</span>
-              <span className="bar-value text-emerald-600">{stats.disponibles}</span>
-            </div>
-            <div className="progress-bar">
-              <div
-                className="progress-fill bg-emerald-500"
-                style={{ width: `${disponiblesPercent}%` }}
-              />
-            </div>
-          </div>
-          <div className="distribution-bar">
-            <div className="bar-header">
-              <span className="bar-label">En Cuotas</span>
-              <span className="bar-value text-amber-600">{stats.enCuotas}</span>
-            </div>
-            <div className="progress-bar">
-              <div
-                className="progress-fill bg-amber-500"
-                style={{ width: `${enCuotasPercent}%` }}
-              />
-            </div>
-          </div>
-          <div className="distribution-bar">
-            <div className="bar-header">
-              <span className="bar-label">Vendidos</span>
-              <span className="bar-value text-blue-600">{stats.vendidos}</span>
-            </div>
-            <div className="progress-bar">
-              <div
-                className="progress-fill bg-blue-500"
-                style={{ width: `${vendidosPercent}%` }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      {/* Distribución de lotes removida - causaba problemas visuales */}
     </div>
   );
 };

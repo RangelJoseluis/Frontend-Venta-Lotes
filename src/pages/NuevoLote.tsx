@@ -22,9 +22,9 @@ import {
 } from 'lucide-react';
 import { lotesService } from '../services/lotes.service';
 import { serviciosService, type Servicio } from '../services/servicios.service';
-import { modelosCasaService, type ModeloCasa } from '../services/modelos-casa.service';
+import modelosCasaService from '../services/modelos-casa.service';
 import { getErrorMessage } from '../services/http.service';
-import type { CrearLoteDto } from '../types';
+import type { CrearLoteDto, ModeloCasa } from '../types';
 import './NuevoLote.css';
 
 // Esquema de validación con Zod
@@ -294,9 +294,9 @@ const NuevoLote = () => {
                   {modelosCasaDisponibles.map((modelo) => (
                     <option key={modelo.uid} value={modelo.uid}>
                       {modelo.nombre}
-                      {modelo.precio ? ` - $${modelo.precio.toLocaleString('es-CO')}` : ''}
-                      {modelo.superficieConstruida ? ` - ${modelo.superficieConstruida}m²` : ''}
-                      {modelo.numeroHabitaciones ? ` - ${modelo.numeroHabitaciones} hab.` : ''}
+                      {modelo.precioBase ? ` - $${modelo.precioBase.toLocaleString('es-CO')}` : ''}
+                      {modelo.metrosCubiertos ? ` - ${modelo.metrosCubiertos}m²` : ''}
+                      {modelo.ambientes ? ` - ${modelo.ambientes} amb.` : ''}
                     </option>
                   ))}
                 </select>

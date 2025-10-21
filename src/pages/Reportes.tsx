@@ -111,12 +111,14 @@ const Reportes = () => {
   // FUNCIONES AUXILIARES
   // ============================================================================
   const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
+    // Formatear número con separadores de miles
+    const formatted = new Intl.NumberFormat('es-CO', {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
+    
+    // Retornar con símbolo de peso colombiano explícito
+    return `$ ${formatted}`;
   };
 
   const formatPercentage = (value: number): string => {
@@ -447,7 +449,7 @@ const Reportes = () => {
                           <option value="">-- Selecciona un lote --</option>
                           {lotesFiltrados.map((lote) => (
                             <option key={lote.uid} value={lote.uid}>
-                              {lote.codigo} - {lote.estado} - {formatCurrency(lote.precio)}
+                              {lote.codigo} - {lote.estado} - {formatCurrency((lote as any).precioLista || lote.precio || 0)}
                             </option>
                           ))}
                         </select>
@@ -458,6 +460,10 @@ const Reportes = () => {
                         <div className="lote-info-card">
                           {(() => {
                             const lote = lotes.find(l => l.uid === loteSeleccionado);
+                            // Mapear propiedades del backend a las esperadas
+                            const superficie = (lote as any)?.superficieM2 || lote?.superficie || 0;
+                            const precio = (lote as any)?.precioLista || lote?.precio || 0;
+                            
                             return (
                               <>
                                 <div className="lote-info-item">
@@ -472,11 +478,11 @@ const Reportes = () => {
                                 </div>
                                 <div className="lote-info-item">
                                   <span className="label">Superficie:</span>
-                                  <span className="value">{lote?.superficie} m²</span>
+                                  <span className="value">{superficie} m²</span>
                                 </div>
                                 <div className="lote-info-item">
                                   <span className="label">Precio:</span>
-                                  <span className="value">{formatCurrency(lote?.precio || 0)}</span>
+                                  <span className="value">{formatCurrency(precio)}</span>
                                 </div>
                               </>
                             );

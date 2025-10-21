@@ -1,95 +1,151 @@
-import { Clock, TrendingUp, AlertCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Clock, TrendingUp, AlertCircle, DollarSign, User } from 'lucide-react';
+import actividadesService from '../../../../services/actividades.service';
+import type { ActividadReciente } from '../../../../types';
 import './RecentActivity.css';
 
-interface ActividadReciente {
-  id: string;
-  tipo: 'venta' | 'pago' | 'lote' | 'alerta';
-  titulo: string;
-  descripcion: string;
-  fecha: string;
-  icono: 'venta' | 'pago' | 'lote' | 'alerta';
-}
+/**
+ * COMPONENTE DE ACTIVIDADES RECIENTES
+ * 
+ * Muestra las últimas actividades del sistema (ventas, pagos, clientes)
+ * obtenidas del backend en tiempo real.
+ * 
+ * CARACTERÍSTICAS:
+ * - Consulta actividades reales del backend
+ * - Actualiza automáticamente al montar el componente
+ * - Muestra iconos y colores según el tipo de actividad
+ * - Formatea fechas de forma legible
+ */
 
-interface RecentActivityProps {
-  actividades?: ActividadReciente[];
-}
+const RecentActivity = () => {
+  const [actividades, setActividades] = useState<ActividadReciente[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-const RecentActivity = ({ actividades = [] }: RecentActivityProps) => {
-  // Actividades de ejemplo si no se proporcionan
-  const actividadesDefault: ActividadReciente[] = [
-    {
-      id: '1',
-      tipo: 'venta',
-      titulo: 'Nueva venta registrada',
-      descripcion: 'Venta VTA-018 - Lote L004',
-      fecha: 'Hace 2 horas',
-      icono: 'venta'
-    },
-    {
-      id: '2',
-      tipo: 'pago',
-      titulo: 'Pago recibido',
-      descripcion: 'Cuota 1/24 - Cliente Rivera Delgado',
-      fecha: 'Hace 5 horas',
-      icono: 'pago'
-    },
-    {
-      id: '3',
-      tipo: 'lote',
-      titulo: 'Lote actualizado',
-      descripcion: 'L004 cambió a estado "en_cuotas"',
-      fecha: 'Hace 1 día',
-      icono: 'lote'
-    },
-    {
-      id: '4',
-      tipo: 'alerta',
-      titulo: 'Cuota próxima a vencer',
-      descripcion: 'Cuota 2/24 vence en 3 días',
-      fecha: 'Hace 2 días',
-      icono: 'alerta'
-    },
-    {
-      id: '5',
-      tipo: 'venta',
-      titulo: 'Nueva venta registrada',
-      descripcion: 'Venta VTA-017 - Lote L003',
-      fecha: 'Hace 3 días',
-      icono: 'venta'
-    }
-  ];
+  /**
+   * Cargar actividades recientes del backend
+   */
+  useEffect(() => {
+    const cargarActividades = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Obtener últimas 10 actividades
+        const data = await actividadesService.obtenerActividadesRecientes(10);
+        setActividades(data);
+        
+        console.log('✅ Actividades cargadas:', data);
+      } catch (err) {
+        console.error('❌ Error al cargar actividades:', err);
+        setError('No se pudieron cargar las actividades');
+        setActividades([]); // Array vacío en caso de error
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const actividadesMostrar = actividades.length > 0 ? actividades : actividadesDefault;
+    cargarActividades();
+  }, []);
 
+  /**
+   * Formatear fecha a texto legible (ej: "Hace 2 horas")
+   */
+  const formatearFecha = (fechaISO: string): string => {
+    const fecha = new Date(fechaISO);
+    const ahora = new Date();
+    const diferencia = ahora.getTime() - fecha.getTime();
+    
+    const minutos = Math.floor(diferencia / 60000);
+    const horas = Math.floor(diferencia / 3600000);
+    const dias = Math.floor(diferencia / 86400000);
+    
+    if (minutos < 1) return 'Hace un momento';
+    if (minutos < 60) return `Hace ${minutos} minuto${minutos > 1 ? 's' : ''}`;
+    if (horas < 24) return `Hace ${horas} hora${horas > 1 ? 's' : ''}`;
+    if (dias < 7) return `Hace ${dias} día${dias > 1 ? 's' : ''}`;
+    
+    return fecha.toLocaleDateString('es-CO', { 
+      day: 'numeric', 
+      month: 'short' 
+    });
+  };
+
+  /**
+   * Obtener icono según el tipo de actividad
+   */
   const getIcono = (tipo: string) => {
     switch (tipo) {
       case 'venta':
         return <TrendingUp size={20} />;
       case 'pago':
-        return <Clock size={20} />;
+        return <DollarSign size={20} />;
+      case 'cliente':
+        return <User size={20} />;
       case 'lote':
         return <TrendingUp size={20} />;
-      case 'alerta':
+      case 'cuota':
         return <AlertCircle size={20} />;
       default:
         return <Clock size={20} />;
     }
   };
 
-  const getColorClase = (tipo: string) => {
-    switch (tipo) {
-      case 'venta':
-        return 'activity-icon-success';
-      case 'pago':
+  /**
+   * Obtener clase de color según el tipo de actividad
+   */
+  const getColorClase = (color?: string) => {
+    switch (color) {
+      case 'blue':
         return 'activity-icon-primary';
-      case 'lote':
+      case 'green':
+        return 'activity-icon-success';
+      case 'yellow':
         return 'activity-icon-warning';
-      case 'alerta':
+      case 'red':
         return 'activity-icon-danger';
+      case 'purple':
+        return 'activity-icon-info';
       default:
         return 'activity-icon-primary';
     }
   };
+
+  // Mostrar loading
+  if (loading) {
+    return (
+      <div className="recent-activity-card">
+        <div className="recent-activity-header">
+          <h3 className="recent-activity-title">
+            <Clock size={24} />
+            Actividad Reciente
+          </h3>
+        </div>
+        <div className="activity-loading">
+          <Clock size={48} className="animate-spin" />
+          <p>Cargando actividades...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar error
+  if (error) {
+    return (
+      <div className="recent-activity-card">
+        <div className="recent-activity-header">
+          <h3 className="recent-activity-title">
+            <Clock size={24} />
+            Actividad Reciente
+          </h3>
+        </div>
+        <div className="activity-error">
+          <AlertCircle size={48} />
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="recent-activity-card">
@@ -99,26 +155,29 @@ const RecentActivity = ({ actividades = [] }: RecentActivityProps) => {
           Actividad Reciente
         </h3>
         <span className="recent-activity-badge">
-          {actividadesMostrar.length} eventos
+          {actividades.length} eventos
         </span>
       </div>
 
       <div className="recent-activity-list">
-        {actividadesMostrar.map((actividad) => (
-          <div key={actividad.id} className="activity-item">
-            <div className={`activity-icon ${getColorClase(actividad.tipo)}`}>
-              {getIcono(actividad.tipo)}
+        {actividades.map((actividad, index) => (
+          <div key={`${actividad.tipo}-${index}`} className="activity-item">
+            <div className={`activity-icon ${getColorClase(actividad.color)}`}>
+              {actividad.icono ? (
+                <span className="activity-emoji">{actividad.icono}</span>
+              ) : (
+                getIcono(actividad.tipo)
+              )}
             </div>
             <div className="activity-content">
-              <h4 className="activity-title">{actividad.titulo}</h4>
               <p className="activity-description">{actividad.descripcion}</p>
-              <span className="activity-time">{actividad.fecha}</span>
+              <span className="activity-time">{formatearFecha(actividad.fecha)}</span>
             </div>
           </div>
         ))}
       </div>
 
-      {actividadesMostrar.length === 0 && (
+      {actividades.length === 0 && (
         <div className="activity-empty">
           <Clock size={48} />
           <p>No hay actividad reciente</p>

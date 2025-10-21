@@ -35,6 +35,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const navItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Panel de control", active: true },
     { href: "#", icon: Building2, label: "Lotes" },
+    { href: "/modelos-casa", icon: Home, label: "Modelos de Casa" },
     { href: "#", icon: FileText, label: "Ventas" },
     { href: "#", icon: Calculator, label: "Cuotas" },
     { href: "#", icon: Wallet, label: "Pagos" },

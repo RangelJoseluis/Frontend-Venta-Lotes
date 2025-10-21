@@ -7,6 +7,7 @@ import FormularioCrearVenta from './pages/FormularioCrearVenta';
 import RegistrarPago from './pages/RegistrarPago';
 import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
+import ModelosCasa from './pages/ModelosCasa';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -94,6 +95,15 @@ function App() {
           element={
             <PrivateRoute>
               <Reportes />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/modelos-casa"
+          element={
+            <PrivateRoute>
+              <ModelosCasa />
             </PrivateRoute>
           }
         />

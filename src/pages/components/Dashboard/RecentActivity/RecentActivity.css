@@ -91,6 +91,15 @@
   color: white;
 }
 
+.activity-icon-info {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: white;
+}
+
+.activity-emoji {
+  font-size: 20px;
+}
+
 .activity-content {
   flex: 1;
 }
@@ -132,6 +141,43 @@
   margin: 0;
   font-size: 14px;
   font-style: italic;
+}
+
+.activity-loading,
+.activity-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+
+.activity-loading svg {
+  margin-bottom: 16px;
+  opacity: 0.5;
+  animation: spin 2s linear infinite;
+}
+
+.activity-error svg {
+  margin-bottom: 16px;
+  opacity: 0.5;
+  color: #ef4444;
+}
+
+.activity-loading p,
+.activity-error p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ============================================================================

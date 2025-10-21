@@ -41,14 +41,18 @@ export type VistaLote = 'ciudad' | 'montaña' | 'mar' | 'parque' | 'calle' | 'in
 export interface Lote {
   uid: string;
   codigo: string;
-  superficie: number;
-  precio: number;
-  ubicacion: string;
-  coordenadas: string;
-  topografia: TipoTopografia;
+  // Propiedades del backend
+  superficieM2: number; // Backend usa superficieM2
+  precioLista: number; // Backend usa precioLista
+  // Propiedades legacy (mantener para compatibilidad)
+  superficie?: number;
+  precio?: number;
+  ubicacion?: string;
+  coordenadas?: string;
+  topografia?: TipoTopografia;
   estado: EstadoLote;
-  estadoDocumentacion: EstadoDocumentacion;
-  imagenesUrls: string[];
+  estadoDocumentacion?: EstadoDocumentacion;
+  imagenesUrls?: string[];
   amueblado: boolean;
   modeloCasa?: ModeloCasa;
   creadoEn: string;
@@ -317,4 +321,98 @@ export interface MenuItem {
   path: string;
   icon: string;
   roles?: string[];
+}
+
+// ============================================================================
+// ACTIVIDADES RECIENTES
+// ============================================================================
+
+/**
+ * Tipo de actividad reciente
+ */
+export type TipoActividad = 'venta' | 'pago' | 'cliente' | 'lote' | 'cuota';
+
+/**
+ * Color para badges de actividades
+ */
+export type ColorActividad = 'blue' | 'green' | 'yellow' | 'red' | 'purple';
+
+/**
+ * Actividad reciente del sistema
+ * Basado en el endpoint GET /actividades/recientes del backend
+ */
+export interface ActividadReciente {
+  tipo: TipoActividad;
+  descripcion: string;
+  fecha: string; // ISO 8601 date string
+  usuario?: string;
+  monto?: number;
+  icono?: string; // Emoji
+  color?: ColorActividad;
+}
+
+// ============================================================================
+// MODELOS DE CASA
+// ============================================================================
+
+/**
+ * Estado del modelo de casa en el catálogo
+ */
+export type EstadoModeloCasa = 'activo' | 'inactivo';
+
+/**
+ * Modelo de casa completo
+ * Basado en el endpoint GET /modelos-casa del backend
+ */
+export interface ModeloCasa {
+  uid: string;
+  nombre: string;
+  descripcion: string;
+  amueblado: boolean;
+  metrosCubiertos: number;
+  ambientes: number;
+  banos: number;
+  pisos: number;
+  estado: EstadoModeloCasa;
+  precioBase: number;
+  imagenUrl?: string;
+  observaciones?: string;
+  creadoEn: string;
+  actualizadoEn: string;
+}
+
+/**
+ * DTO para crear un nuevo modelo de casa
+ * Basado en el endpoint POST /modelos-casa del backend
+ */
+export interface CrearModeloCasaDto {
+  nombre: string;
+  descripcion: string;
+  amueblado?: boolean;
+  metrosCubiertos?: number;
+  ambientes?: number;
+  banos?: number;
+  pisos?: number;
+  estado?: EstadoModeloCasa;
+  precioBase?: number;
+  imagenUrl?: string;
+  observaciones?: string;
+}
+
+/**
+ * DTO para actualizar un modelo de casa existente
+ * Basado en el endpoint PATCH /modelos-casa/:uid del backend
+ */
+export interface ActualizarModeloCasaDto {
+  nombre?: string;
+  descripcion?: string;
+  amueblado?: boolean;
+  metrosCubiertos?: number;
+  ambientes?: number;
+  banos?: number;
+  pisos?: number;
+  estado?: EstadoModeloCasa;
+  precioBase?: number;
+  imagenUrl?: string;
+  observaciones?: string;
 }
