@@ -8,6 +8,7 @@ import RegistrarPago from './pages/RegistrarPago';
 import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
 import ModelosCasa from './pages/ModelosCasa';
+import MapaLotes from './pages/MapaLotes';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -104,6 +105,15 @@ function App() {
           element={
             <PrivateRoute>
               <ModelosCasa />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/mapa"
+          element={
+            <PrivateRoute>
+              <MapaLotes />
             </PrivateRoute>
           }
         />

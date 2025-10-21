@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Home, Plus, Edit2, Trash2, X, Save, Building2, Bath, Bed, Layers, DollarSign, Square } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Home, Plus, Edit2, Trash2, X, Save, Building2, Bath, Bed, Layers, DollarSign, Square, ArrowLeft } from 'lucide-react';
 import modelosCasaService from '../services/modelos-casa.service';
 import type { ModeloCasa, CrearModeloCasaDto, ActualizarModeloCasaDto } from '../types';
 import './ModelosCasa.css';
 
 const ModelosCasa = () => {
+  const navigate = useNavigate();
   const [modelos, setModelos] = useState<ModeloCasa[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -176,6 +178,15 @@ const ModelosCasa = () => {
   return (
     <div className="modelos-container">
       <div className="modelos-wrapper">
+
+        {/* Botón Volver */}
+        <button 
+          onClick={() => navigate('/dashboard')} 
+          className="btn-back"
+        >
+          <ArrowLeft />
+          <span>Volver al Dashboard</span>
+        </button>
 
         {/* Header */}
         <div className="modelos-header">

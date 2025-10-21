@@ -27,13 +27,33 @@ export const authService = {
       credentials
     );
     
+    console.log('🔐 Respuesta del login:', response.data);
+    
+    // El backend devuelve el usuario directamente en response.data, no en response.data.usuario
+    // Extraer el usuario (todos los campos excepto accessToken)
+    const { accessToken, ...usuarioData } = response.data as any;
+    
+    console.log('👤 Usuario extraído:', usuarioData);
+    console.log('🎫 Token recibido:', accessToken ? 'Sí' : 'No');
+    
     // Guardar token y usuario en localStorage
-    if (response.data.accessToken) {
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('user', JSON.stringify(response.data.usuario));
+    if (accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+      
+      if (usuarioData && usuarioData.uid) {
+        const userStr = JSON.stringify(usuarioData);
+        localStorage.setItem('user', userStr);
+        console.log('✅ Usuario guardado en localStorage:', userStr);
+      } else {
+        console.error('❌ No se pudo extraer el usuario de la respuesta');
+      }
     }
     
-    return response.data;
+    // Devolver en el formato esperado por el authStore
+    return {
+      accessToken,
+      usuario: usuarioData as Usuario
+    };
   },
 
   /**

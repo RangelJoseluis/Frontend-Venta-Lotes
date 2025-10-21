@@ -9,7 +9,8 @@ import {
   BarChart3,
   Menu,
   X,
-  Home
+  Home,
+  MapPin
 } from 'lucide-react';
 import NavLink from './NavLink';
 import './Sidebar.css';
@@ -35,6 +36,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const navItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Panel de control", active: true },
     { href: "#", icon: Building2, label: "Lotes" },
+    { href: "/mapa", icon: MapPin, label: "Mapa de Lotes" },
     { href: "/modelos-casa", icon: Home, label: "Modelos de Casa" },
     { href: "#", icon: FileText, label: "Ventas" },
     { href: "#", icon: Calculator, label: "Cuotas" },
