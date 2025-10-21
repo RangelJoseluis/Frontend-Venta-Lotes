@@ -95,6 +95,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               label={item.label}
               active={item.active}
               sidebarOpen={sidebarOpen}
+              submenu={item.submenu}
             />
           ))}
         </nav>

@@ -68,11 +68,13 @@ const loteSchema = z.object({
 type LoteFormData = z.infer<typeof loteSchema>;
 
 // Componente helper para actualizar el centro del mapa
-const MapUpdater = ({ center }: { center: [number, number] }) => {
+const MapUpdater = ({ center, zoom, disabled }: { center: [number, number]; zoom?: number; disabled?: boolean }) => {
   const map = useMap();
   useEffect(() => {
-    map.setView(center, 15);
-  }, [center, map]);
+    if (!disabled) {
+      map.setView(center, zoom || obtenerZoomZona());
+    }
+  }, [center, zoom, map, disabled]);
   return null;
 };
 
@@ -176,6 +178,14 @@ const NuevoLote = () => {
   const limpiarPoligono = () => {
     setPuntosPoligono([]);
     setValue('geojson', '');
+  };
+
+  // Eliminar el último punto agregado
+  const eliminarUltimoPunto = () => {
+    if (puntosPoligono.length > 0) {
+      const nuevosPuntos = puntosPoligono.slice(0, -1);
+      setPuntosPoligono(nuevosPuntos);
+    }
   };
 
   // Cargar código, servicios y modelos de casa al montar el componente
@@ -670,6 +680,26 @@ const NuevoLote = () => {
                       </button>
                       <button
                         type="button"
+                        onClick={eliminarUltimoPunto}
+                        disabled={puntosPoligono.length === 0}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          background: puntosPoligono.length === 0 
+                            ? '#9ca3af' 
+                            : 'linear-gradient(135deg, #f59e0b, #d97706)',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '0.5rem',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          cursor: puntosPoligono.length === 0 ? 'not-allowed' : 'pointer',
+                          opacity: puntosPoligono.length === 0 ? 0.5 : 1
+                        }}
+                      >
+                        ↶ Deshacer
+                      </button>
+                      <button
+                        type="button"
                         onClick={cancelarDibujo}
                         style={{
                           padding: '0.5rem 1rem',
@@ -864,9 +894,15 @@ const NuevoLote = () => {
                       {/* Handler para clicks en modo dibujo */}
                       <MapClickHandler enabled={modoDibujo} onMapClick={agregarPunto} />
                       
-                      <MapUpdater center={ubicacionX && ubicacionY && !isNaN(ubicacionX) && !isNaN(ubicacionY) 
-                        ? [ubicacionY, ubicacionX] 
-                        : obtenerCentroZona()} />
+                      <MapUpdater 
+                        center={ubicacionX && ubicacionY && !isNaN(ubicacionX) && !isNaN(ubicacionY) 
+                          ? [ubicacionY, ubicacionX] 
+                          : obtenerCentroZona()} 
+                        zoom={ubicacionX && ubicacionY && !isNaN(ubicacionX) && !isNaN(ubicacionY) 
+                          ? 18 
+                          : undefined}
+                        disabled={modoDibujo}
+                      />
                     </MapContainer>
                   </div>
                   
