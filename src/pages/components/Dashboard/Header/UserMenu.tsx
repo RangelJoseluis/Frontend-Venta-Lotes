@@ -31,6 +31,14 @@ const UserMenu = ({ isOpen, setIsOpen }: UserMenuProps) => {
   }, [isOpen, setIsOpen]);
 
   /**
+   * Manejar navegación a configuraciones
+   */
+  const handleConfiguraciones = () => {
+    navigate('/configuraciones');
+    setIsOpen(false);
+  };
+
+  /**
    * Manejar cierre de sesión
    */
   const handleLogout = () => {
@@ -87,7 +95,7 @@ const UserMenu = ({ isOpen, setIsOpen }: UserMenuProps) => {
               <User className="menu-icon" />
               <span>Mi Perfil</span>
             </button>
-            <button className="menu-item">
+            <button className="menu-item" onClick={handleConfiguraciones}>
               <Settings className="menu-icon" />
               <span>Configuración</span>
             </button>

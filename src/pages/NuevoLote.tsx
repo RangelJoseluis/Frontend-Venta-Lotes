@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { MapContainer, TileLayer, Marker, Popup, useMap, Polygon, useMapEvents } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { 
   Save, 
   AlertCircle, 
@@ -18,14 +21,24 @@ import {
   Ruler, 
   MapPin, 
   Settings,
-  MessageSquare 
+  MessageSquare,
+  Navigation
 } from 'lucide-react';
 import { lotesService } from '../services/lotes.service';
 import { serviciosService, type Servicio } from '../services/servicios.service';
 import modelosCasaService from '../services/modelos-casa.service';
 import { getErrorMessage } from '../services/http.service';
 import type { CrearLoteDto, ModeloCasa } from '../types';
+import { obtenerCentroZona, obtenerZoomZona, obtenerZonaPredeterminada } from '../config/zona.config';
 import './NuevoLote.css';
+
+// Configurar iconos de Leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 // Esquema de validación con Zod
 const loteSchema = z.object({
@@ -46,9 +59,40 @@ const loteSchema = z.object({
   imagenesUrls: z.string().optional(),
   observaciones: z.string().optional(),
   modeloCasa: z.number().optional(),
+  // Campos de coordenadas para el mapa
+  ubicacionX: z.number().optional(), // Longitud
+  ubicacionY: z.number().optional(), // Latitud
+  geojson: z.string().optional(), // GeoJSON para polígonos
 });
 
 type LoteFormData = z.infer<typeof loteSchema>;
+
+// Componente helper para actualizar el centro del mapa
+const MapUpdater = ({ center }: { center: [number, number] }) => {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center, 15);
+  }, [center, map]);
+  return null;
+};
+
+// Componente para manejar clicks en el mapa (modo dibujo)
+const MapClickHandler = ({ 
+  enabled, 
+  onMapClick 
+}: { 
+  enabled: boolean; 
+  onMapClick: (lat: number, lng: number) => void;
+}) => {
+  useMapEvents({
+    click: (e) => {
+      if (enabled) {
+        onMapClick(e.latlng.lat, e.latlng.lng);
+      }
+    },
+  });
+  return null;
+};
 
 const NuevoLote = () => {
   const navigate = useNavigate();
@@ -61,6 +105,10 @@ const NuevoLote = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  
+  // Estados para modo dibujo de polígono
+  const [modoDibujo, setModoDibujo] = useState(false);
+  const [puntosPoligono, setPuntosPoligono] = useState<[number, number][]>([]);
 
   const {
     register,
@@ -82,10 +130,52 @@ const NuevoLote = () => {
   const anchoM = watch('anchoM');
   const largoM = watch('largoM');
 
+  // Observar coordenadas para vista previa del mapa
+  const ubicacionX = watch('ubicacionX');
+  const ubicacionY = watch('ubicacionY');
+
   const calcularSuperficie = () => {
     if (anchoM && largoM) {
       setValue('superficieM2', Number((anchoM * largoM).toFixed(2)));
     }
+  };
+
+  // Funciones para modo dibujo de polígono
+  const iniciarDibujo = () => {
+    setModoDibujo(true);
+    setPuntosPoligono([]);
+  };
+
+  const agregarPunto = (lat: number, lng: number) => {
+    setPuntosPoligono(prev => [...prev, [lat, lng]]);
+  };
+
+  const finalizarDibujo = () => {
+    if (puntosPoligono.length >= 3) {
+      // Generar GeoJSON del polígono
+      const geojson = {
+        type: "Polygon",
+        coordinates: [[...puntosPoligono.map(p => [p[1], p[0]]), [puntosPoligono[0][1], puntosPoligono[0][0]]]]
+      };
+      setValue('geojson', JSON.stringify(geojson));
+      
+      // Calcular centro del polígono para ubicacionX y ubicacionY
+      const centroLat = puntosPoligono.reduce((sum, p) => sum + p[0], 0) / puntosPoligono.length;
+      const centroLng = puntosPoligono.reduce((sum, p) => sum + p[1], 0) / puntosPoligono.length;
+      setValue('ubicacionX', centroLng);
+      setValue('ubicacionY', centroLat);
+    }
+    setModoDibujo(false);
+  };
+
+  const cancelarDibujo = () => {
+    setModoDibujo(false);
+    setPuntosPoligono([]);
+  };
+
+  const limpiarPoligono = () => {
+    setPuntosPoligono([]);
+    setValue('geojson', '');
   };
 
   // Cargar código, servicios y modelos de casa al montar el componente
@@ -512,6 +602,303 @@ const NuevoLote = () => {
                     {errors.direccion.message}
                   </span>
                 )}
+              </div>
+            </div>
+
+            {/* Dibujar Polígono del Lote */}
+            <div style={{ 
+              marginTop: '1.5rem',
+              padding: '1.5rem',
+              background: 'linear-gradient(135deg, #f5f3ff, #ede9fe)',
+              borderRadius: '1rem',
+              border: '2px solid #a78bfa'
+            }}>
+              <div style={{ marginTop: '0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <MapPin size={16} style={{ color: '#7c3aed' }} />
+                    <h4 style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: '#7c3aed' }}>
+                      Dibujar Forma del Lote (Opcional)
+                    </h4>
+                  </div>
+                  {!modoDibujo && puntosPoligono.length === 0 && (
+                    <button
+                      type="button"
+                      onClick={iniciarDibujo}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        background: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '0.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        transition: 'transform 0.2s'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    >
+                      <MapPin size={16} />
+                      Dibujar en el Mapa
+                    </button>
+                  )}
+                  {modoDibujo && (
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <button
+                        type="button"
+                        onClick={finalizarDibujo}
+                        disabled={puntosPoligono.length < 3}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          background: puntosPoligono.length >= 3 ? 'linear-gradient(135deg, #10b981, #059669)' : '#d1d5db',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '0.5rem',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          cursor: puntosPoligono.length >= 3 ? 'pointer' : 'not-allowed',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}
+                      >
+                        ✓ Finalizar ({puntosPoligono.length} puntos)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={cancelarDibujo}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '0.5rem',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        ✕ Cancelar
+                      </button>
+                    </div>
+                  )}
+                  {!modoDibujo && puntosPoligono.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={limpiarPoligono}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '0.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        cursor: 'pointer'
+                      }}
+                    >
+                      🗑️ Limpiar Polígono
+                    </button>
+                  )}
+                </div>
+
+                {modoDibujo && (
+                  <div style={{
+                    padding: '1rem',
+                    background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                    border: '2px solid #fbbf24',
+                    borderRadius: '0.5rem',
+                    marginBottom: '1rem'
+                  }}>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: '#92400e', fontWeight: 600 }}>
+                      🖱️ Modo Dibujo Activo
+                    </p>
+                    <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.75rem', color: '#78350f' }}>
+                      Haz click en el mapa para marcar las esquinas del lote. Necesitas mínimo 3 puntos para formar un polígono.
+                    </p>
+                  </div>
+                )}
+
+                {!modoDibujo && puntosPoligono.length === 0 && (
+                  <div style={{
+                    padding: '1rem',
+                    background: '#f8fafc',
+                    border: '2px dashed #cbd5e1',
+                    borderRadius: '0.5rem',
+                    textAlign: 'center'
+                  }}>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: '#64748b' }}>
+                      Click en "Dibujar en el Mapa" para definir la forma exacta del lote
+                    </p>
+                    <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.75rem', color: '#94a3b8' }}>
+                      Útil para lotes con formas irregulares o para delimitar el área exacta
+                    </p>
+                  </div>
+                )}
+
+                {!modoDibujo && puntosPoligono.length > 0 && (
+                  <div style={{
+                    padding: '1rem',
+                    background: 'linear-gradient(135deg, #d1fae5, #a7f3d0)',
+                    border: '2px solid #10b981',
+                    borderRadius: '0.5rem'
+                  }}>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: '#065f46', fontWeight: 600 }}>
+                      ✅ Polígono Definido
+                    </p>
+                    <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.75rem', color: '#047857' }}>
+                      {puntosPoligono.length} puntos • GeoJSON generado automáticamente
+                    </p>
+                  </div>
+                )}
+
+                {/* Campo oculto para GeoJSON */}
+                <input type="hidden" {...register('geojson')} />
+              </div>
+
+              {/* Vista Previa del Mapa - Siempre visible con zona predeterminada */}
+              <div style={{ marginTop: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                  <MapPin size={16} style={{ color: ubicacionX && ubicacionY ? '#059669' : '#7c3aed' }} />
+                  <h4 style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: ubicacionX && ubicacionY ? '#059669' : '#7c3aed' }}>
+                    {ubicacionX && ubicacionY ? '✅ Vista Previa de Ubicación' : '🗺️ Mapa de la Zona - Dibuja tu Lote'}
+                  </h4>
+                </div>
+                <div style={{ 
+                  height: '400px', 
+                  borderRadius: '0.5rem', 
+                  overflow: 'hidden',
+                  border: `2px solid ${ubicacionX && ubicacionY ? '#10b981' : '#7c3aed'}`,
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                }}>
+                  <MapContainer
+                    center={ubicacionX && ubicacionY && !isNaN(ubicacionX) && !isNaN(ubicacionY) 
+                      ? [ubicacionY, ubicacionX] 
+                      : obtenerCentroZona()}
+                    zoom={ubicacionX && ubicacionY && !isNaN(ubicacionX) && !isNaN(ubicacionY) 
+                      ? 18 
+                      : obtenerZoomZona()}
+                    style={{ height: '100%', width: '100%' }}
+                    scrollWheelZoom={true}
+                  >
+                      {/* Vista Satelital de Google Maps (mismo que MapaLotes) */}
+                      <TileLayer
+                        attribution='&copy; Google'
+                        url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+                        maxZoom={22}
+                      />
+                      
+                      {/* Marcador central - solo si hay coordenadas válidas */}
+                      {ubicacionX && ubicacionY && !isNaN(ubicacionX) && !isNaN(ubicacionY) && (
+                        <Marker position={[ubicacionY, ubicacionX]}>
+                          <Popup>
+                            <div style={{ textAlign: 'center' }}>
+                              <strong>📍 Centro del Lote</strong>
+                              <br />
+                              <small>
+                                Lat: {ubicacionY.toFixed(6)}
+                                <br />
+                                Lng: {ubicacionX.toFixed(6)}
+                              </small>
+                            </div>
+                          </Popup>
+                        </Marker>
+                      )}
+                      
+                      {/* Polígono dibujado */}
+                      {puntosPoligono.length > 0 && (
+                        <Polygon
+                          positions={puntosPoligono}
+                          pathOptions={{
+                            color: modoDibujo ? '#fbbf24' : '#10b981',
+                            fillColor: modoDibujo ? '#fbbf24' : '#10b981',
+                            fillOpacity: 0.3,
+                            weight: 3
+                          }}
+                        />
+                      )}
+                      
+                      {/* Marcadores de puntos del polígono */}
+                      {puntosPoligono.map((punto, index) => (
+                        <Marker
+                          key={index}
+                          position={punto}
+                          icon={L.divIcon({
+                            className: 'custom-marker',
+                            html: `<div style="
+                              width: 24px;
+                              height: 24px;
+                              background: ${modoDibujo ? '#fbbf24' : '#10b981'};
+                              border: 3px solid white;
+                              border-radius: 50%;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              font-size: 12px;
+                              font-weight: bold;
+                              color: white;
+                              box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                            ">${index + 1}</div>`,
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 12]
+                          })}
+                        >
+                          <Popup>
+                            <div style={{ textAlign: 'center' }}>
+                              <strong>Punto {index + 1}</strong>
+                              <br />
+                              <small>
+                                Lat: {punto[0].toFixed(6)}
+                                <br />
+                                Lng: {punto[1].toFixed(6)}
+                              </small>
+                            </div>
+                          </Popup>
+                        </Marker>
+                      ))}
+                      
+                      {/* Handler para clicks en modo dibujo */}
+                      <MapClickHandler enabled={modoDibujo} onMapClick={agregarPunto} />
+                      
+                      <MapUpdater center={ubicacionX && ubicacionY && !isNaN(ubicacionX) && !isNaN(ubicacionY) 
+                        ? [ubicacionY, ubicacionX] 
+                        : obtenerCentroZona()} />
+                    </MapContainer>
+                  </div>
+                  
+                  {/* Información de la zona */}
+                  <div style={{ 
+                    marginTop: '0.75rem',
+                    padding: '0.75rem',
+                    background: modoDibujo ? '#fef3c7' : '#f0f9ff',
+                    border: `1px solid ${modoDibujo ? '#fbbf24' : '#bae6fd'}`,
+                    borderRadius: '0.5rem'
+                  }}>
+                    <p style={{ margin: 0, fontSize: '0.75rem', color: modoDibujo ? '#92400e' : '#0c4a6e' }}>
+                      {modoDibujo 
+                        ? '🖱️ Haz click en el mapa para marcar las esquinas del lote'
+                        : ubicacionX && ubicacionY 
+                          ? `📍 Centro: ${ubicacionY.toFixed(6)}, ${ubicacionX.toFixed(6)}`
+                          : `🗺️ Zona: ${obtenerZonaPredeterminada().nombre}`
+                      }
+                    </p>
+                  </div>
+                </div>
+
+              <div style={{ 
+                marginTop: '1rem', 
+                padding: '0.75rem', 
+                background: '#fef3c7', 
+                border: '1px solid #fde047',
+                borderRadius: '0.5rem',
+                fontSize: '0.875rem',
+                color: '#854d0e'
+              }}>
+                <strong>💡 Tip:</strong> Puedes obtener las coordenadas desde Google Maps haciendo click derecho en el mapa y seleccionando las coordenadas.
               </div>
             </div>
           </div>

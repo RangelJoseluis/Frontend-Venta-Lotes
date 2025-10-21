@@ -104,6 +104,40 @@ export const lotesService = {
       `${API_CONFIG.ENDPOINTS.LOTES}/disponibles`
     );
     return response.data;
+  },
+
+  /**
+   * Obtener un lote por UID
+   * Endpoint: GET /lotes/:uid
+   * Requiere autenticación
+   */
+  async obtenerPorUid(uid: string): Promise<any> {
+    const response = await httpClient.get<any>(
+      `${API_CONFIG.ENDPOINTS.LOTES}/${uid}`
+    );
+    return response.data;
+  },
+
+  /**
+   * Actualizar un lote existente
+   * Endpoint: PUT /lotes/:uid
+   * Requiere autenticación (admin)
+   */
+  async actualizar(uid: string, loteData: any): Promise<any> {
+    const response = await httpClient.put(
+      `${API_CONFIG.ENDPOINTS.LOTES}/${uid}`,
+      loteData
+    );
+    return response.data;
+  },
+
+  /**
+   * Eliminar un lote
+   * Endpoint: DELETE /lotes/:uid
+   * Requiere autenticación (admin)
+   */
+  async eliminar(uid: string): Promise<void> {
+    await httpClient.delete(`${API_CONFIG.ENDPOINTS.LOTES}/${uid}`);
   }
 };
 

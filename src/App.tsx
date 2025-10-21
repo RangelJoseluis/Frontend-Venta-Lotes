@@ -4,12 +4,14 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import GestionLotes from './pages/GestionLotes';
 import NuevoLote from './pages/NuevoLote';
+import EditarLote from './pages/EditarLote';
 import FormularioCrearVenta from './pages/FormularioCrearVenta';
 import RegistrarPago from './pages/RegistrarPago';
 import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
 import ModelosCasa from './pages/ModelosCasa';
 import MapaLotes from './pages/MapaLotes';
+import Configuraciones from './pages/Configuraciones';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -75,6 +77,15 @@ function App() {
         />
 
         <Route
+          path="/lotes/:uid/editar"
+          element={
+            <PrivateRoute>
+              <EditarLote />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
           path="/crear-venta"
           element={
             <PrivateRoute>
@@ -128,8 +139,17 @@ function App() {
           }
         />
 
-        {/* Ruta 404 - Redirige al dashboard */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route
+          path="/configuraciones"
+          element={
+            <PrivateRoute>
+              <Configuraciones />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Ruta 404 - Redirige al login */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );

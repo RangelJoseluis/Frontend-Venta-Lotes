@@ -14,6 +14,7 @@ import lotesMapaService from '../services/lotes-mapa.service';
 import type { LoteParaMapa, RolMapa, TipoCapaMapa } from '../types/mapa';
 import { COLORES_MAPA, CONFIG_MAPA_DEFAULT, TILES_CONFIG } from '../types/mapa';
 import { useAuthStore } from '../store/authStore';
+import { obtenerCentroZona, obtenerZoomZona } from '../config/zona.config';
 import 'leaflet/dist/leaflet.css';
 import './MapaLotes.css';
 import './MapaLotes-filtros.css';
@@ -711,8 +712,8 @@ const MapaLotes = () => {
       {/* Mapa */}
       {!loading && !error && (
         <MapContainer
-          center={[CONFIG_MAPA_DEFAULT.centroInicial.latitud, CONFIG_MAPA_DEFAULT.centroInicial.longitud]}
-          zoom={CONFIG_MAPA_DEFAULT.zoomInicial}
+          center={obtenerCentroZona()}
+          zoom={obtenerZoomZona()}
           style={{ height: '100%', width: '100%' }}
           className="leaflet-map"
         >
@@ -720,7 +721,7 @@ const MapaLotes = () => {
             key={tipoCapa}
             url={TILES_CONFIG[tipoCapa].url}
             attribution={TILES_CONFIG[tipoCapa].atribucion}
-            maxZoom={TILES_CONFIG[tipoCapa].maxZoom}
+            maxZoom={22}
           />
 
           {/* Renderizar lotes filtrados */}
