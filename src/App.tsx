@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import GestionLotes from './pages/GestionLotes';
 import NuevoLote from './pages/NuevoLote';
 import FormularioCrearVenta from './pages/FormularioCrearVenta';
 import RegistrarPago from './pages/RegistrarPago';
@@ -51,6 +52,15 @@ function App() {
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/lotes"
+          element={
+            <PrivateRoute>
+              <GestionLotes />
             </PrivateRoute>
           }
         />

@@ -279,3 +279,85 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ============================================================================
+   SUBMENÚ DE NAVEGACIÓN
+   ============================================================================ */
+
+.nav-link-with-submenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-link-with-submenu .nav-link {
+  position: relative;
+  justify-content: space-between;
+}
+
+.nav-link-chevron {
+  margin-left: auto;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+.nav-submenu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 3rem;
+  margin-top: 0.25rem;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-submenu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 1rem;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-submenu-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(to bottom, #2563eb, #1d4ed8);
+  transition: height 0.2s ease;
+}
+
+.nav-submenu-item:hover {
+  color: white;
+  background-color: rgba(100, 116, 139, 0.3);
+  padding-left: 1.25rem;
+}
+
+.nav-submenu-item:hover::before {
+  height: 100%;
+}
+
+.nav-submenu-item-active {
+  color: white;
+  background-color: rgba(37, 99, 235, 0.2);
+  font-weight: 500;
+  padding-left: 1.25rem;
+}
+
+.nav-submenu-item-active::before {
+  height: 100%;
+}
