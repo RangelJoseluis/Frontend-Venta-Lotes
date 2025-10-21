@@ -254,6 +254,30 @@ const EditarLote = () => {
           setModeloCasaSeleccionado(lote.modeloCasa.uid);
         }
 
+        // Cargar polígono existente si existe
+        if (lote.geojson) {
+          try {
+            const geojsonData = JSON.parse(lote.geojson);
+            if (geojsonData.type === 'Polygon' && geojsonData.coordinates && geojsonData.coordinates[0]) {
+              // Convertir coordenadas GeoJSON [lng, lat] a [lat, lng] para Leaflet
+              const puntos: [number, number][] = geojsonData.coordinates[0]
+                .slice(0, -1) // Eliminar el último punto (que es igual al primero)
+                .map((coord: number[]) => [coord[1], coord[0]] as [number, number]);
+              
+              setPuntosPoligono(puntos);
+              console.log('✅ Polígono cargado:', puntos.length, 'puntos');
+            }
+          } catch (error) {
+            console.error('❌ Error al parsear GeoJSON:', error);
+          }
+        }
+
+        // Establecer coordenadas del centro si existen
+        if (lote.ubicacionX && lote.ubicacionY) {
+          setUbicacionX(parseFloat(lote.ubicacionX));
+          setUbicacionY(parseFloat(lote.ubicacionY));
+        }
+
       } catch (err) {
         const mensaje = getErrorMessage(err);
         setError(mensaje);

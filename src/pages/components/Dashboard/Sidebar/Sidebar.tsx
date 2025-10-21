@@ -71,15 +71,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <h2 className="sidebar-logo-title">Venta Lotes</h2>
                 <p className="sidebar-logo-subtitle">Sistema de Gestión</p>
               </div>
-            ) : (
-              <div className="sidebar-logo-collapsed">
-                <Home className="sidebar-home-icon" />
-              </div>
-            )}
+            ) : null}
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="sidebar-toggle-btn"
               aria-label={sidebarOpen ? 'Cerrar sidebar' : 'Abrir sidebar'}
+              style={!sidebarOpen ? {
+                margin: '0 auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              } : {}}
             >
               {sidebarOpen ? <X className="sidebar-toggle-icon" /> : <Menu className="sidebar-toggle-icon" />}
             </button>

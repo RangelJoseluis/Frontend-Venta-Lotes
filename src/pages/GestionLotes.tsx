@@ -19,7 +19,8 @@ import {
   Maximize2,
   AlertCircle,
   CheckCircle,
-  X
+  X,
+  ArrowLeft
 } from 'lucide-react';
 import { lotesService } from '../services/lotes.service';
 import { getErrorMessage } from '../services/http.service';
@@ -203,13 +204,44 @@ const GestionLotes = () => {
             {lotesFiltrados.length} de {lotes.length} lotes
           </p>
         </div>
-        <button
-          onClick={() => navigate('/lotes/nuevo')}
-          className="btn-nuevo-lote"
-        >
-          <Plus size={20} />
-          Nuevo Lote
-        </button>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="btn-volver-dashboard"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.75rem 1.5rem',
+              background: 'white',
+              color: '#1e293b',
+              border: '2px solid #e2e8f0',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#f8fafc';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'white';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
+          >
+            <ArrowLeft size={20} />
+            Volver al Dashboard
+          </button>
+          <button
+            onClick={() => navigate('/lotes/nuevo')}
+            className="btn-nuevo-lote"
+          >
+            <Plus size={20} />
+            Nuevo Lote
+          </button>
+        </div>
       </div>
 
       {/* Barra de búsqueda y filtros */}
