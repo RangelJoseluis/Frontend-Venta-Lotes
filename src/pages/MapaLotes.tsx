@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, Home, DollarSign, Maximize2, Map, Satellite, Layers as LayersIcon, Filter, X, Search } from 'lucide-react';
+import { ArrowLeft, MapPin, Home, DollarSign, Maximize2, Map, Satellite, Layers as LayersIcon, Filter, X, Search, Edit } from 'lucide-react';
 import lotesMapaService from '../services/lotes-mapa.service';
 import type { LoteParaMapa, RolMapa, TipoCapaMapa } from '../types/mapa';
 import { COLORES_MAPA, CONFIG_MAPA_DEFAULT, TILES_CONFIG } from '../types/mapa';
@@ -633,20 +633,32 @@ const MapaLotes = () => {
               )}
 
               {/* Imágenes */}
-              {loteSeleccionado.imagenesUrls && loteSeleccionado.imagenesUrls.length > 0 && (
-                <div className="detalles-seccion">
-                  <h3>Imágenes</h3>
-                  <div className="imagenes-grid">
-                    {loteSeleccionado.imagenesUrls.map((url, index) => (
-                      <img 
-                        key={index} 
-                        src={url} 
-                        alt={`${loteSeleccionado.codigo} - Imagen ${index + 1}`}
-                        className="lote-imagen"
-                      />
-                    ))}
-                  </div>
-                </div>
+              {loteSeleccionado.imagenesUrls && (
+                (() => {
+                  // Parsear imagenesUrls (puede ser string separado por comas o array)
+                  const imagenesValue = loteSeleccionado.imagenesUrls as any;
+                  const urls: string[] = typeof imagenesValue === 'string'
+                    ? imagenesValue.split(',').map((url: string) => url.trim()).filter((url: string) => url.length > 0)
+                    : Array.isArray(imagenesValue)
+                    ? imagenesValue
+                    : [];
+                  
+                  return urls.length > 0 ? (
+                    <div className="detalles-seccion">
+                      <h3>Imágenes</h3>
+                      <div className="imagenes-grid">
+                        {urls.map((url: string, index: number) => (
+                          <img 
+                            key={index} 
+                            src={url} 
+                            alt={`${loteSeleccionado.codigo} - Imagen ${index + 1}`}
+                            className="lote-imagen"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : null;
+                })()
               )}
 
               {/* Fechas */}
@@ -676,18 +688,54 @@ const MapaLotes = () => {
                 </div>
               </div>
 
-              {/* Botón de acción */}
-              {rol === 'admin' && (
-                <div className="detalles-acciones">
+              {/* Botones de acción */}
+              <div className="detalles-acciones">
+                <button 
+                  className="btn-ver-detalles"
+                  onClick={() => navigate(`/lotes/${loteSeleccionado.uid}`)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.75rem 1.5rem',
+                    background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '0.5rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    width: '100%',
+                    justifyContent: 'center',
+                    marginBottom: '0.5rem'
+                  }}
+                >
+                  <Home size={16} />
+                  Ver Detalles Completos
+                </button>
+                {rol === 'admin' && (
                   <button 
                     className="btn-editar-lote"
-                    onClick={() => navigate(`/lotes/${loteSeleccionado.uid}`)}
+                    onClick={() => navigate(`/lotes/${loteSeleccionado.uid}/editar`)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.75rem 1.5rem',
+                      background: 'white',
+                      color: '#1e293b',
+                      border: '2px solid #e2e8f0',
+                      borderRadius: '0.5rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      width: '100%',
+                      justifyContent: 'center'
+                    }}
                   >
-                    <Home size={16} />
+                    <Edit size={16} />
                     Editar Lote
                   </button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import GestionLotes from './pages/GestionLotes';
 import NuevoLote from './pages/NuevoLote';
 import EditarLote from './pages/EditarLote';
+import DetalleLote from './pages/DetalleLote';
 import FormularioCrearVenta from './pages/FormularioCrearVenta';
 import RegistrarPago from './pages/RegistrarPago';
 import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
@@ -81,6 +82,15 @@ function App() {
           element={
             <PrivateRoute>
               <EditarLote />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/lotes/:uid"
+          element={
+            <PrivateRoute>
+              <DetalleLote />
             </PrivateRoute>
           }
         />
