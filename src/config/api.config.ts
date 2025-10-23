@@ -5,8 +5,15 @@
  * Usa variables de entorno para desarrollo y producción
  */
 
+// Función helper para asegurar que la URL base incluya /api
+const getBaseUrl = () => {
+  const url = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+  // Si la URL no termina en /api, agregarla
+  return url.endsWith('/api') ? url : `${url}/api`;
+};
+
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
+  BASE_URL: getBaseUrl(),
   ENDPOINTS: {
     // Autenticación
     LOGIN: '/auth/login',
