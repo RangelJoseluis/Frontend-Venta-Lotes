@@ -2,10 +2,11 @@
  * CONFIGURACIÓN DE LA API
  * 
  * Centraliza las URLs y configuraciones de la API del backend
+ * Usa variables de entorno para desarrollo y producción
  */
 
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:3000',
+  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
   ENDPOINTS: {
     // Autenticación
     LOGIN: '/auth/login',
