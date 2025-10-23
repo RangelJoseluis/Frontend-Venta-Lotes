@@ -3,14 +3,14 @@ import {
   LayoutDashboard,
   Building2,
   FileText,
-  Calculator,
-  Wallet,
   Users,
   BarChart3,
   Menu,
   X,
   Home,
-  Map
+  Map,
+  Settings,
+  CreditCard
 } from 'lucide-react';
 import NavLink from './NavLink';
 import './Sidebar.css';
@@ -46,12 +46,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       ]
     },
     { href: "/modelos-casa", icon: Home, label: "Modelos de Casa" },
+    { href: "/servicios", icon: Settings, label: "Servicios" },
     { href: "/mapa", icon: Map, label: "Mapa Visual" },
-    { href: "#", icon: FileText, label: "Ventas" },
-    { href: "#", icon: Calculator, label: "Cuotas" },
-    { href: "#", icon: Wallet, label: "Pagos" },
-    { href: "/clientes", icon: Users, label: "Clientes" },
+    { href: "/ventas", icon: FileText, label: "Ventas" },
     { href: "/reportes", icon: BarChart3, label: "Reportes" },
+    { href: "/pagos", icon: CreditCard, label: "Pagos" },
+    { href: "/clientes", icon: Users, label: "Clientes" },
   ];
 
   return (

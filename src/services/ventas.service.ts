@@ -57,3 +57,29 @@ export const obtenerVentasPorLote = async (loteUid: string): Promise<Venta[]> =>
   const response = await httpClient.get(`${API_CONFIG.ENDPOINTS.VENTAS}/lote/${loteUid}`);
   return response.data;
 };
+
+/**
+ * Actualizar una venta
+ * PUT /ventas/:uid
+ */
+export const actualizarVenta = async (uid: string, datos: any): Promise<Venta> => {
+  const response = await httpClient.put(`${API_CONFIG.ENDPOINTS.VENTAS}/${uid}`, datos);
+  return response.data;
+};
+
+/**
+ * Eliminar una venta
+ * DELETE /ventas/:uid
+ */
+export const eliminarVenta = async (uid: string): Promise<void> => {
+  await httpClient.delete(`${API_CONFIG.ENDPOINTS.VENTAS}/${uid}`);
+};
+
+/**
+ * Obtener estadísticas de ventas
+ * GET /ventas/consultas/estadisticas
+ */
+export const obtenerEstadisticasVentas = async (): Promise<any> => {
+  const response = await httpClient.get(`${API_CONFIG.ENDPOINTS.VENTAS}/consultas/estadisticas`);
+  return response.data;
+};

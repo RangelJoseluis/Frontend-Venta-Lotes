@@ -1,0 +1,278 @@
+/* GESTIÓN DE SERVICIOS - ESTILOS BÁSICOS */
+
+.gestion-servicios {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.gestion-servicios .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.gestion-servicios .header h1 {
+  font-size: 1.8rem;
+  color: #1e293b;
+  margin: 0;
+}
+
+.gestion-servicios .btn-volver {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-servicios .btn-volver:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.gestion-servicios .btn-nuevo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-servicios .btn-nuevo:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+/* Filtros */
+.gestion-servicios .filtros {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.gestion-servicios .filtro-busqueda {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+}
+
+.gestion-servicios .filtro-busqueda input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.gestion-servicios .filtros select {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: white;
+}
+
+/* Tabla */
+.gestion-servicios .tabla-container {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.gestion-servicios .tabla-servicios {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.gestion-servicios .tabla-servicios thead {
+  background: #f8fafc;
+}
+
+.gestion-servicios .tabla-servicios th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.gestion-servicios .tabla-servicios td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.gestion-servicios .tabla-servicios tbody tr:hover {
+  background: #f8fafc;
+}
+
+.gestion-servicios .proveedor {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+/* Badges */
+.gestion-servicios .badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.gestion-servicios .badge-utilities { background: #dbeafe; color: #1e40af; }
+.gestion-servicios .badge-comunicaciones { background: #fce7f3; color: #9f1239; }
+.gestion-servicios .badge-seguridad { background: #fef3c7; color: #92400e; }
+.gestion-servicios .badge-transporte { background: #d1fae5; color: #065f46; }
+.gestion-servicios .badge-recreacion { background: #e0e7ff; color: #3730a3; }
+.gestion-servicios .badge-otros { background: #f3f4f6; color: #374151; }
+
+.gestion-servicios .badge-publico { background: #dbeafe; color: #1e40af; }
+.gestion-servicios .badge-privado { background: #fce7f3; color: #9f1239; }
+.gestion-servicios .badge-opcional { background: #f3f4f6; color: #374151; }
+.gestion-servicios .badge-basico { background: #d1fae5; color: #065f46; }
+
+.gestion-servicios .badge-si { background: #d1fae5; color: #065f46; }
+.gestion-servicios .badge-no { background: #fee2e2; color: #991b1b; }
+
+/* Botón Estado */
+.gestion-servicios .btn-estado {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-servicios .btn-estado.activo {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.gestion-servicios .btn-estado.inactivo {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.gestion-servicios .btn-estado:hover {
+  opacity: 0.8;
+}
+
+/* Acciones */
+.gestion-servicios .acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.gestion-servicios .btn-accion {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gestion-servicios .btn-editar {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.gestion-servicios .btn-editar:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+.gestion-servicios .btn-eliminar {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.gestion-servicios .btn-eliminar:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* Estados */
+.gestion-servicios .cargando {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 1.125rem;
+}
+
+.gestion-servicios .sin-datos {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+}
+
+/* Resumen */
+.gestion-servicios .resumen {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gestion-servicios {
+    padding: 1rem;
+  }
+
+  .gestion-servicios .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gestion-servicios .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .gestion-servicios .filtros {
+    flex-direction: column;
+  }
+
+  .gestion-servicios .tabla-container {
+    overflow-x: auto;
+  }
+
+  .gestion-servicios .tabla-servicios {
+    font-size: 0.875rem;
+  }
+
+  .gestion-servicios .tabla-servicios th,
+  .gestion-servicios .tabla-servicios td {
+    padding: 0.75rem 0.5rem;
+  }
+}

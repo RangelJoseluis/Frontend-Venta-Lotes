@@ -89,6 +89,52 @@ export const pagosService = {
     );
     return response.data;
   },
+
+  /**
+   * Obtener pagos paginados
+   * Endpoint: GET /pagos?pagina=1&limite=20
+   * Requiere autenticación
+   */
+  async obtenerPaginados(
+    pagina: number = 1,
+    limite: number = 20,
+    filtros?: {
+      metodoPago?: string;
+      fechaDesde?: string;
+      fechaHasta?: string;
+    }
+  ): Promise<{
+    pagos: Pago[];
+    total: number;
+    pagina: number;
+    limite: number;
+    totalPaginas: number;
+  }> {
+    const params = new URLSearchParams();
+    params.append('pagina', pagina.toString());
+    params.append('limite', limite.toString());
+    
+    if (filtros?.metodoPago) params.append('metodoPago', filtros.metodoPago);
+    if (filtros?.fechaDesde) params.append('fechaDesde', filtros.fechaDesde);
+    if (filtros?.fechaHasta) params.append('fechaHasta', filtros.fechaHasta);
+
+    const response = await httpClient.get(
+      `${API_CONFIG.BASE_URL}/pagos?${params.toString()}`
+    );
+    return response.data;
+  },
+
+  /**
+   * Obtener estadísticas de pagos
+   * Endpoint: GET /pagos/consultas/estadisticas
+   * Requiere autenticación (admin)
+   */
+  async obtenerEstadisticas(): Promise<any> {
+    const response = await httpClient.get(
+      `${API_CONFIG.BASE_URL}/pagos/consultas/estadisticas`
+    );
+    return response.data;
+  },
 };
 
 export default pagosService;

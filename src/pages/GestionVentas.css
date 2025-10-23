@@ -1,0 +1,289 @@
+/* GESTIÓN DE VENTAS - ESTILOS BÁSICOS */
+
+.gestion-ventas {
+  padding: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Header */
+.gestion-ventas .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.gestion-ventas .header h1 {
+  font-size: 1.8rem;
+  color: #1e293b;
+  margin: 0;
+}
+
+.gestion-ventas .btn-volver {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-ventas .btn-volver:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.gestion-ventas .btn-nuevo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-ventas .btn-nuevo:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+/* Filtros */
+.gestion-ventas .filtros {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.gestion-ventas .filtro-busqueda {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+}
+
+.gestion-ventas .filtro-busqueda input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+/* Tabla */
+.gestion-ventas .tabla-container {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.gestion-ventas .tabla-ventas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.gestion-ventas .tabla-ventas thead {
+  background: #f8fafc;
+}
+
+.gestion-ventas .tabla-ventas th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.gestion-ventas .tabla-ventas td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.gestion-ventas .tabla-ventas tbody tr:hover {
+  background: #f8fafc;
+}
+
+.gestion-ventas .cliente-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.gestion-ventas .documento {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Badges */
+.gestion-ventas .badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.gestion-ventas .badge-contado {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.gestion-ventas .badge-cuotas {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.gestion-ventas .badge-estado-activa {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.gestion-ventas .badge-estado-completada {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.gestion-ventas .badge-estado-cancelada {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.gestion-ventas .pendiente {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.gestion-ventas .pagado {
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* Acciones */
+.gestion-ventas .acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.gestion-ventas .btn-accion {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gestion-ventas .btn-ver {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.gestion-ventas .btn-ver:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+.gestion-ventas .btn-eliminar {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.gestion-ventas .btn-eliminar:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* Paginación */
+.gestion-ventas .paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.gestion-ventas .paginacion button {
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-ventas .paginacion button:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.gestion-ventas .paginacion button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Estados */
+.gestion-ventas .cargando {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 1.125rem;
+}
+
+.gestion-ventas .sin-datos {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+}
+
+/* Resumen */
+.gestion-ventas .resumen {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gestion-ventas {
+    padding: 1rem;
+  }
+
+  .gestion-ventas .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gestion-ventas .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .gestion-ventas .tabla-ventas {
+    font-size: 0.875rem;
+  }
+
+  .gestion-ventas .tabla-ventas th,
+  .gestion-ventas .tabla-ventas td {
+    padding: 0.75rem 0.5rem;
+  }
+}

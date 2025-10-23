@@ -416,3 +416,148 @@ export interface ActualizarModeloCasaDto {
   imagenUrl?: string;
   observaciones?: string;
 }
+
+// ============================================================================
+// SERVICIOS
+// ============================================================================
+
+/**
+ * Categoría del servicio
+ */
+export type CategoriaServicio = 'utilities' | 'comunicaciones' | 'seguridad' | 'transporte' | 'recreacion' | 'otros';
+
+/**
+ * Tipo de servicio
+ */
+export type TipoServicio = 'publico' | 'privado' | 'opcional' | 'basico';
+
+/**
+ * Estado del servicio
+ */
+export type EstadoServicio = 'activo' | 'inactivo';
+
+/**
+ * Servicio completo
+ * Basado en el endpoint GET /servicios del backend
+ */
+export interface Servicio {
+  uid: string;
+  nombre: string;
+  descripcion: string;
+  categoria: CategoriaServicio;
+  tipo: TipoServicio;
+  costoMensual: number;
+  esEsencial: boolean;
+  proveedor?: string;
+  estado: EstadoServicio;
+  creadoEn: string;
+  actualizadoEn: string;
+}
+
+/**
+ * DTO para crear un nuevo servicio
+ * Basado en el endpoint POST /servicios del backend
+ */
+export interface CrearServicioDto {
+  nombre: string;
+  descripcion: string;
+  categoria: CategoriaServicio;
+  tipo: TipoServicio;
+  costoMensual: number;
+  esEsencial: boolean;
+  proveedor?: string;
+}
+
+/**
+ * DTO para actualizar un servicio existente
+ * Basado en el endpoint PUT /servicios/:uid del backend
+ */
+export interface ActualizarServicioDto {
+  nombre?: string;
+  descripcion?: string;
+  categoria?: CategoriaServicio;
+  tipo?: TipoServicio;
+  costoMensual?: number;
+  esEsencial?: boolean;
+  proveedor?: string;
+  estado?: EstadoServicio;
+}
+
+/**
+ * Estadísticas de servicios
+ */
+export interface EstadisticasServicios {
+  totalServicios: number;
+  serviciosActivos: number;
+  serviciosInactivos: number;
+  serviciosEsenciales: number;
+  porCategoria: {
+    categoria: string;
+    cantidad: number;
+  }[];
+  porTipo: {
+    tipo: string;
+    cantidad: number;
+  }[];
+  costoPromedioMensual: number;
+}
+
+// ============================================================================
+// VENTAS (INTERFACES ADICIONALES)
+// ============================================================================
+
+/**
+ * DTO para actualizar una venta existente
+ */
+export interface ActualizarVentaDto {
+  precioVenta?: number;
+  montoInicial?: number;
+  estado?: string;
+  observaciones?: string;
+}
+
+/**
+ * Estadísticas de ventas
+ */
+export interface EstadisticasVentas {
+  totalVentas: number;
+  ventasActivas: number;
+  ventasCompletadas: number;
+  ventasCanceladas: number;
+  montoTotalVentas: number;
+  montoPromedioVenta: number;
+  ventasPorModalidad: {
+    contado: number;
+    cuotas: number;
+  };
+  montoPendienteTotal: number;
+}
+
+// ============================================================================
+// PAGOS (INTERFACES ADICIONALES)
+// ============================================================================
+
+/**
+ * Respuesta de validación de pago
+ */
+export interface ValidarPagoResponse {
+  esValido: boolean;
+  mensaje: string;
+  detalles: {
+    valorCuota: number;
+    montoPagado: number;
+    montoPendiente: number;
+    excedente: number;
+  };
+}
+
+/**
+ * Respuesta paginada de pagos
+ */
+export interface PagosResponse {
+  pagos: Pago[];
+  total: number;
+  pagina: number;
+  limite: number;
+  totalPaginas: number;
+}

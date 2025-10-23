@@ -13,6 +13,10 @@ import Reportes from './pages/Reportes';
 import ModelosCasa from './pages/ModelosCasa';
 import MapaLotes from './pages/MapaLotes';
 import Configuraciones from './pages/Configuraciones';
+import GestionServicios from './pages/GestionServicios';
+import FormularioServicio from './pages/FormularioServicio';
+import GestionVentas from './pages/GestionVentas';
+import GestionPagos from './pages/GestionPagos';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -145,6 +149,54 @@ function App() {
           element={
             <PrivateRoute>
               <MapaLotes />
+            </PrivateRoute>
+          }
+        />
+
+        {/* CRUD de Servicios */}
+        <Route
+          path="/servicios"
+          element={
+            <PrivateRoute>
+              <GestionServicios />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/servicios/nuevo"
+          element={
+            <PrivateRoute>
+              <FormularioServicio />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/servicios/:uid/editar"
+          element={
+            <PrivateRoute>
+              <FormularioServicio />
+            </PrivateRoute>
+          }
+        />
+
+        {/* CRUD de Ventas */}
+        <Route
+          path="/ventas"
+          element={
+            <PrivateRoute>
+              <GestionVentas />
+            </PrivateRoute>
+          }
+        />
+
+        {/* CRUD de Pagos */}
+        <Route
+          path="/pagos"
+          element={
+            <PrivateRoute>
+              <GestionPagos />
             </PrivateRoute>
           }
         />

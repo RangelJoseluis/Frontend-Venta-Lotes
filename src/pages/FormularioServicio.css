@@ -1,0 +1,206 @@
+/* FORMULARIO DE SERVICIO - ESTILOS BÁSICOS */
+
+.formulario-servicio {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header */
+.formulario-servicio .header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.formulario-servicio .header h1 {
+  font-size: 1.8rem;
+  color: #1e293b;
+  margin: 0;
+}
+
+.formulario-servicio .btn-volver {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.formulario-servicio .btn-volver:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Formulario */
+.formulario-servicio .formulario {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.formulario-servicio .seccion {
+  margin-bottom: 2rem;
+}
+
+.formulario-servicio .seccion h2 {
+  font-size: 1.25rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* Campos */
+.formulario-servicio .campo {
+  margin-bottom: 1.5rem;
+}
+
+.formulario-servicio .campo label {
+  display: block;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.formulario-servicio .campo input,
+.formulario-servicio .campo textarea,
+.formulario-servicio .campo select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.formulario-servicio .campo input:focus,
+.formulario-servicio .campo textarea:focus,
+.formulario-servicio .campo select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.formulario-servicio .campo textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Checkbox */
+.formulario-servicio .campo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.formulario-servicio .campo-checkbox input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}
+
+.formulario-servicio .campo-checkbox label {
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Botones */
+.formulario-servicio .botones {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.formulario-servicio .btn-cancelar {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: #64748b;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.formulario-servicio .btn-cancelar:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.formulario-servicio .btn-guardar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.formulario-servicio .btn-guardar:hover:not(:disabled) {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.formulario-servicio .btn-guardar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Estados */
+.formulario-servicio .cargando {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 1.125rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-servicio {
+    padding: 1rem;
+  }
+
+  .formulario-servicio .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .formulario-servicio .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .formulario-servicio .formulario {
+    padding: 1.5rem;
+  }
+
+  .formulario-servicio .botones {
+    flex-direction: column;
+  }
+
+  .formulario-servicio .btn-cancelar,
+  .formulario-servicio .btn-guardar {
+    width: 100%;
+    justify-content: center;
+  }
+}

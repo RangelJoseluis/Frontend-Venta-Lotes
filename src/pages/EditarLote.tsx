@@ -23,10 +23,10 @@ import {
   Loader
 } from 'lucide-react';
 import { lotesService } from '../services/lotes.service';
-import { serviciosService, type Servicio } from '../services/servicios.service';
+import serviciosService from '../services/servicios.service';
 import modelosCasaService from '../services/modelos-casa.service';
 import { getErrorMessage } from '../services/http.service';
-import type { ModeloCasa } from '../types';
+import type { ModeloCasa, Servicio } from '../types';
 import './NuevoLote.css';
 
 // Imports de Leaflet para el mapa
@@ -585,7 +585,7 @@ const EditarLote = () => {
                                   <span style={{ fontSize: '0.875rem', color: '#1e293b', fontWeight: 500 }}>
                                     {servicio.nombre}
                                   </span>
-                                  {servicio.esencial && (
+                                  {servicio.esEsencial && (
                                     <span style={{ 
                                       fontSize: '0.625rem', 
                                       padding: '0.125rem 0.375rem', 

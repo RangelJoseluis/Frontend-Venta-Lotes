@@ -1,0 +1,302 @@
+/* GESTIÓN DE PAGOS - ESTILOS BÁSICOS */
+
+.gestion-pagos {
+  padding: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Header */
+.gestion-pagos .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.gestion-pagos .header h1 {
+  font-size: 1.8rem;
+  color: #1e293b;
+  margin: 0;
+}
+
+.gestion-pagos .btn-volver {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-pagos .btn-volver:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.gestion-pagos .btn-nuevo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-pagos .btn-nuevo:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+/* Filtros */
+.gestion-pagos .filtros {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.gestion-pagos .filtro-busqueda {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+}
+
+.gestion-pagos .filtro-busqueda input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.gestion-pagos .filtros select {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: white;
+}
+
+/* Tabla */
+.gestion-pagos .tabla-container {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.gestion-pagos .tabla-pagos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.gestion-pagos .tabla-pagos thead {
+  background: #f8fafc;
+}
+
+.gestion-pagos .tabla-pagos th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.gestion-pagos .tabla-pagos td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.gestion-pagos .tabla-pagos tbody tr:hover {
+  background: #f8fafc;
+}
+
+.gestion-pagos .venta-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.gestion-pagos .cliente-nombre {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.gestion-pagos .numero-cuota {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.gestion-pagos .monto {
+  color: #10b981;
+  font-size: 1.125rem;
+}
+
+.gestion-pagos .referencia {
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  background: #f1f5f9;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.gestion-pagos .sin-info,
+.gestion-pagos .sin-referencia {
+  color: #94a3b8;
+}
+
+/* Badges */
+.gestion-pagos .badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.gestion-pagos .badge-efectivo {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.gestion-pagos .badge-transferencia {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.gestion-pagos .badge-cheque {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.gestion-pagos .badge-tarjeta {
+  background: #fce7f3;
+  color: #9f1239;
+}
+
+/* Acciones */
+.gestion-pagos .acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.gestion-pagos .btn-accion {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gestion-pagos .btn-ver {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.gestion-pagos .btn-ver:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+/* Paginación */
+.gestion-pagos .paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.gestion-pagos .paginacion button {
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.gestion-pagos .paginacion button:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.gestion-pagos .paginacion button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Estados */
+.gestion-pagos .cargando {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 1.125rem;
+}
+
+.gestion-pagos .sin-datos {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+}
+
+/* Resumen */
+.gestion-pagos .resumen {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gestion-pagos {
+    padding: 1rem;
+  }
+
+  .gestion-pagos .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gestion-pagos .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .gestion-pagos .filtros {
+    flex-direction: column;
+  }
+
+  .gestion-pagos .tabla-pagos {
+    font-size: 0.875rem;
+  }
+
+  .gestion-pagos .tabla-pagos th,
+  .gestion-pagos .tabla-pagos td {
+    padding: 0.75rem 0.5rem;
+  }
+}
