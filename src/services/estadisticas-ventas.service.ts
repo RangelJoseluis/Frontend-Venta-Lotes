@@ -1,6 +1,5 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000';
+import httpClient from './http.service';
+import API_CONFIG from '../config/api.config';
 
 // ============================================================================
 // INTERFACES
@@ -29,12 +28,7 @@ class EstadisticasVentasService {
    */
   async obtenerEstadisticas(): Promise<EstadisticasVentas> {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.get(`${API_URL}/ventas/consultas/estadisticas`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.get(`${API_CONFIG.BASE_URL}/ventas/consultas/estadisticas`);
       console.log('✅ Estadísticas de ventas obtenidas:', response.data);
       return response.data;
     } catch (error: any) {

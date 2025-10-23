@@ -1,6 +1,5 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000';
+import httpClient from './http.service';
+import API_CONFIG from '../config/api.config';
 
 // ============================================================================
 // INTERFACES
@@ -36,20 +35,14 @@ class EstadisticasPagosService {
    */
   async obtenerEstadisticas(fechaDesde?: string, fechaHasta?: string): Promise<EstadisticasPagos> {
     try {
-      const token = localStorage.getItem('accessToken');
-      
       // Construir query params
       const params = new URLSearchParams();
       if (fechaDesde) params.append('fechaDesde', fechaDesde);
       if (fechaHasta) params.append('fechaHasta', fechaHasta);
       
-      const url = `${API_URL}/pagos/consultas/estadisticas${params.toString() ? `?${params.toString()}` : ''}`;
+      const url = `${API_CONFIG.BASE_URL}/pagos/consultas/estadisticas${params.toString() ? `?${params.toString()}` : ''}`;
       
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.get(url);
       console.log('✅ Estadísticas de pagos obtenidas:', response.data);
       return response.data;
     } catch (error: any) {

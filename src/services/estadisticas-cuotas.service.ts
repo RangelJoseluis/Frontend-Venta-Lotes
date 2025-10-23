@@ -1,6 +1,5 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000';
+import httpClient from './http.service';
+import API_CONFIG from '../config/api.config';
 
 // ============================================================================
 // INTERFACES
@@ -64,12 +63,7 @@ class EstadisticasCuotasService {
    */
   async obtenerEstadisticas(): Promise<EstadisticasCuotas> {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.get(`${API_URL}/cuotas/consultas/estadisticas`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.get(`${API_CONFIG.BASE_URL}/cuotas/consultas/estadisticas`);
       console.log('✅ Estadísticas de cuotas obtenidas:', response.data);
       return response.data;
     } catch (error: any) {
@@ -83,12 +77,7 @@ class EstadisticasCuotasService {
    */
   async obtenerCuotasVencidas(): Promise<CuotaVencida[]> {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.get(`${API_URL}/cuotas/consultas/vencidas`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.get(`${API_CONFIG.BASE_URL}/cuotas/consultas/vencidas`);
       console.log('✅ Cuotas vencidas obtenidas:', response.data);
       return response.data;
     } catch (error: any) {
@@ -103,12 +92,7 @@ class EstadisticasCuotasService {
    */
   async obtenerCuotasProximasVencer(dias: number = 7): Promise<CuotaProximaVencer[]> {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.get(`${API_URL}/cuotas/consultas/proximas-vencer?dias=${dias}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.get(`${API_CONFIG.BASE_URL}/cuotas/consultas/proximas-vencer?dias=${dias}`);
       console.log('✅ Cuotas próximas a vencer obtenidas:', response.data);
       return response.data;
     } catch (error: any) {
