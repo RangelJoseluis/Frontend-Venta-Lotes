@@ -8,11 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Plus, 
   Search, 
+  Filter,
+  Eye,
   Edit, 
   Trash2, 
-  Eye,
-  Filter,
-  Download,
   MapPin,
   Home,
   DollarSign,

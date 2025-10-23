@@ -16,13 +16,12 @@ import './Dashboard.css';
 import type { EstadisticasLotes } from '../types';
 import type { EstadisticasVentas } from '../services/estadisticas-ventas.service';
 import type { EstadisticasCuotas } from '../services/estadisticas-cuotas.service';
-import type { EstadisticasPagos } from '../services/estadisticas-pagos.service';
 
 const Dashboard = () => {
   const [stats, setStats] = useState<EstadisticasLotes | null>(null);
   const [statsVentas, setStatsVentas] = useState<EstadisticasVentas | null>(null);
   const [statsCuotas, setStatsCuotas] = useState<EstadisticasCuotas | null>(null);
-  const [statsPagos, setStatsPagos] = useState<EstadisticasPagos | null>(null);
+  // const [statsPagos, setStatsPagos] = useState<EstadisticasPagos | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(() => {
@@ -68,7 +67,7 @@ const Dashboard = () => {
         setStats(dataLotes);
         setStatsVentas(dataVentas);
         setStatsCuotas(dataCuotas);
-        setStatsPagos(dataPagos);
+        // setStatsPagos(dataPagos);
       } catch (err) {
         const errorMsg = getErrorMessage(err);
         setError(errorMsg);

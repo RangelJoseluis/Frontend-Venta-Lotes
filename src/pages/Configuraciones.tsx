@@ -3,7 +3,7 @@
  * Permite al administrador configurar parámetros del sistema
  */
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Save, AlertCircle, CheckCircle } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';

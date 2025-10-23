@@ -21,8 +21,7 @@ import {
   Ruler, 
   MapPin, 
   Settings,
-  MessageSquare,
-  Navigation
+  MessageSquare
 } from 'lucide-react';
 import { lotesService } from '../services/lotes.service';
 import serviciosService from '../services/servicios.service';
@@ -99,7 +98,7 @@ const MapClickHandler = ({
 const NuevoLote = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [codigoLote, setCodigoLote] = useState<string>('');
+  // const [codigoLote, setCodigoLote] = useState<string>('');
   const [serviciosDisponibles, setServiciosDisponibles] = useState<Servicio[]>([]);
   const [serviciosSeleccionados, setServiciosSeleccionados] = useState<string[]>([]);
   const [modelosCasaDisponibles, setModelosCasaDisponibles] = useState<ModeloCasa[]>([]);
@@ -196,7 +195,7 @@ const NuevoLote = () => {
         
         // Cargar próximo código de lote
         const codigo = await lotesService.obtenerProximoCodigo();
-        setCodigoLote(codigo);
+        // setCodigoLote(codigo);
         setValue('codigo', codigo);
 
         // Cargar servicios disponibles

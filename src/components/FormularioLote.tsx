@@ -4,38 +4,13 @@
  * Usado por: NuevoLote.tsx y EditarLote.tsx
  */
 
-import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form';
-import { FileText, Ruler, MapPin, Settings, MessageSquare, Home } from 'lucide-react';
-import type { Servicio } from '../services/servicios.service';
-import type { ModeloCasa } from '../types';
+import { FileText } from 'lucide-react';
 
 interface FormularioLoteProps {
-  register: UseFormRegister<any>;
-  errors: FieldErrors<any>;
-  watch: UseFormWatch<any>;
-  setValue: UseFormSetValue<any>;
-  calcularSuperficie: () => void;
-  serviciosDisponibles: Servicio[];
-  serviciosSeleccionados: string[];
-  setServiciosSeleccionados: (servicios: string[]) => void;
-  modelosCasaDisponibles: ModeloCasa[];
-  modeloCasaSeleccionado: string;
-  setModeloCasaSeleccionado: (modelo: string) => void;
-  isLoading?: boolean;
   modoEdicion?: boolean;
 }
 
 const FormularioLote = ({
-  register,
-  errors,
-  calcularSuperficie,
-  serviciosDisponibles,
-  serviciosSeleccionados,
-  setServiciosSeleccionados,
-  modelosCasaDisponibles,
-  modeloCasaSeleccionado,
-  setModeloCasaSeleccionado,
-  isLoading = false,
   modoEdicion = false
 }: FormularioLoteProps) => {
   

@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Home, DollarSign, Maximize2, Map, Satellite, Layers as LayersIcon, Filter, X, Search, Edit } from 'lucide-react';
 import lotesMapaService from '../services/lotes-mapa.service';
 import type { LoteParaMapa, RolMapa, TipoCapaMapa } from '../types/mapa';
-import { COLORES_MAPA, CONFIG_MAPA_DEFAULT, TILES_CONFIG } from '../types/mapa';
+import { COLORES_MAPA, TILES_CONFIG } from '../types/mapa';
 import { useAuthStore } from '../store/authStore';
 import { obtenerCentroZona, obtenerZoomZona } from '../config/zona.config';
 import 'leaflet/dist/leaflet.css';
