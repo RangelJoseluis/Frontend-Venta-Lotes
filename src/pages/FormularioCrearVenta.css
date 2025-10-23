@@ -1,17 +1,36 @@
 .formulario-container {
   min-height: 100vh;
   background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
-  padding: 3rem 1rem;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .formulario-container {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .formulario-container {
+    padding: 3rem 1rem;
+  }
 }
 
 .formulario-wrapper {
   max-width: 64rem;
   margin: 0 auto;
+  width: 100%;
 }
 
 .formulario-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .formulario-header {
+    margin-bottom: 2rem;
+  }
 }
 
 .formulario-icon-wrapper {
@@ -22,27 +41,52 @@
 
 .formulario-icon-bg {
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  padding: 1rem;
+  padding: 0.875rem;
   border-radius: 1rem;
   box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
 }
 
+@media (min-width: 768px) {
+  .formulario-icon-bg {
+    padding: 1rem;
+  }
+}
+
 .formulario-icon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
   color: white;
 }
 
+@media (min-width: 768px) {
+  .formulario-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
 .formulario-title {
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #111827;
   margin-bottom: 0.5rem;
 }
 
+@media (min-width: 768px) {
+  .formulario-title {
+    font-size: 1.875rem;
+  }
+}
+
 .formulario-subtitle {
   color: #6b7280;
-  font-size: 1rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .formulario-subtitle {
+    font-size: 1rem;
+  }
 }
 
 .formulario-card {
@@ -55,14 +99,26 @@
 
 .formulario-card-header {
   background: linear-gradient(to right, #2563eb, #1d4ed8);
-  padding: 1.5rem 2rem;
+  padding: 1.25rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .formulario-card-header {
+    padding: 1.5rem 2rem;
+  }
 }
 
 .formulario-card-title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: white;
   margin-bottom: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .formulario-card-title {
+    font-size: 1.5rem;
+  }
 }
 
 .formulario-card-subtitle {
@@ -71,7 +127,19 @@
 }
 
 .formulario-form {
-  padding: 2rem;
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .formulario-form {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .formulario-form {
+    padding: 2rem;
+  }
 }
 
 .formulario-section {

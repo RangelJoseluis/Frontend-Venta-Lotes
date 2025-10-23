@@ -4,50 +4,80 @@
 
 .recent-activity-card {
   background: white;
-  border-radius: 16px;
+  border-radius: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .recent-activity-header {
-  padding: 24px;
+  padding: 1rem 1.25rem;
   border-bottom: 1px solid #f1f5f9;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .recent-activity-header {
+    padding: 1.5rem;
+  }
 }
 
 .recent-activity-title {
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 700;
   color: #1e293b;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   margin: 0;
+}
+
+@media (min-width: 768px) {
+  .recent-activity-title {
+    font-size: 1.125rem;
+  }
 }
 
 .recent-activity-badge {
   background: #eff6ff;
   color: #2563eb;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .recent-activity-list {
-  padding: 16px 24px;
+  padding: 1rem 1.25rem;
   max-height: 400px;
   overflow-y: auto;
 }
 
+@media (min-width: 768px) {
+  .recent-activity-list {
+    padding: 1rem 1.5rem;
+  }
+}
+
 .activity-item {
   display: flex;
-  gap: 16px;
-  padding: 16px 0;
+  gap: 0.75rem;
+  padding: 0.875rem 0;
   border-bottom: 1px solid #f1f5f9;
   transition: all 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .activity-item {
+    gap: 1rem;
+    padding: 1rem 0;
+  }
 }
 
 .activity-item:last-child {
@@ -56,9 +86,16 @@
 
 .activity-item:hover {
   background: #f8fafc;
-  margin: 0 -12px;
-  padding: 16px 12px;
-  border-radius: 8px;
+  margin: 0 -0.75rem;
+  padding: 0.875rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .activity-item:hover {
+    margin: 0 -0.75rem;
+    padding: 1rem 0.75rem;
+  }
 }
 
 .activity-icon {

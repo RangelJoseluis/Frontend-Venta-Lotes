@@ -263,37 +263,37 @@ const Reportes = () => {
                   {/* Grid de estadísticas */}
                   <div className="stats-grid-reportes">
                     {/* Ventas */}
-                    <div className="stat-card stat-card-ventas">
-                      <div className="stat-header">
+                    <div className="reportes-stat-card reportes-stat-card-ventas">
+                      <div className="reportes-stat-header">
                         <h3>📈 Ventas</h3>
                       </div>
-                      <div className="stat-body">
-                        <div className="stat-row">
+                      <div className="reportes-stat-body">
+                        <div className="reportes-stat-row">
                           <span>Total Ventas:</span>
                           <strong>{statsVentas?.totalVentas || 0}</strong>
                         </div>
-                        <div className="stat-row">
+                        <div className="reportes-stat-row">
                           <span>Monto Total:</span>
                           <strong>{formatCurrency(statsVentas?.montoTotalVentas || 0)}</strong>
                         </div>
-                        <div className="stat-row">
+                        <div className="reportes-stat-row">
                           <span>Promedio:</span>
                           <strong>{formatCurrency(statsVentas?.montoPromedioPorVenta || 0)}</strong>
                         </div>
-                        <div className="stat-row">
+                        <div className="reportes-stat-row">
                           <span>Activas:</span>
                           <strong>{statsVentas?.ventasActivas || 0}</strong>
                         </div>
-                        <div className="stat-row">
+                        <div className="reportes-stat-row">
                           <span>Completadas:</span>
                           <strong>{statsVentas?.ventasCompletadas || 0}</strong>
                         </div>
-                        <div className="stat-divider"></div>
-                        <div className="stat-row">
+                        <div className="reportes-stat-divider"></div>
+                        <div className="reportes-stat-row">
                           <span>Contado:</span>
                           <strong>{statsVentas?.ventasPorModalidad.contado || 0}</strong>
                         </div>
-                        <div className="stat-row">
+                        <div className="reportes-stat-row">
                           <span>Cuotas:</span>
                           <strong>{statsVentas?.ventasPorModalidad.cuotas || 0}</strong>
                         </div>
@@ -301,11 +301,11 @@ const Reportes = () => {
                     </div>
 
                     {/* Cuotas */}
-                    <div className="stat-card stat-card-cuotas">
-                      <div className="stat-header">
+                    <div className="reportes-stat-card reportes-stat-card-cuotas">
+                      <div className="reportes-stat-header">
                         <h3>💰 Cuotas</h3>
                       </div>
-                      <div className="stat-body">
+                      <div className="reportes-stat-body">
                         <div className="stat-row">
                           <span>Total Cuotas:</span>
                           <strong>{statsCuotas?.totalCuotas || 0}</strong>
@@ -339,11 +339,11 @@ const Reportes = () => {
                     </div>
 
                     {/* Pagos */}
-                    <div className="stat-card stat-card-pagos">
-                      <div className="stat-header">
+                    <div className="reportes-stat-card reportes-stat-card-pagos">
+                      <div className="reportes-stat-header">
                         <h3>💵 Pagos (Año Actual)</h3>
                       </div>
-                      <div className="stat-body">
+                      <div className="reportes-stat-body">
                         <div className="stat-row">
                           <span>Total Pagos:</span>
                           <strong>{statsPagos?.totalPagos || 0}</strong>
@@ -373,11 +373,11 @@ const Reportes = () => {
                     </div>
 
                     {/* Lotes */}
-                    <div className="stat-card stat-card-lotes">
-                      <div className="stat-header">
+                    <div className="reportes-stat-card reportes-stat-card-lotes">
+                      <div className="reportes-stat-header">
                         <h3>🏘️ Lotes</h3>
                       </div>
-                      <div className="stat-body">
+                      <div className="reportes-stat-body">
                         <div className="stat-row">
                           <span>Total Lotes:</span>
                           <strong>{statsLotes?.totalLotes || 0}</strong>

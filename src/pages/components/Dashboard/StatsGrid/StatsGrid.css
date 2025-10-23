@@ -1,17 +1,26 @@
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
+  width: 100%;
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 640px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 }
 
 @media (min-width: 1024px) {
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .stats-grid {
+    gap: 1.5rem;
   }
 }

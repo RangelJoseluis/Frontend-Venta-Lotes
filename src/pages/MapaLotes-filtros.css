@@ -7,7 +7,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.625rem 1rem;
+  padding: 0 1rem;
   background: white;
   color: #64748b;
   font-weight: 500;
@@ -17,6 +17,15 @@
   transition: all 0.2s ease;
   font-size: 0.875rem;
   position: relative;
+  height: 2.5rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .btn-filtros {
+    height: 2.75rem;
+  }
 }
 
 .btn-filtros:hover {
@@ -34,6 +43,11 @@
 .btn-filtros svg {
   width: 1rem;
   height: 1rem;
+  flex-shrink: 0;
+}
+
+.btn-filtros span {
+  line-height: 1;
 }
 
 .filtros-badge {

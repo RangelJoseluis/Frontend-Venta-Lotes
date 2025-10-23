@@ -3,19 +3,42 @@
    ============================================================================ */
 
 .gestion-lotes-container {
-  padding: 2rem;
+  padding: 1rem;
   max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .gestion-lotes-container {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gestion-lotes-container {
+    padding: 2rem;
+  }
 }
 
 /* Header */
 .gestion-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
   border-bottom: 2px solid #e2e8f0;
+}
+
+@media (min-width: 768px) {
+  .gestion-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+  }
 }
 
 .header-left h1 {
@@ -23,9 +46,21 @@
   align-items: center;
   gap: 0.75rem;
   margin: 0 0 0.5rem 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1e293b;
+}
+
+@media (min-width: 768px) {
+  .header-left h1 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-left h1 {
+    font-size: 2rem;
+  }
 }
 
 .header-subtitle {
@@ -37,16 +72,25 @@
 .btn-nuevo-lote {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: white;
   border: none;
   border-radius: 0.5rem;
   font-weight: 600;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .btn-nuevo-lote {
+    padding: 0.75rem 1.5rem;
+  }
 }
 
 .btn-nuevo-lote:hover {
@@ -58,17 +102,30 @@
 /* Filtros */
 .filtros-container {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .filtros-container {
+    flex-direction: row;
+    gap: 1rem;
+  }
 }
 
 .busqueda-wrapper {
   flex: 1;
-  min-width: 300px;
+  min-width: 0;
   position: relative;
   display: flex;
   align-items: center;
+}
+
+@media (min-width: 768px) {
+  .busqueda-wrapper {
+    min-width: 300px;
+  }
 }
 
 .busqueda-wrapper svg {
