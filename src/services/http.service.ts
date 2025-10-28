@@ -44,7 +44,7 @@ httpClient.interceptors.request.use(
 
 /**
  * INTERCEPTOR DE RESPONSE
- * Maneja errores de autenticación (401) y otros errores comunes
+ * Maneja errores de autenticación (401, 404 con mensaje de auth) y otros errores comunes
  */
 httpClient.interceptors.response.use(
   (response) => {
@@ -53,9 +53,34 @@ httpClient.interceptors.response.use(
   (error: AxiosError) => {
     // Si el token expiró o es inválido (401), redirigir al login
     if (error.response?.status === 401) {
+      console.warn('🔒 Token inválido o expirado (401). Redirigiendo al login...');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('user');
       window.location.href = '/login';
+    }
+    
+    // Si es 404 pero parece ser un problema de autenticación (backend protege rutas)
+    if (error.response?.status === 404 && localStorage.getItem('accessToken')) {
+      const errorMessage = (error.response?.data as any)?.message || '';
+      const errorString = (error.response?.data as any)?.error || '';
+      
+      // Si el mensaje indica problema de autenticación o acceso denegado
+      if (
+        errorMessage.toLowerCase().includes('unauthorized') ||
+        errorMessage.toLowerCase().includes('forbidden') ||
+        errorString.toLowerCase().includes('unauthorized') ||
+        errorString.toLowerCase().includes('forbidden') ||
+        errorMessage.toLowerCase().includes('token') ||
+        // O si es un endpoint protegido (estadisticas, admin, etc)
+        error.config?.url?.includes('estadisticas') ||
+        error.config?.url?.includes('admin')
+      ) {
+        console.warn('🔒 Posible problema de autenticación (404 en ruta protegida). Token inválido para este servidor.');
+        console.warn('💡 Limpiando localStorage y redirigiendo al login...');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
     }
     
     // Si hay error de red
