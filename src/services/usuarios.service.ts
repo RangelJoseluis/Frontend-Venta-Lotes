@@ -1,6 +1,5 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000';
+import httpClient from './http.service';
+import { API_CONFIG } from '../config/api.config';
 
 // ============================================================================
 // INTERFACES
@@ -47,12 +46,7 @@ class UsuariosService {
    */
   async obtenerTodos(): Promise<Usuario[]> {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.get(`${API_URL}/usuarios`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.get(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.USUARIOS}`);
       console.log('✅ Usuarios obtenidos:', response.data);
       return response.data;
     } catch (error: any) {
@@ -66,12 +60,7 @@ class UsuariosService {
    */
   async obtenerPorUid(uid: string): Promise<Usuario> {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.get(`${API_URL}/usuarios/${uid}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.get(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.USUARIOS}/${uid}`);
       console.log('✅ Usuario obtenido:', response.data);
       return response.data;
     } catch (error: any) {
@@ -86,12 +75,7 @@ class UsuariosService {
    */
   async crear(datos: CrearUsuarioDto): Promise<Usuario> {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.post(`${API_URL}/usuarios`, datos, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.post(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.USUARIOS}`, datos);
       console.log('✅ Usuario creado:', response.data);
       return response.data;
     } catch (error: any) {
@@ -105,12 +89,7 @@ class UsuariosService {
    */
   async actualizar(uid: string, datos: ActualizarUsuarioDto): Promise<Usuario> {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await axios.patch(`${API_URL}/usuarios/${uid}`, datos, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await httpClient.patch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.USUARIOS}/${uid}`, datos);
       console.log('✅ Usuario actualizado:', response.data);
       return response.data;
     } catch (error: any) {
@@ -124,12 +103,7 @@ class UsuariosService {
    */
   async eliminar(uid: string): Promise<void> {
     try {
-      const token = localStorage.getItem('accessToken');
-      await axios.delete(`${API_URL}/usuarios/${uid}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await httpClient.delete(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.USUARIOS}/${uid}`);
       console.log('✅ Usuario eliminado');
     } catch (error: any) {
       console.error('❌ Error al eliminar usuario:', error.response?.data || error.message);
