@@ -460,12 +460,18 @@ export interface Servicio {
  */
 export interface CrearServicioDto {
   nombre: string;
-  descripcion: string;
+  descripcion: string; // Mínimo 10 caracteres requerido por backend
   categoria: CategoriaServicio;
   tipo: TipoServicio;
-  costoMensual: number;
-  esEsencial: boolean;
+  costoMensualBase?: number; // Opcional en backend
+  esencial?: boolean; // Opcional en backend (default: false)
   proveedor?: string;
+  estado?: 'activo' | 'inactivo'; // Opcional
+  requisitos?: string;
+  iconoUrl?: string;
+  color?: string;
+  ordenVisualizacion?: number;
+  observaciones?: string;
 }
 
 /**

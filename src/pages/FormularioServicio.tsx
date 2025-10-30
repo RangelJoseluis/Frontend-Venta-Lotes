@@ -17,8 +17,8 @@ const FormularioServicio = () => {
     descripcion: '',
     categoria: 'utilities',
     tipo: 'publico',
-    costoMensual: 0,
-    esEsencial: false,
+    costoMensualBase: 0,
+    esencial: false,
     proveedor: ''
   });
 
@@ -37,8 +37,8 @@ const FormularioServicio = () => {
         descripcion: servicio.descripcion,
         categoria: servicio.categoria,
         tipo: servicio.tipo,
-        costoMensual: servicio.costoMensual,
-        esEsencial: servicio.esEsencial,
+        costoMensualBase: servicio.costoMensual || 0,
+        esencial: servicio.esEsencial || false,
         proveedor: servicio.proveedor || ''
       });
     } catch (error) {
@@ -59,7 +59,12 @@ const FormularioServicio = () => {
       return;
     }
 
-    if (formData.costoMensual < 0) {
+    if (!formData.descripcion || formData.descripcion.trim().length < 10) {
+      alert('La descripción es requerida y debe tener al menos 10 caracteres');
+      return;
+    }
+
+    if (formData.costoMensualBase && formData.costoMensualBase < 0) {
       alert('El costo mensual no puede ser negativo');
       return;
     }
@@ -138,14 +143,16 @@ const FormularioServicio = () => {
           </div>
 
           <div className="campo">
-            <label htmlFor="descripcion">Descripción</label>
+            <label htmlFor="descripcion">Descripción *</label>
             <textarea
               id="descripcion"
               name="descripcion"
               value={formData.descripcion}
               onChange={handleChange}
               rows={3}
-              placeholder="Descripción del servicio"
+              required
+              minLength={10}
+              placeholder="Descripción del servicio (mínimo 10 caracteres)"
             />
           </div>
 
@@ -200,14 +207,13 @@ const FormularioServicio = () => {
           </div>
 
           <div className="campo">
-            <label htmlFor="costoMensual">Costo Mensual *</label>
+            <label htmlFor="costoMensualBase">Costo Mensual Base</label>
             <input
               type="number"
-              id="costoMensual"
-              name="costoMensual"
-              value={formData.costoMensual}
+              id="costoMensualBase"
+              name="costoMensualBase"
+              value={formData.costoMensualBase || 0}
               onChange={handleChange}
-              required
               min="0"
               step="1000"
               placeholder="0"
@@ -217,12 +223,12 @@ const FormularioServicio = () => {
           <div className="campo-checkbox">
             <input
               type="checkbox"
-              id="esEsencial"
-              name="esEsencial"
-              checked={formData.esEsencial}
+              id="esencial"
+              name="esencial"
+              checked={formData.esencial || false}
               onChange={handleChange}
             />
-            <label htmlFor="esEsencial">Es esencial</label>
+            <label htmlFor="esencial">Es esencial</label>
           </div>
         </div>
 
