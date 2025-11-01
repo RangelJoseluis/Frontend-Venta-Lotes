@@ -21,6 +21,7 @@ import GestionVentas from './pages/GestionVentas';
 import GestionPagos from './pages/GestionPagos';
 import GestionMora from './pages/GestionMora';
 import ReportesMora from './pages/ReportesMora';
+import Perfil from './pages/Perfil/Perfil';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -221,6 +222,16 @@ function App() {
           element={
             <PrivateRoute>
               <ReportesMora />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Perfil de Usuario */}
+        <Route
+          path="/perfil"
+          element={
+            <PrivateRoute>
+              <Perfil />
             </PrivateRoute>
           }
         />

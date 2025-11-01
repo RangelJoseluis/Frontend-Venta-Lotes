@@ -116,12 +116,15 @@ function GestionDeUsuariosCliente() {
   // FUNCIONES DE FILTRADO
   // ============================================================================
 
-  const filteredUsuarios = usuarios.filter(user =>
-    user.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.cedula.includes(searchTerm)
-  );
+  // Filtrar usuarios excluyendo admins y aplicando búsqueda
+  const filteredUsuarios = usuarios
+    .filter(user => !user.roles.includes('admin')) // Excluir administradores
+    .filter(user =>
+      user.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.cedula.includes(searchTerm)
+    );
 
   const totalClientes = usuarios.filter(u => u.roles.includes('cliente') && !u.roles.includes('admin')).length;
   const totalAdmins = usuarios.filter(u => u.roles.includes('admin')).length;

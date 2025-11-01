@@ -1,0 +1,171 @@
+/* ============================================================================
+   REP-STATS-CARD - Tarjeta de Estadísticas con CSS 100% Aislado
+   Prefijo 'rep-' para evitar CUALQUIER interferencia global
+   ============================================================================ */
+
+.rep-stats-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.rep-stats-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Header */
+.rep-stats-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 20px;
+  min-height: 70px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.rep-stats-ventas .rep-stats-header {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.rep-stats-cuotas .rep-stats-header {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.rep-stats-pagos .rep-stats-header {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.rep-stats-lotes .rep-stats-header {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.rep-stats-icon {
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+
+.rep-stats-title {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: white !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Body */
+.rep-stats-body {
+  padding: 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  background: #ffffff !important;
+  flex: 1 !important;
+}
+
+/* Rows */
+.rep-stats-row {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  gap: 16px !important;
+  align-items: center !important;
+  padding: 10px 12px !important;
+  background: #f9fafb !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  min-height: 44px !important;
+}
+
+.rep-stats-row:hover {
+  background: #f3f4f6 !important;
+  transform: translateX(3px) !important;
+}
+
+.rep-stats-label {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #4b5563 !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+.rep-stats-value {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  line-height: 1.5 !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rep-stats-header {
+    padding: 16px 20px !important;
+    min-height: 70px !important;
+  }
+
+  .rep-stats-icon {
+    font-size: 28px !important;
+  }
+
+  .rep-stats-title {
+    font-size: 16px !important;
+  }
+
+  .rep-stats-body {
+    padding: 20px !important;
+    gap: 14px !important;
+  }
+
+  .rep-stats-row {
+    padding: 12px 14px !important;
+    min-height: 52px !important;
+    gap: 16px !important;
+  }
+
+  .rep-stats-label {
+    font-size: 13px !important;
+  }
+
+  .rep-stats-value {
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .rep-stats-header {
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    min-height: auto;
+  }
+
+  .rep-stats-icon {
+    font-size: 24px !important;
+  }
+
+  .rep-stats-title {
+    font-size: 15px !important;
+  }
+
+  .rep-stats-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .rep-stats-label,
+  .rep-stats-value {
+    text-align: left !important;
+  }
+}

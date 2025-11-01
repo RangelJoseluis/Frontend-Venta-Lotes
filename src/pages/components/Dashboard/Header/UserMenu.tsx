@@ -31,6 +31,14 @@ const UserMenu = ({ isOpen, setIsOpen }: UserMenuProps) => {
   }, [isOpen, setIsOpen]);
 
   /**
+   * Manejar navegación a perfil
+   */
+  const handlePerfil = () => {
+    navigate('/perfil');
+    setIsOpen(false);
+  };
+
+  /**
    * Manejar navegación a configuraciones
    */
   const handleConfiguraciones = () => {
@@ -56,8 +64,13 @@ const UserMenu = ({ isOpen, setIsOpen }: UserMenuProps) => {
       .slice(0, 2);
   };
 
-  const userName = user?.nombre || 'Usuario';
+  // Construir nombre completo desde nombres y apellidos
+  const userName = user?.nombres && user?.apellidos 
+    ? `${user.nombres} ${user.apellidos}` 
+    : user?.nombres || 'Usuario';
   const userEmail = user?.email || '';
+  const userRole = user?.roles && user.roles.length > 0 ? user.roles[0] : 'usuario';
+  const userRoleDisplay = userRole === 'admin' ? 'Administrador' : 'Usuario';
   const userInitials = getInitials(userName);
 
   return (
@@ -73,7 +86,7 @@ const UserMenu = ({ isOpen, setIsOpen }: UserMenuProps) => {
         </div>
         <div className="user-details">
           <p className="user-name">{userName}</p>
-          <p className="user-email">{userEmail}</p>
+          <p className="user-role">{userRoleDisplay}</p>
         </div>
         <ChevronDown className={`chevron-icon ${isOpen ? 'chevron-open' : ''}`} />
       </button>
@@ -91,7 +104,7 @@ const UserMenu = ({ isOpen, setIsOpen }: UserMenuProps) => {
           <div className="dropdown-divider" />
 
           <div className="dropdown-menu">
-            <button className="menu-item">
+            <button className="menu-item" onClick={handlePerfil}>
               <User className="menu-icon" />
               <span>Mi Perfil</span>
             </button>

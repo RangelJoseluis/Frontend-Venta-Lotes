@@ -21,9 +21,13 @@ export interface AuthResponse {
 export interface Usuario {
   uid: string;
   email: string;
-  nombre: string;
+  nombres: string;  // Backend envía 'nombres' (plural)
+  apellidos: string; // Backend envía 'apellidos' (plural)
   cedula?: string;
   telefono?: string;
+  direccion?: string;
+  estado?: string;
+  ultimoAcceso?: string;
   roles: string[];
   creadoEn?: string;
 }

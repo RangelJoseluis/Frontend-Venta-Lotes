@@ -1,0 +1,133 @@
+/* ============================================================================
+   PAYMENT METHOD CARD - Componente de Tarjeta de Método de Pago
+   Estilos aislados para evitar interferencias
+   ============================================================================ */
+
+.payment-method-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.payment-method-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Variantes de color */
+.payment-method-efectivo {
+  border-left-color: #10b981;
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.payment-method-transferencia {
+  border-left-color: #3b82f6;
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+}
+
+.payment-method-cheque {
+  border-left-color: #f59e0b;
+  background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+}
+
+.payment-method-tarjeta {
+  border-left-color: #8b5cf6;
+  background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+}
+
+/* Header */
+.payment-method-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.payment-method-icon {
+  font-size: 2rem !important;
+  line-height: 1 !important;
+}
+
+.payment-method-title {
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  margin: 0 !important;
+}
+
+/* Stats */
+.payment-method-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.payment-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  gap: 1rem;
+}
+
+.payment-stat-item:hover {
+  background: #f8fafc;
+  transform: translateX(2px);
+}
+
+.payment-stat-label {
+  font-size: 0.875rem !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+  min-width: 100px !important;
+  flex-shrink: 0 !important;
+}
+
+.payment-stat-value {
+  font-size: 0.9375rem !important;
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  text-align: right !important;
+  flex: 1 !important;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .payment-method-card {
+    padding: 1.25rem;
+  }
+
+  .payment-method-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .payment-method-icon {
+    font-size: 1.75rem !important;
+  }
+
+  .payment-method-title {
+    font-size: 1rem !important;
+  }
+
+  .payment-stat-item {
+    padding: 0.75rem 0.875rem;
+  }
+
+  .payment-stat-label {
+    font-size: 0.8125rem !important;
+    min-width: 85px !important;
+  }
+
+  .payment-stat-value {
+    font-size: 0.875rem !important;
+  }
+}

@@ -1,0 +1,174 @@
+/* ============================================================================
+   REP-PAYMENT-CARD - Tarjeta de Método de Pago con CSS 100% Aislado
+   Prefijo 'rep-payment-' para evitar CUALQUIER interferencia global
+   ============================================================================ */
+
+.rep-payment-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.rep-payment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Variantes de color */
+.rep-payment-efectivo {
+  border-left-color: #10b981;
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.rep-payment-transferencia {
+  border-left-color: #3b82f6;
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+}
+
+.rep-payment-cheque {
+  border-left-color: #f59e0b;
+  background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+}
+
+.rep-payment-tarjeta {
+  border-left-color: #8b5cf6;
+  background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+}
+
+/* Header */
+.rep-payment-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 2px solid #f3f4f6 !important;
+}
+
+.rep-payment-icon {
+  font-size: 32px !important;
+  line-height: 1 !important;
+}
+
+.rep-payment-title {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+
+/* Body */
+.rep-payment-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  flex: 1 !important;
+}
+
+/* Rows */
+.rep-payment-row {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  gap: 16px !important;
+  align-items: center !important;
+  padding: 10px 12px !important;
+  background: rgba(248, 250, 252, 0.6) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  min-height: 44px !important;
+}
+
+.rep-payment-row:hover {
+  background: #f8fafc !important;
+  transform: translateX(3px) !important;
+}
+
+.rep-payment-label {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #4b5563 !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+.rep-payment-value {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  line-height: 1.5 !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rep-payment-card {
+    padding: 18px !important;
+  }
+
+  .rep-payment-header {
+    margin-bottom: 16px !important;
+    padding-bottom: 14px !important;
+  }
+
+  .rep-payment-icon {
+    font-size: 28px !important;
+  }
+
+  .rep-payment-title {
+    font-size: 16px !important;
+  }
+
+  .rep-payment-body {
+    gap: 12px !important;
+  }
+
+  .rep-payment-row {
+    padding: 12px 14px !important;
+    min-height: 48px !important;
+    gap: 16px !important;
+  }
+
+  .rep-payment-label {
+    font-size: 13px !important;
+  }
+
+  .rep-payment-value {
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .rep-payment-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .rep-payment-icon {
+    font-size: 24px !important;
+  }
+
+  .rep-payment-title {
+    font-size: 15px !important;
+  }
+
+  .rep-payment-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .rep-payment-label,
+  .rep-payment-value {
+    text-align: left !important;
+  }
+}

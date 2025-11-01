@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { BarChart3, History, TrendingUp, AlertCircle, Search } from 'lucide-react';
+import { BarChart3, History, TrendingUp, Search, AlertCircle } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Sidebar from './components/Dashboard/Sidebar/Sidebar';
 import Header from './components/Dashboard/Header/Header';
 import LoadingSpinner from './components/Dashboard/UI/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage';
+import { StatsCard, PaymentMethodCard, CobranzaSummaryCard } from './components/ReportesComponents';
 import estadisticasVentasService from '../services/estadisticas-ventas.service';
 import estadisticasCuotasService from '../services/estadisticas-cuotas.service';
 import estadisticasPagosService from '../services/estadisticas-pagos.service';
@@ -173,23 +175,7 @@ const Reportes = () => {
   }
 
   if (error) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 text-center">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <AlertCircle className="w-8 h-8 text-red-600" />
-          </div>
-          <h2 className="text-xl font-bold text-slate-800 mb-2">Error al cargar datos</h2>
-          <p className="text-slate-600 mb-6">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-          >
-            Reintentar
-          </button>
-        </div>
-      </div>
-    );
+    return <ErrorMessage message={error} />;
   }
 
   // ============================================================================
@@ -263,148 +249,66 @@ const Reportes = () => {
                   {/* Grid de estadísticas */}
                   <div className="stats-grid-reportes">
                     {/* Ventas */}
-                    <div className="reportes-stat-card reportes-stat-card-ventas">
-                      <div className="reportes-stat-header">
-                        <h3>📈 Ventas</h3>
-                      </div>
-                      <div className="reportes-stat-body">
-                        <div className="reportes-stat-row">
-                          <span>Total Ventas:</span>
-                          <strong>{statsVentas?.totalVentas || 0}</strong>
-                        </div>
-                        <div className="reportes-stat-row">
-                          <span>Monto Total:</span>
-                          <strong>{formatCurrency(statsVentas?.montoTotalVentas || 0)}</strong>
-                        </div>
-                        <div className="reportes-stat-row">
-                          <span>Promedio:</span>
-                          <strong>{formatCurrency(statsVentas?.montoPromedioPorVenta || 0)}</strong>
-                        </div>
-                        <div className="reportes-stat-row">
-                          <span>Activas:</span>
-                          <strong>{statsVentas?.ventasActivas || 0}</strong>
-                        </div>
-                        <div className="reportes-stat-row">
-                          <span>Completadas:</span>
-                          <strong>{statsVentas?.ventasCompletadas || 0}</strong>
-                        </div>
-                        <div className="reportes-stat-divider"></div>
-                        <div className="reportes-stat-row">
-                          <span>Contado:</span>
-                          <strong>{statsVentas?.ventasPorModalidad.contado || 0}</strong>
-                        </div>
-                        <div className="reportes-stat-row">
-                          <span>Cuotas:</span>
-                          <strong>{statsVentas?.ventasPorModalidad.cuotas || 0}</strong>
-                        </div>
-                      </div>
-                    </div>
+                    <StatsCard
+                      title="Ventas"
+                      icon="📈"
+                      variant="ventas"
+                      rows={[
+                        { label: 'Total Ventas:', value: statsVentas?.totalVentas || 0 },
+                        { label: 'Monto Total:', value: formatCurrency(statsVentas?.montoTotalVentas || 0) },
+                        { label: 'Promedio:', value: formatCurrency(statsVentas?.montoPromedioPorVenta || 0) },
+                        { label: 'Activas:', value: statsVentas?.ventasActivas || 0 },
+                        { label: 'Completadas:', value: statsVentas?.ventasCompletadas || 0 },
+                        { label: 'Contado:', value: statsVentas?.ventasPorModalidad.contado || 0 },
+                        { label: 'Cuotas:', value: statsVentas?.ventasPorModalidad.cuotas || 0 },
+                      ]}
+                    />
 
                     {/* Cuotas */}
-                    <div className="reportes-stat-card reportes-stat-card-cuotas">
-                      <div className="reportes-stat-header">
-                        <h3>💰 Cuotas</h3>
-                      </div>
-                      <div className="reportes-stat-body">
-                        <div className="stat-row">
-                          <span>Total Cuotas:</span>
-                          <strong>{statsCuotas?.totalCuotas || 0}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Pendientes:</span>
-                          <strong className="text-warning">{statsCuotas?.cuotasPendientes || 0}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Pagadas:</span>
-                          <strong className="text-success">{statsCuotas?.cuotasPagadas || 0}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Vencidas:</span>
-                          <strong className="text-danger">{statsCuotas?.cuotasVencidas || 0}</strong>
-                        </div>
-                        <div className="stat-divider"></div>
-                        <div className="stat-row">
-                          <span>Monto Total:</span>
-                          <strong>{formatCurrency(statsCuotas?.montoTotalCuotas || 0)}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Monto Pagado:</span>
-                          <strong className="text-success">{formatCurrency(statsCuotas?.montoTotalPagado || 0)}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>% Cobranza:</span>
-                          <strong className="text-primary">{formatPercentage(statsCuotas?.porcentajeCobranza || 0)}</strong>
-                        </div>
-                      </div>
-                    </div>
+                    <StatsCard
+                      title="Cuotas"
+                      icon="💰"
+                      variant="cuotas"
+                      rows={[
+                        { label: 'Total Cuotas:', value: statsCuotas?.totalCuotas || 0 },
+                        { label: 'Pendientes:', value: statsCuotas?.cuotasPendientes || 0 },
+                        { label: 'Pagadas:', value: statsCuotas?.cuotasPagadas || 0 },
+                        { label: 'Vencidas:', value: statsCuotas?.cuotasVencidas || 0 },
+                        { label: 'Monto Total:', value: formatCurrency(statsCuotas?.montoTotalCuotas || 0) },
+                        { label: 'Monto Pagado:', value: formatCurrency(statsCuotas?.montoTotalPagado || 0) },
+                        { label: '% Cobranza:', value: formatPercentage(statsCuotas?.porcentajeCobranza || 0) },
+                      ]}
+                    />
 
                     {/* Pagos */}
-                    <div className="reportes-stat-card reportes-stat-card-pagos">
-                      <div className="reportes-stat-header">
-                        <h3>💵 Pagos (Año Actual)</h3>
-                      </div>
-                      <div className="reportes-stat-body">
-                        <div className="stat-row">
-                          <span>Total Pagos:</span>
-                          <strong>{statsPagos?.totalPagos || 0}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Monto Total:</span>
-                          <strong>{formatCurrency(statsPagos?.montoTotalPagos || 0)}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Promedio:</span>
-                          <strong>{formatCurrency(statsPagos?.promedioMontoPago || 0)}</strong>
-                        </div>
-                        <div className="stat-divider"></div>
-                        <div className="stat-row">
-                          <span>Efectivo:</span>
-                          <strong>{statsPagos?.pagosPorMetodo.efectivo || 0} ({formatCurrency(statsPagos?.montosPorMetodo.efectivo || 0)})</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Transferencia:</span>
-                          <strong>{statsPagos?.pagosPorMetodo.transferencia || 0} ({formatCurrency(statsPagos?.montosPorMetodo.transferencia || 0)})</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Cheque:</span>
-                          <strong>{statsPagos?.pagosPorMetodo.cheque || 0} ({formatCurrency(statsPagos?.montosPorMetodo.cheque || 0)})</strong>
-                        </div>
-                      </div>
-                    </div>
+                    <StatsCard
+                      title="Pagos (Año Actual)"
+                      icon="💵"
+                      variant="pagos"
+                      rows={[
+                        { label: 'Total Pagos:', value: statsPagos?.totalPagos || 0 },
+                        { label: 'Monto Total:', value: formatCurrency(statsPagos?.montoTotalPagos || 0) },
+                        { label: 'Promedio:', value: formatCurrency(statsPagos?.promedioMontoPago || 0) },
+                        { label: 'Efectivo:', value: `${statsPagos?.pagosPorMetodo.efectivo || 0} (${formatCurrency(statsPagos?.montosPorMetodo.efectivo || 0)})` },
+                        { label: 'Transferencia:', value: `${statsPagos?.pagosPorMetodo.transferencia || 0} (${formatCurrency(statsPagos?.montosPorMetodo.transferencia || 0)})` },
+                        { label: 'Cheque:', value: `${statsPagos?.pagosPorMetodo.cheque || 0} (${formatCurrency(statsPagos?.montosPorMetodo.cheque || 0)})` },
+                      ]}
+                    />
 
                     {/* Lotes */}
-                    <div className="reportes-stat-card reportes-stat-card-lotes">
-                      <div className="reportes-stat-header">
-                        <h3>🏘️ Lotes</h3>
-                      </div>
-                      <div className="reportes-stat-body">
-                        <div className="stat-row">
-                          <span>Total Lotes:</span>
-                          <strong>{statsLotes?.totalLotes || 0}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Disponibles:</span>
-                          <strong className="text-success">{statsLotes?.disponibles || 0}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>En Cuotas:</span>
-                          <strong className="text-warning">{statsLotes?.enCuotas || 0}</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Vendidos:</span>
-                          <strong className="text-primary">{statsLotes?.vendidos || 0}</strong>
-                        </div>
-                        <div className="stat-divider"></div>
-                        <div className="stat-row">
-                          <span>Superficie Total:</span>
-                          <strong>{statsLotes?.superficieTotal || 0} m²</strong>
-                        </div>
-                        <div className="stat-row">
-                          <span>Valor Total:</span>
-                          <strong>{formatCurrency(statsLotes?.valorTotal || 0)}</strong>
-                        </div>
-                      </div>
-                    </div>
+                    <StatsCard
+                      title="Lotes"
+                      icon="🏘️"
+                      variant="lotes"
+                      rows={[
+                        { label: 'Total Lotes:', value: statsLotes?.totalLotes || 0 },
+                        { label: 'Disponibles:', value: statsLotes?.disponibles || 0 },
+                        { label: 'En Cuotas:', value: statsLotes?.enCuotas || 0 },
+                        { label: 'Vendidos:', value: statsLotes?.vendidos || 0 },
+                        { label: 'Superficie Total:', value: `${statsLotes?.superficieTotal || 0} m²` },
+                        { label: 'Valor Total:', value: formatCurrency(statsLotes?.valorTotal || 0) },
+                      ]}
+                    />
                   </div>
                 </div>
               )}
@@ -716,167 +620,89 @@ const Reportes = () => {
                       <h3 className="detalle-title">Resumen Detallado por Método de Pago</h3>
                     </div>
                     <div className="detalle-grid">
-                      {/* Efectivo */}
-                      <div className="metodo-card metodo-efectivo">
-                        <div className="metodo-header">
-                          <div className="metodo-icon">💵</div>
-                          <h4>Efectivo</h4>
-                        </div>
-                        <div className="metodo-stats">
-                          <div className="stat-item">
-                            <span className="stat-label">Cantidad:</span>
-                            <span className="stat-value">{statsPagos?.pagosPorMetodo.efectivo || 0} pagos</span>
-                          </div>
-                          <div className="stat-item">
-                            <span className="stat-label">Monto Total:</span>
-                            <span className="stat-value">{formatCurrency(statsPagos?.montosPorMetodo.efectivo || 0)}</span>
-                          </div>
-                          <div className="stat-item">
-                            <span className="stat-label">Promedio:</span>
-                            <span className="stat-value">
-                              {formatCurrency(
-                                (statsPagos?.pagosPorMetodo.efectivo || 0) > 0
-                                  ? (statsPagos?.montosPorMetodo.efectivo || 0) / (statsPagos?.pagosPorMetodo.efectivo || 1)
-                                  : 0
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                      <PaymentMethodCard
+                        method="efectivo"
+                        icon="💵"
+                        title="Efectivo"
+                        quantity={statsPagos?.pagosPorMetodo.efectivo || 0}
+                        totalAmount={statsPagos?.montosPorMetodo.efectivo || 0}
+                        average={
+                          (statsPagos?.pagosPorMetodo.efectivo || 0) > 0
+                            ? (statsPagos?.montosPorMetodo.efectivo || 0) / (statsPagos?.pagosPorMetodo.efectivo || 1)
+                            : 0
+                        }
+                        formatCurrency={formatCurrency}
+                      />
 
-                      {/* Transferencia */}
-                      <div className="metodo-card metodo-transferencia">
-                        <div className="metodo-header">
-                          <div className="metodo-icon">🏦</div>
-                          <h4>Transferencia</h4>
-                        </div>
-                        <div className="metodo-stats">
-                          <div className="stat-item">
-                            <span className="stat-label">Cantidad:</span>
-                            <span className="stat-value">{statsPagos?.pagosPorMetodo.transferencia || 0} pagos</span>
-                          </div>
-                          <div className="stat-item">
-                            <span className="stat-label">Monto Total:</span>
-                            <span className="stat-value">{formatCurrency(statsPagos?.montosPorMetodo.transferencia || 0)}</span>
-                          </div>
-                          <div className="stat-item">
-                            <span className="stat-label">Promedio:</span>
-                            <span className="stat-value">
-                              {formatCurrency(
-                                (statsPagos?.pagosPorMetodo.transferencia || 0) > 0
-                                  ? (statsPagos?.montosPorMetodo.transferencia || 0) / (statsPagos?.pagosPorMetodo.transferencia || 1)
-                                  : 0
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                      <PaymentMethodCard
+                        method="transferencia"
+                        icon="🏦"
+                        title="Transferencia"
+                        quantity={statsPagos?.pagosPorMetodo.transferencia || 0}
+                        totalAmount={statsPagos?.montosPorMetodo.transferencia || 0}
+                        average={
+                          (statsPagos?.pagosPorMetodo.transferencia || 0) > 0
+                            ? (statsPagos?.montosPorMetodo.transferencia || 0) / (statsPagos?.pagosPorMetodo.transferencia || 1)
+                            : 0
+                        }
+                        formatCurrency={formatCurrency}
+                      />
 
-                      {/* Cheque */}
-                      <div className="metodo-card metodo-cheque">
-                        <div className="metodo-header">
-                          <div className="metodo-icon">📝</div>
-                          <h4>Cheque</h4>
-                        </div>
-                        <div className="metodo-stats">
-                          <div className="stat-item">
-                            <span className="stat-label">Cantidad:</span>
-                            <span className="stat-value">{statsPagos?.pagosPorMetodo.cheque || 0} pagos</span>
-                          </div>
-                          <div className="stat-item">
-                            <span className="stat-label">Monto Total:</span>
-                            <span className="stat-value">{formatCurrency(statsPagos?.montosPorMetodo.cheque || 0)}</span>
-                          </div>
-                          <div className="stat-item">
-                            <span className="stat-label">Promedio:</span>
-                            <span className="stat-value">
-                              {formatCurrency(
-                                (statsPagos?.pagosPorMetodo.cheque || 0) > 0
-                                  ? (statsPagos?.montosPorMetodo.cheque || 0) / (statsPagos?.pagosPorMetodo.cheque || 1)
-                                  : 0
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                      <PaymentMethodCard
+                        method="cheque"
+                        icon="📝"
+                        title="Cheque"
+                        quantity={statsPagos?.pagosPorMetodo.cheque || 0}
+                        totalAmount={statsPagos?.montosPorMetodo.cheque || 0}
+                        average={
+                          (statsPagos?.pagosPorMetodo.cheque || 0) > 0
+                            ? (statsPagos?.montosPorMetodo.cheque || 0) / (statsPagos?.pagosPorMetodo.cheque || 1)
+                            : 0
+                        }
+                        formatCurrency={formatCurrency}
+                      />
 
-                      {/* Tarjeta */}
                       {(statsPagos?.pagosPorMetodo.tarjeta || 0) > 0 && (
-                        <div className="metodo-card metodo-tarjeta">
-                          <div className="metodo-header">
-                            <div className="metodo-icon">💳</div>
-                            <h4>Tarjeta</h4>
-                          </div>
-                          <div className="metodo-stats">
-                            <div className="stat-item">
-                              <span className="stat-label">Cantidad:</span>
-                              <span className="stat-value">{statsPagos?.pagosPorMetodo.tarjeta || 0} pagos</span>
-                            </div>
-                            <div className="stat-item">
-                              <span className="stat-label">Monto Total:</span>
-                              <span className="stat-value">{formatCurrency(statsPagos?.montosPorMetodo.tarjeta || 0)}</span>
-                            </div>
-                            <div className="stat-item">
-                              <span className="stat-label">Promedio:</span>
-                              <span className="stat-value">
-                                {formatCurrency(
-                                  (statsPagos?.pagosPorMetodo.tarjeta || 0) > 0
-                                    ? (statsPagos?.montosPorMetodo.tarjeta || 0) / (statsPagos?.pagosPorMetodo.tarjeta || 1)
-                                    : 0
-                                )}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                        <PaymentMethodCard
+                          method="tarjeta"
+                          icon="💳"
+                          title="Tarjeta"
+                          quantity={statsPagos?.pagosPorMetodo.tarjeta || 0}
+                          totalAmount={statsPagos?.montosPorMetodo.tarjeta || 0}
+                          average={
+                            (statsPagos?.pagosPorMetodo.tarjeta || 0) > 0
+                              ? (statsPagos?.montosPorMetodo.tarjeta || 0) / (statsPagos?.pagosPorMetodo.tarjeta || 1)
+                              : 0
+                          }
+                          formatCurrency={formatCurrency}
+                        />
                       )}
                     </div>
                   </div>
 
                   {/* Indicadores de Cobranza */}
                   <div className="cobranza-indicadores">
-                    <div className="indicador-card">
-                      <h4>Estado de Cuotas</h4>
-                      <div className="indicador-content">
-                        <div className="indicador-item">
-                          <span className="indicador-label">Total Cuotas:</span>
-                          <span className="indicador-valor">{statsCuotas?.totalCuotas || 0}</span>
-                        </div>
-                        <div className="indicador-item">
-                          <span className="indicador-label">Pagadas:</span>
-                          <span className="indicador-valor indicador-success">{statsCuotas?.cuotasPagadas || 0}</span>
-                        </div>
-                        <div className="indicador-item">
-                          <span className="indicador-label">Pendientes:</span>
-                          <span className="indicador-valor indicador-warning">{statsCuotas?.cuotasPendientes || 0}</span>
-                        </div>
-                        <div className="indicador-item">
-                          <span className="indicador-label">Vencidas:</span>
-                          <span className="indicador-valor indicador-danger">{statsCuotas?.cuotasVencidas || 0}</span>
-                        </div>
-                      </div>
-                    </div>
+                    <CobranzaSummaryCard
+                      title="Estado de Cuotas"
+                      icon="📋"
+                      items={[
+                        { label: 'Cuotas totales:', value: statsCuotas?.totalCuotas || 0 },
+                        { label: 'Pagadas:', value: statsCuotas?.cuotasPagadas || 0, variant: 'success' },
+                        { label: 'Pendientes:', value: statsCuotas?.cuotasPendientes || 0, variant: 'warning' },
+                        { label: 'Vencidas:', value: statsCuotas?.cuotasVencidas || 0, variant: 'danger' },
+                      ]}
+                    />
 
-                    <div className="indicador-card">
-                      <h4>Montos</h4>
-                      <div className="indicador-content">
-                        <div className="indicador-item">
-                          <span className="indicador-label">Total a Cobrar:</span>
-                          <span className="indicador-valor">{formatCurrency(statsCuotas?.montoTotalCuotas || 0)}</span>
-                        </div>
-                        <div className="indicador-item">
-                          <span className="indicador-label">Cobrado:</span>
-                          <span className="indicador-valor indicador-success">{formatCurrency(statsCuotas?.montoTotalPagado || 0)}</span>
-                        </div>
-                        <div className="indicador-item">
-                          <span className="indicador-label">Pendiente:</span>
-                          <span className="indicador-valor indicador-warning">{formatCurrency(statsCuotas?.montoTotalPendiente || 0)}</span>
-                        </div>
-                        <div className="indicador-item">
-                          <span className="indicador-label">Eficiencia:</span>
-                          <span className="indicador-valor indicador-primary">{formatPercentage(statsCuotas?.porcentajeCobranza || 0)}</span>
-                        </div>
-                      </div>
-                    </div>
+                    <CobranzaSummaryCard
+                      title="Montos"
+                      icon="💰"
+                      items={[
+                        { label: 'Total a Cobrar:', value: formatCurrency(statsCuotas?.montoTotalCuotas || 0) },
+                        { label: 'Cobrado:', value: formatCurrency(statsCuotas?.montoTotalPagado || 0), variant: 'success' },
+                        { label: 'Pendiente:', value: formatCurrency(statsCuotas?.montoTotalPendiente || 0), variant: 'warning' },
+                        { label: 'Eficiencia:', value: formatPercentage(statsCuotas?.porcentajeCobranza || 0), variant: 'primary' },
+                      ]}
+                    />
                   </div>
                 </div>
               )}

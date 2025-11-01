@@ -1,0 +1,111 @@
+/* ============================================================================
+   COMPONENTE: ERROR MESSAGE
+   Estilos aislados para mensajes de error
+   ============================================================================ */
+
+.error-message-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.error-message-card {
+  max-width: 28rem;
+  width: 100%;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  text-align: center;
+}
+
+.error-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background-color: #fee2e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+}
+
+.error-icon {
+  width: 40px !important;
+  height: 40px !important;
+  color: #dc2626;
+  stroke-width: 2;
+}
+
+.error-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.75rem 0;
+  text-align: center;
+}
+
+.error-description {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.error-retry-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: #2563eb;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: inherit;
+}
+
+.error-retry-button:hover {
+  background-color: #1d4ed8;
+}
+
+.error-retry-button:active {
+  transform: scale(0.98);
+}
+
+.retry-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .error-message-card {
+    padding: 1.5rem;
+  }
+
+  .error-icon-wrapper {
+    width: 64px;
+    height: 64px;
+  }
+
+  .error-icon {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .error-title {
+    font-size: 1rem;
+  }
+
+  .error-description {
+    font-size: 0.8125rem;
+  }
+}

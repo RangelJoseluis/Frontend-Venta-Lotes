@@ -79,6 +79,24 @@ class EstadisticasCuotasService {
     try {
       const response = await httpClient.get(`${API_CONFIG.BASE_URL}/cuotas/consultas/vencidas`);
       console.log('✅ Cuotas vencidas obtenidas:', response.data);
+      
+      // DEBUG: Verificar datos de cada cuota
+      response.data.forEach((cuota: any, index: number) => {
+        console.log(`🔍 Cuota ${index + 1}:`);
+        console.log('   - numeroCuota:', cuota.numeroCuota);
+        console.log('   - cliente:', cuota.cliente);
+        console.log('   - lote:', cuota.lote);
+        console.log('   - Tiene cliente?', !!cuota.cliente);
+        console.log('   - Tiene lote?', !!cuota.lote);
+        if (cuota.cliente) {
+          console.log('   - Cliente nombres:', cuota.cliente.nombres);
+          console.log('   - Cliente apellidos:', cuota.cliente.apellidos);
+        }
+        if (cuota.lote) {
+          console.log('   - Lote código:', cuota.lote.codigo);
+        }
+      });
+      
       return response.data;
     } catch (error: any) {
       console.error('❌ Error al obtener cuotas vencidas:', error.response?.data || error.message);
