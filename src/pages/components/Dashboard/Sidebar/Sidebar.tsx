@@ -10,7 +10,8 @@ import {
   Home,
   Map,
   Settings,
-  CreditCard
+  CreditCard,
+  AlertTriangle
 } from 'lucide-react';
 import NavLink from './NavLink';
 import './Sidebar.css';
@@ -51,6 +52,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     { href: "/ventas", icon: FileText, label: "Ventas" },
     { href: "/reportes", icon: BarChart3, label: "Reportes" },
     { href: "/pagos", icon: CreditCard, label: "Pagos" },
+    { 
+      href: "/gestion-mora", 
+      icon: AlertTriangle, 
+      label: "Mora",
+      submenu: [
+        { href: "/gestion-mora", label: "Gestión de Mora" },
+        { href: "/reportes-mora", label: "Reportes de Mora" }
+      ]
+    },
     { href: "/clientes", icon: Users, label: "Clientes" },
   ];
 

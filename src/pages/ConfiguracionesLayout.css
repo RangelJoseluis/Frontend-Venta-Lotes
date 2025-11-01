@@ -1,0 +1,269 @@
+/* ============================================================================
+   LAYOUT: CONFIGURACIONES CON SIDEBAR INTERNO
+   Estilos para el layout principal de configuraciones
+   ============================================================================ */
+
+.config-layout-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #f9fafb;
+  padding: 24px;
+}
+
+/* Header Global */
+.config-layout-header {
+  max-width: 1600px;
+  margin: 0 auto 24px;
+}
+
+.config-layout-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 16px 0 0 0;
+}
+
+/* Layout Principal */
+.config-layout-content {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Sidebar Interno */
+.config-sidebar {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 24px;
+}
+
+.config-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.config-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  width: 100%;
+}
+
+.config-sidebar-item:hover:not(.disabled) {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+}
+
+.config-sidebar-item.active {
+  background: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.config-sidebar-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.config-sidebar-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  color: #6b7280;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.config-sidebar-item.active .config-sidebar-item-icon {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.config-sidebar-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.config-sidebar-item-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.config-sidebar-item.active .config-sidebar-item-label {
+  color: #1d4ed8;
+}
+
+.config-sidebar-item-desc {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Contenido Principal */
+.config-main {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-height: 500px;
+}
+
+.config-contenido {
+  width: 100%;
+}
+
+.config-titulo {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.config-descripcion {
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* Secciones de Configuración */
+.config-seccion-header-small {
+  margin-bottom: 16px;
+}
+
+.config-seccion-header-small h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Toggle Switch */
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  background: #d1d5db;
+  border-radius: 12px;
+  transition: background 0.3s;
+}
+
+.toggle-input:checked + .toggle-slider {
+  background: #10b981;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-input:checked + .toggle-slider::before {
+  transform: translateX(24px);
+}
+
+.toggle-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Ejemplo de Cálculo */
+.ejemplo-calculo {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.ejemplo-calculo p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.ejemplo-calculo hr {
+  margin: 12px 0;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+}
+
+.ejemplo-calculo .resultado {
+  font-size: 16px;
+  font-weight: 700;
+  color: #059669;
+  margin-top: 12px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .config-layout-content {
+    grid-template-columns: 1fr;
+  }
+
+  .config-sidebar {
+    position: static;
+  }
+
+  .config-sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .config-sidebar-item {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .config-layout-container {
+    padding: 16px;
+  }
+
+  .config-sidebar-nav {
+    flex-direction: column;
+  }
+
+  .config-sidebar-item {
+    min-width: auto;
+  }
+}

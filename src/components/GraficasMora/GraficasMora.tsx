@@ -26,7 +26,7 @@ interface GraficasMoraProps {
 
 export default function GraficasMora({ reportePeriodo, reporteClientes, tipo }: GraficasMoraProps) {
   
-  // Formatear moneda
+  // Formatear moneda en pesos colombianos
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
       return `$${(value / 1000000).toFixed(1)}M`;
@@ -38,6 +38,20 @@ export default function GraficasMora({ reportePeriodo, reporteClientes, tipo }: 
 
   // GRÁFICA 1: Tendencia de Mora Mensual (Línea)
   if (tipo === 'tendencia' && reportePeriodo && reportePeriodo.length > 0) {
+    // Validar que haya datos reales (no solo ceros)
+    const hayDatosReales = reportePeriodo.some(p => p.moraGenerada > 0 || p.moraPagada > 0);
+    
+    if (!hayDatosReales) {
+      return (
+        <div className="grafica-container">
+          <h3 className="grafica-titulo">Tendencia de Mora Mensual</h3>
+          <div className="sin-datos">
+            <p>📊 No hay datos de mora para este período</p>
+            <p className="sin-datos-hint">Los datos aparecerán cuando se genere mora en las cuotas vencidas</p>
+          </div>
+        </div>
+      );
+    }
     const dataMoraGenerada = reportePeriodo.map(p => ({
       x: p.periodo,
       y: p.moraGenerada,
@@ -53,8 +67,8 @@ export default function GraficasMora({ reportePeriodo, reporteClientes, tipo }: 
         <h3 className="grafica-titulo">Tendencia de Mora Mensual</h3>
         <VictoryChart
           theme={VictoryTheme.material}
-          height={300}
-          padding={{ top: 20, bottom: 50, left: 80, right: 20 }}
+          height={150}
+          padding={{ top: 10, bottom: 25, left: 50, right: 10 }}
         >
           <VictoryAxis
             style={{
@@ -117,6 +131,20 @@ export default function GraficasMora({ reportePeriodo, reporteClientes, tipo }: 
 
   // GRÁFICA 2: Mora por Cliente (Barras Horizontales - Top 10)
   if (tipo === 'clientes' && reporteClientes && reporteClientes.length > 0) {
+    // Validar que haya clientes con mora real
+    const clientesConMora = reporteClientes.filter(c => c.moraPendiente > 0);
+    
+    if (clientesConMora.length === 0) {
+      return (
+        <div className="grafica-container">
+          <h3 className="grafica-titulo">Top 10 Clientes por Mora Pendiente</h3>
+          <div className="sin-datos">
+            <p>📊 No hay clientes con mora pendiente</p>
+            <p className="sin-datos-hint">¡Excelente! Todos los pagos están al día</p>
+          </div>
+        </div>
+      );
+    }
     const top10 = reporteClientes.slice(0, 10);
     const dataClientes = top10.map((cliente, index) => ({
       x: index + 1,
@@ -130,8 +158,8 @@ export default function GraficasMora({ reportePeriodo, reporteClientes, tipo }: 
         <VictoryChart
           theme={VictoryTheme.material}
           domainPadding={{ x: 20 }}
-          height={400}
-          padding={{ top: 20, bottom: 50, left: 100, right: 50 }}
+          height={150}
+          padding={{ top: 10, bottom: 25, left: 60, right: 25 }}
         >
           <VictoryAxis
             tickValues={dataClientes.map(d => d.x)}
@@ -173,6 +201,20 @@ export default function GraficasMora({ reportePeriodo, reporteClientes, tipo }: 
 
   // GRÁFICA 3: Efectividad de Cobro (Pie Chart)
   if (tipo === 'efectividad' && reportePeriodo && reportePeriodo.length > 0) {
+    // Validar que haya mora generada
+    const hayMora = reportePeriodo.some(p => p.moraGenerada > 0);
+    
+    if (!hayMora) {
+      return (
+        <div className="grafica-container">
+          <h3 className="grafica-titulo">Efectividad de Cobro de Mora</h3>
+          <div className="sin-datos">
+            <p>📊 No hay datos de mora para analizar</p>
+            <p className="sin-datos-hint">Las estadísticas aparecerán cuando se genere y cobre mora</p>
+          </div>
+        </div>
+      );
+    }
     const totalGenerada = reportePeriodo.reduce((sum, p) => sum + p.moraGenerada, 0);
     const totalCobrada = reportePeriodo.reduce((sum, p) => sum + p.moraPagada, 0);
     const totalPendiente = reportePeriodo.reduce((sum, p) => sum + p.moraPendiente, 0);
@@ -194,14 +236,14 @@ export default function GraficasMora({ reportePeriodo, reporteClientes, tipo }: 
         <VictoryPie
           data={dataPie}
           colorScale={['#059669', '#f59e0b']}
-          labelRadius={80}
+          labelRadius={60}
           style={{
-            labels: { fontSize: 12, fill: 'white', fontWeight: 'bold' }
+            labels: { fontSize: 10, fill: 'white', fontWeight: 'bold' }
           }}
-          innerRadius={80}
+          innerRadius={60}
           labelComponent={<VictoryLabel />}
-          height={300}
-          padding={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          height={200}
+          padding={{ top: 10, bottom: 10, left: 10, right: 10 }}
         />
         <div className="leyenda-pie">
           <div className="leyenda-item">

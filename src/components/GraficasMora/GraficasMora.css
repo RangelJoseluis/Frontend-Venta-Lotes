@@ -3,17 +3,30 @@
    Estilos para visualizaciones con Victory
    ============================================================================ */
 
+/* Layout horizontal para gráficas */
+.graficas-horizontales {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
 .grafica-container {
   background: #ffffff;
-  padding: 24px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0;
+}
+
+/* Para gráficas que van solas (efectividad) */
+.grafica-container.full-width {
   margin-bottom: 24px;
 }
 
 .grafica-titulo {
-  margin: 0 0 20px 0;
-  font-size: 18px;
+  margin: 0 0 15px 0;
+  font-size: 16px;
   font-weight: 700;
   color: #1f2937;
   text-align: center;
@@ -69,19 +82,41 @@
 /* Sin Datos */
 .sin-datos {
   text-align: center;
-  padding: 40px;
-  color: #6b7280;
-  font-size: 14px;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-radius: 12px;
+  border: 2px dashed #d1d5db;
+}
+
+.sin-datos p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.sin-datos-hint {
+  margin-top: 8px !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #6b7280 !important;
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .graficas-horizontales {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
 @media (max-width: 640px) {
   .grafica-container {
     padding: 16px;
   }
 
   .grafica-titulo {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .porcentaje-valor {

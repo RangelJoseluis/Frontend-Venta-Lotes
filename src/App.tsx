@@ -12,7 +12,9 @@ import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
 import ModelosCasa from './pages/ModelosCasa';
 import MapaLotes from './pages/MapaLotes';
-import Configuraciones from './pages/Configuraciones';
+import ConfiguracionesLayout from './pages/ConfiguracionesLayout';
+import ConfiguracionZona from './pages/ConfiguracionZona';
+import ConfiguracionMora from './pages/ConfiguracionMora';
 import GestionServicios from './pages/GestionServicios';
 import FormularioServicio from './pages/FormularioServicio';
 import GestionVentas from './pages/GestionVentas';
@@ -223,14 +225,20 @@ function App() {
           }
         />
 
+        {/* Configuraciones con Sidebar Interno */}
         <Route
           path="/configuraciones"
           element={
             <PrivateRoute>
-              <Configuraciones />
+              <ConfiguracionesLayout />
             </PrivateRoute>
           }
-        />
+        >
+          {/* Rutas Anidadas de Configuración */}
+          <Route index element={<ConfiguracionZona />} />
+          <Route path="zona" element={<ConfiguracionZona />} />
+          <Route path="mora" element={<ConfiguracionMora />} />
+        </Route>
 
         {/* Ruta 404 - Redirige al login */}
         <Route path="*" element={<Navigate to="/login" replace />} />
