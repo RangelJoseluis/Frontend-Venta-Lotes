@@ -198,6 +198,11 @@ export interface Pago {
   };
   monto: number;
   montoFormateado: string;
+  // Discriminación de pago (mora/capital)
+  montoAplicadoMora?: number;
+  montoAplicadoCapital?: number;
+  montoAplicadoMoraFormateado?: string;
+  montoAplicadoCapitalFormateado?: string;
   fechaPago: string;
   fechaPagoFormateada: string;
   metodoPago: MetodoPago;

@@ -6,6 +6,7 @@ import ValueDistribution from './components/Dashboard/ValueDistribution/ValueDis
 import QuickActions from './components/Dashboard/QuickActions/QuickActions';
 import RecentActivity from './components/Dashboard/RecentActivity/RecentActivity';
 import ImportantAlerts from './components/Dashboard/ImportantAlerts/ImportantAlerts';
+import MoraWidget from './components/Dashboard/MoraWidget/MoraWidget';
 import LoadingSpinner from './components/Dashboard/UI/LoadingSpinner';
 import { lotesService } from '../services/lotes.service';
 import estadisticasVentasService from '../services/estadisticas-ventas.service';
@@ -134,6 +135,9 @@ const Dashboard = () => {
                 ventasActivas={statsVentas?.ventasActivas || 0}
               />
             </div>
+
+            {/* Widget de Mora */}
+            <MoraWidget />
 
             <QuickActions />
 

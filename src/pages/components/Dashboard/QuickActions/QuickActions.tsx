@@ -1,4 +1,4 @@
-import { Plus, FileText, Wallet } from 'lucide-react';
+import { Plus, FileText, Wallet, AlertTriangle, BarChart3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './QuickActions.css';
 
@@ -26,13 +26,29 @@ const QuickActions = () => {
       description: 'Aplicar a cuota',
       color: 'amber',
       onClick: () => navigate('/registrar-pago')
+    },
+    {
+      icon: AlertTriangle,
+      title: 'Gestión de Mora',
+      description: 'Cuotas vencidas',
+      color: 'red',
+      onClick: () => navigate('/gestion-mora')
+    },
+    {
+      icon: BarChart3,
+      title: 'Reportes de Mora',
+      description: 'Análisis y gráficas',
+      color: 'blue',
+      onClick: () => navigate('/reportes-mora')
     }
   ];
 
   const colorClasses = {
     slate: { icon: 'bg-slate-100 text-slate-600 group-hover:bg-blue-100 group-hover:text-blue-600' },
     emerald: { icon: 'bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100' },
-    amber: { icon: 'bg-amber-50 text-amber-600 group-hover:bg-amber-100' }
+    amber: { icon: 'bg-amber-50 text-amber-600 group-hover:bg-amber-100' },
+    red: { icon: 'bg-red-50 text-red-600 group-hover:bg-red-100' },
+    blue: { icon: 'bg-blue-50 text-blue-600 group-hover:bg-blue-100' }
   };
 
   return (

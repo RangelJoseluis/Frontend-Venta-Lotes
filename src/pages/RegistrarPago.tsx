@@ -26,6 +26,7 @@ import { cuotasService } from '../services/cuotas.service';
 import { pagosService } from '../services/pagos.service';
 import { getErrorMessage } from '../services/http.service';
 import type { VentaResumen, Cuota, CrearPagoDto, CrearPagoResponse, MetodoPago } from '../types';
+import DiscriminacionPago from '../components/DiscriminacionPago';
 import './RegistrarPago.css';
 
 interface PagoFormData {
@@ -242,6 +243,18 @@ export default function RegistrarPago() {
                   </div>
                 )}
               </div>
+
+              {/* Discriminación de Pago (Mora/Capital) */}
+              {(pagoResponse.pago.montoAplicadoMora || pagoResponse.pago.montoAplicadoCapital) && (
+                <DiscriminacionPago
+                  montoTotal={pagoResponse.pago.monto}
+                  montoTotalFormateado={pagoResponse.pago.montoFormateado}
+                  montoAplicadoMora={pagoResponse.pago.montoAplicadoMora}
+                  montoAplicadoCapital={pagoResponse.pago.montoAplicadoCapital}
+                  montoAplicadoMoraFormateado={pagoResponse.pago.montoAplicadoMoraFormateado}
+                  montoAplicadoCapitalFormateado={pagoResponse.pago.montoAplicadoCapitalFormateado}
+                />
+              )}
 
               <div className="success-actions">
                 <button

@@ -1,0 +1,247 @@
+/* ============================================================================
+   COMPONENTE: DISCRIMINACIÓN DE PAGO
+   Estilos para mostrar la distribución de pagos entre mora y capital
+   ============================================================================ */
+
+.discriminacion-pago {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 12px 0;
+}
+
+/* Encabezado */
+.discriminacion-pago .encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.discriminacion-pago .encabezado h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.discriminacion-pago .monto-total-badge {
+  background: #3b82f6;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Barra de distribución visual */
+.barra-distribucion {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #f3f4f6;
+}
+
+.barra-distribucion .segmento {
+  transition: width 0.3s ease;
+}
+
+.barra-distribucion .segmento.mora {
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
+.barra-distribucion .segmento.capital {
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+/* Detalle de discriminación */
+.detalle-discriminacion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-detalle:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item-detalle.mora {
+  background: #fef2f2;
+  border-left: 4px solid #ef4444;
+}
+
+.item-detalle.capital {
+  background: #f0fdf4;
+  border-left: 4px solid #10b981;
+}
+
+.icono-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icono-wrapper .icono {
+  font-size: 20px;
+}
+
+.icono-wrapper .label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.valores {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.valores .monto {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.item-detalle.mora .valores .monto {
+  color: #dc2626;
+}
+
+.item-detalle.capital .valores .monto {
+  color: #059669;
+}
+
+.valores .porcentaje {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Nota informativa */
+.nota-info {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fffbeb;
+  border: 1px solid #fbbf24;
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.nota-info .icono-info {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.nota-info .texto {
+  font-size: 13px;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+/* Sin discriminación */
+.discriminacion-pago.sin-discriminacion {
+  padding: 12px;
+  background: #f9fafb;
+}
+
+.monto-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.monto-total .label {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.monto-total .valor {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* ============================================================================
+   MODO COMPACTO (para tablas)
+   ============================================================================ */
+
+.discriminacion-pago.compacto {
+  display: inline-flex;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  margin: 0;
+}
+
+.discriminacion-pago.compacto .item-discriminacion {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.discriminacion-pago.compacto .item-discriminacion.mora {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.discriminacion-pago.compacto .item-discriminacion.capital {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.discriminacion-pago.compacto .icono {
+  font-size: 14px;
+}
+
+.discriminacion-pago.compacto .valor {
+  font-size: 13px;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 640px) {
+  .discriminacion-pago {
+    padding: 12px;
+  }
+
+  .discriminacion-pago .encabezado h4 {
+    font-size: 14px;
+  }
+
+  .discriminacion-pago .monto-total-badge {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+
+  .valores .monto {
+    font-size: 14px;
+  }
+
+  .nota-info .texto {
+    font-size: 12px;
+  }
+}

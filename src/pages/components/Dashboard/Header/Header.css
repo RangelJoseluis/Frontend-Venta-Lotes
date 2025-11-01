@@ -26,6 +26,13 @@
   min-width: 0;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
 .mobile-menu-btn {
   padding: 0.5rem;
   background: transparent;

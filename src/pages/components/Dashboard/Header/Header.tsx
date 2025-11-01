@@ -1,5 +1,6 @@
 import { Menu } from 'lucide-react';
 import UserMenu from './UserMenu';
+import NotificacionesPanel from '../../../../components/NotificacionesPanel';
 import './Header.css';
 
 interface HeaderProps {
@@ -26,7 +27,10 @@ const Header = ({ setSidebarOpen, userMenuOpen, setUserMenuOpen }: HeaderProps) 
         </div>
       </div>
 
-      <UserMenu isOpen={userMenuOpen} setIsOpen={setUserMenuOpen} />
+      <div className="header-right">
+        <NotificacionesPanel />
+        <UserMenu isOpen={userMenuOpen} setIsOpen={setUserMenuOpen} />
+      </div>
     </header>
   );
 };

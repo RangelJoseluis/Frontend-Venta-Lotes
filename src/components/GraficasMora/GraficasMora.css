@@ -1,0 +1,90 @@
+/* ============================================================================
+   COMPONENTE: GRÁFICAS DE MORA
+   Estilos para visualizaciones con Victory
+   ============================================================================ */
+
+.grafica-container {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.grafica-titulo {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+}
+
+/* Porcentaje de Efectividad */
+.porcentaje-efectividad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-radius: 8px;
+}
+
+.porcentaje-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+.porcentaje-valor {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1d4ed8;
+}
+
+/* Leyenda del Pie Chart */
+.leyenda-pie {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.leyenda-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* Sin Datos */
+.sin-datos {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .grafica-container {
+    padding: 16px;
+  }
+
+  .grafica-titulo {
+    font-size: 16px;
+  }
+
+  .porcentaje-valor {
+    font-size: 24px;
+  }
+}

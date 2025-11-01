@@ -23,6 +23,7 @@
     "react-router-dom": "^7.9.4",
     "react-select": "^5.10.2",
     "recharts": "^3.3.0",
+    "victory": "^37.3.6",
     "zod": "^4.1.12",
     "zustand": "^5.0.8"
   },

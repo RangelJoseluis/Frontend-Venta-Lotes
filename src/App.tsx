@@ -17,6 +17,8 @@ import GestionServicios from './pages/GestionServicios';
 import FormularioServicio from './pages/FormularioServicio';
 import GestionVentas from './pages/GestionVentas';
 import GestionPagos from './pages/GestionPagos';
+import GestionMora from './pages/GestionMora';
+import ReportesMora from './pages/ReportesMora';
 import PrivateRoute from './components/PrivateRoute';
 import { useAuthStore } from './store/authStore';
 
@@ -197,6 +199,26 @@ function App() {
           element={
             <PrivateRoute>
               <GestionPagos />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Gestión de Mora */}
+        <Route
+          path="/gestion-mora"
+          element={
+            <PrivateRoute>
+              <GestionMora />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Reportes de Mora */}
+        <Route
+          path="/reportes-mora"
+          element={
+            <PrivateRoute>
+              <ReportesMora />
             </PrivateRoute>
           }
         />
