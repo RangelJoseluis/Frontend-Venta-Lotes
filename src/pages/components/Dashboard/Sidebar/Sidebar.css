@@ -173,6 +173,15 @@
   width: 1.75rem;
   height: 1.75rem;
   flex-shrink: 0;
+  color: #94a3b8; /* Color slate-400 para iconos */
+}
+
+.nav-link-active .nav-link-icon {
+  color: #60a5fa; /* Color azul para iconos activos */
+}
+
+.nav-link:hover .nav-link-icon {
+  color: #60a5fa; /* Color azul al hacer hover */
 }
 
 .nav-link-text {
@@ -289,15 +298,36 @@
   flex-direction: column;
 }
 
+/* Estilos para botones con submenú (para que no tengan fondo blanco) */
+.nav-link-with-submenu button.nav-link {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+}
+
 .nav-link-with-submenu .nav-link {
   position: relative;
   justify-content: space-between;
+}
+
+/* Centrar icono cuando el sidebar está cerrado */
+.nav-link-with-submenu button.nav-link.nav-link-collapsed {
+  justify-content: center;
 }
 
 .nav-link-chevron {
   margin-left: auto;
   color: #94a3b8;
   transition: transform 0.2s ease;
+}
+
+/* Ocultar chevron cuando el sidebar está cerrado */
+.nav-link-collapsed .nav-link-chevron {
+  display: none;
 }
 
 .nav-submenu {
