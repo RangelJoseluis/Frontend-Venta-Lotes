@@ -58,6 +58,11 @@ export interface LoteParaMapa {
   imagenesUrls?: string[];
   creadoEn: string;
   actualizadoEn: string;
+  // Información del cliente propietario (solo cuando está vendido o en cuotas)
+  clienteUid?: string;
+  clienteNombre?: string;
+  clienteCedula?: string;
+  clienteTelefono?: string;
 }
 
 // ============================================================================

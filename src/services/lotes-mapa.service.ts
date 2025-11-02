@@ -40,7 +40,12 @@ const lotesMapaService = {
       } : undefined,
       imagenesUrls: loteBackend.imagenesUrls,
       creadoEn: loteBackend.creadoEn,
-      actualizadoEn: loteBackend.actualizadoEn
+      actualizadoEn: loteBackend.actualizadoEn,
+      // Datos del cliente propietario (para zoom automático)
+      clienteUid: loteBackend.clienteUid,
+      clienteNombre: loteBackend.clienteNombre,
+      clienteCedula: loteBackend.clienteCedula,
+      clienteTelefono: loteBackend.clienteTelefono
     };
   },
 
