@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 1.5rem;
+  gap: 1rem;
   z-index: 1000;
   border: none;
   flex-wrap: wrap;
@@ -632,80 +632,105 @@ path.leaflet-interactive {
 }
 
 /* ============================================================================
-   BÚSQUEDA POR CLIENTE
+   BÚSQUEDA POR CLIENTE (INLINE)
    ============================================================================ */
 
-.busqueda-cliente-container {
-  margin: 16px 0;
-  padding: 16px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 2px solid #e5e7eb;
-  transition: all 0.3s ease;
+.busqueda-cliente-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px;
+  flex: 0 1 auto !important;
+  max-width: 400px !important;
+  min-width: 280px !important;
+  width: auto !important;
+  order: 3;
 }
 
-.busqueda-cliente-container:focus-within {
-  border-color: #3b82f6;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+.busqueda-cliente-inline {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto !important;
+  min-width: 300px !important;
+  width: 100% !important;
+  height: 2.75rem;
 }
 
-.busqueda-cliente-select-wrapper {
-  width: 100%;
+/* Forzar el ancho del control de react-select */
+.busqueda-cliente-inline > div {
+  width: 100% !important;
+  min-width: 300px !important;
 }
 
-/* Estilos adicionales para react-select */
-.busqueda-cliente-select-wrapper .css-1s2u09g-control,
-.busqueda-cliente-select-wrapper .css-1pahdxg-control {
-  min-height: 44px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.busqueda-cliente-select-wrapper .css-1s2u09g-control:hover,
-.busqueda-cliente-select-wrapper .css-1pahdxg-control:hover {
-  border-color: #3b82f6;
-}
-
-.busqueda-cliente-select-wrapper .css-1okebmr-indicatorSeparator {
+/* Ocultar el separador de indicadores en react-select */
+.busqueda-cliente-inline .css-1okebmr-indicatorSeparator {
   display: none;
 }
 
-.busqueda-cliente-select-wrapper .css-tlfecz-indicatorContainer,
-.busqueda-cliente-select-wrapper .css-1gtu0rj-indicatorContainer {
+/* Ajustar el color de los indicadores (iconos) */
+.busqueda-cliente-inline .css-tlfecz-indicatorContainer,
+.busqueda-cliente-inline .css-1gtu0rj-indicatorContainer {
   color: #6b7280;
+  padding: 8px 4px;
 }
 
-.busqueda-cliente-select-wrapper .css-26l3qy-menu {
-  z-index: 9999;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
+.busqueda-cliente-inline .css-1gtu0rj-indicatorContainer:hover {
+  color: #3b82f6;
 }
 
-.busqueda-cliente-info {
-  margin: 12px 0 0 0;
-  padding: 8px 12px;
+/* Badge compacto de resultados - siempre presente pero invisible */
+.busqueda-cliente-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  height: 2.75rem;
+  min-width: 80px;
   background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
   color: #1e40af;
-  text-align: center;
+  white-space: nowrap;
+  border: 1px solid #bfdbfe;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.busqueda-cliente-badge.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 1200px) {
+  .busqueda-cliente-wrapper {
+    order: 2;
+    max-width: 420px;
+  }
+
+  .busqueda-cliente-inline {
+    flex: 1;
+  }
 }
 
 @media (max-width: 768px) {
-  .busqueda-cliente-container {
-    margin: 12px 0;
-    padding: 12px;
+  .busqueda-cliente-wrapper {
+    width: 100%;
+    max-width: 100%;
+    order: 3;
+    flex-direction: column;
   }
 
-  .busqueda-cliente-field {
-    padding: 10px 12px;
+  .busqueda-cliente-inline {
+    width: 100%;
   }
 
-  .busqueda-cliente-input {
-    font-size: 13px;
+  .busqueda-cliente-badge {
+    width: 100%;
+    min-width: 100%;
+    justify-content: center;
   }
 }

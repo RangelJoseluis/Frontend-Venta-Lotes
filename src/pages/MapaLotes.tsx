@@ -341,60 +341,6 @@ const MapaLotes = () => {
           </span>
         </div>
 
-        {/* Búsqueda por Cliente - Solo Admin */}
-        {rol === 'admin' && (
-          <div className="busqueda-cliente-container">
-            <div className="busqueda-cliente-select-wrapper">
-              <Select
-                options={clientes.map(cliente => ({
-                  value: cliente.uid,
-                  label: `${cliente.nombres} ${cliente.apellidos} - ${cliente.documento}`,
-                  cliente: cliente
-                }))}
-                value={clienteSeleccionado}
-                onChange={(selected) => {
-                  setClienteSeleccionado(selected);
-                  // Actualizar filtro con nombre o cédula
-                  if (selected) {
-                    setFiltros({ ...filtros, busquedaCliente: selected.label });
-                  } else {
-                    setFiltros({ ...filtros, busquedaCliente: '' });
-                  }
-                }}
-                isClearable
-                isSearchable
-                isLoading={cargandoClientes}
-                placeholder="Buscar cliente por nombre o cédula..."
-                noOptionsMessage={() => 'No se encontraron clientes'}
-                loadingMessage={() => 'Cargando clientes...'}
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    borderRadius: '8px',
-                    borderColor: '#e5e7eb',
-                    boxShadow: 'none',
-                    '&:hover': {
-                      borderColor: '#3b82f6'
-                    }
-                  }),
-                  menu: (base) => ({
-                    ...base,
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-                  })
-                }}
-              />
-            </div>
-            {clienteSeleccionado && (
-              <p className="busqueda-cliente-info">
-                {lotesFiltrados.length === 1 
-                  ? `1 lote encontrado para ${clienteSeleccionado.label}` 
-                  : `${lotesFiltrados.length} lotes encontrados para ${clienteSeleccionado.label}`}
-              </p>
-            )}
-          </div>
-        )}
-
         {/* Selector de Capas */}
         <div className="selector-capas">
           <button
@@ -422,6 +368,73 @@ const MapaLotes = () => {
             <span>Híbrido</span>
           </button>
         </div>
+
+        {/* Búsqueda por Cliente - Solo Admin (DESPUÉS de selector de capas) */}
+        {rol === 'admin' && (
+          <div className="busqueda-cliente-wrapper">
+            <div className="busqueda-cliente-inline">
+              <Select
+                options={clientes.map(cliente => ({
+                  value: cliente.uid,
+                  label: `${cliente.nombres} ${cliente.apellidos} - ${cliente.documento}`,
+                  cliente: cliente
+                }))}
+                value={clienteSeleccionado}
+                onChange={(selected) => {
+                  setClienteSeleccionado(selected);
+                  // Actualizar filtro con nombre o cédula
+                  if (selected) {
+                    setFiltros({ ...filtros, busquedaCliente: selected.label });
+                  } else {
+                    setFiltros({ ...filtros, busquedaCliente: '' });
+                  }
+                }}
+                isClearable
+                isSearchable
+                isLoading={cargandoClientes}
+                placeholder="Buscar cliente..."
+                noOptionsMessage={() => 'Sin resultados'}
+                loadingMessage={() => 'Cargando...'}
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    minHeight: '44px',
+                    borderRadius: '10px',
+                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+                    backgroundColor: 'white',
+                    '&:hover': {
+                      borderColor: '#3b82f6',
+                      boxShadow: '0 2px 6px rgba(59, 130, 246, 0.15)'
+                    }
+                  }),
+                  menu: (base) => ({
+                    ...base,
+                    borderRadius: '10px',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    border: '1px solid #e2e8f0',
+                    zIndex: 9999
+                  }),
+                  option: (base, state) => ({
+                    ...base,
+                    backgroundColor: state.isFocused ? '#eff6ff' : 'white',
+                    color: '#1f2937',
+                    cursor: 'pointer',
+                    '&:active': {
+                      backgroundColor: '#dbeafe'
+                    }
+                  })
+                }}
+              />
+              {/* Badge siempre presente, visible solo cuando hay selección */}
+              <div className={`busqueda-cliente-badge ${clienteSeleccionado ? 'visible' : ''}`}>
+                {clienteSeleccionado && (
+                  <>{lotesFiltrados.length} lote{lotesFiltrados.length !== 1 ? 's' : ''}</>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Leyenda Dinámica */}
         <div className="mapa-leyenda">
