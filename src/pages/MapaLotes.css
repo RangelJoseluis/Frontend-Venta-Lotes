@@ -630,3 +630,82 @@ path.leaflet-interactive {
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+
+/* ============================================================================
+   BÚSQUEDA POR CLIENTE
+   ============================================================================ */
+
+.busqueda-cliente-container {
+  margin: 16px 0;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.busqueda-cliente-container:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.busqueda-cliente-select-wrapper {
+  width: 100%;
+}
+
+/* Estilos adicionales para react-select */
+.busqueda-cliente-select-wrapper .css-1s2u09g-control,
+.busqueda-cliente-select-wrapper .css-1pahdxg-control {
+  min-height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.busqueda-cliente-select-wrapper .css-1s2u09g-control:hover,
+.busqueda-cliente-select-wrapper .css-1pahdxg-control:hover {
+  border-color: #3b82f6;
+}
+
+.busqueda-cliente-select-wrapper .css-1okebmr-indicatorSeparator {
+  display: none;
+}
+
+.busqueda-cliente-select-wrapper .css-tlfecz-indicatorContainer,
+.busqueda-cliente-select-wrapper .css-1gtu0rj-indicatorContainer {
+  color: #6b7280;
+}
+
+.busqueda-cliente-select-wrapper .css-26l3qy-menu {
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+}
+
+.busqueda-cliente-info {
+  margin: 12px 0 0 0;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e40af;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .busqueda-cliente-container {
+    margin: 12px 0;
+    padding: 12px;
+  }
+
+  .busqueda-cliente-field {
+    padding: 10px 12px;
+  }
+
+  .busqueda-cliente-input {
+    font-size: 13px;
+  }
+}

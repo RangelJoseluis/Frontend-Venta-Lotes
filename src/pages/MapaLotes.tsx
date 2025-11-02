@@ -9,9 +9,12 @@ import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 import { ArrowLeft, MapPin, Home, DollarSign, Maximize2, Map, Satellite, Layers as LayersIcon, Filter, X, Search, Edit } from 'lucide-react';
 import lotesMapaService from '../services/lotes-mapa.service';
+import { obtenerClientes } from '../services/clientes.service';
 import type { LoteParaMapa, RolMapa, TipoCapaMapa } from '../types/mapa';
+import type { Cliente } from '../types';
 import { COLORES_MAPA, TILES_CONFIG } from '../types/mapa';
 import { useAuthStore } from '../store/authStore';
 import { obtenerCentroZona, obtenerZoomZona } from '../config/zona.config';
@@ -34,6 +37,7 @@ const MapaLotes = () => {
   // Estado de filtros
   const [filtros, setFiltros] = useState({
     busqueda: '',
+    busquedaCliente: '', // Búsqueda por nombre o cédula del cliente
     precioMin: 0,
     precioMax: 100000000,
     superficieMin: 0,
@@ -46,6 +50,11 @@ const MapaLotes = () => {
   });
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [loteSeleccionado, setLoteSeleccionado] = useState<LoteParaMapa | null>(null);
+  
+  // Estado para clientes y react-select
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [clienteSeleccionado, setClienteSeleccionado] = useState<{ value: string; label: string } | null>(null);
+  const [cargandoClientes, setCargandoClientes] = useState(false);
 
   /**
    * Detectar rol del usuario
@@ -116,6 +125,29 @@ const MapaLotes = () => {
     cargarLotes();
   }, [rol]);
 
+  // Cargar clientes si es admin
+  useEffect(() => {
+    if (rol === 'admin') {
+      cargarClientes();
+    }
+  }, [rol]);
+
+  /**
+   * Cargar lista de clientes
+   */
+  const cargarClientes = async () => {
+    try {
+      setCargandoClientes(true);
+      const clientesData = await obtenerClientes();
+      setClientes(clientesData);
+      console.log(`✅ ${clientesData.length} clientes cargados`);
+    } catch (err: any) {
+      console.error('❌ Error al cargar clientes:', err);
+    } finally {
+      setCargandoClientes(false);
+    }
+  };
+
   /**
    * Cargar lotes desde el backend según el rol
    */
@@ -167,6 +199,7 @@ const MapaLotes = () => {
   const limpiarFiltros = () => {
     setFiltros({
       busqueda: '',
+      busquedaCliente: '',
       precioMin: 0,
       precioMax: 100000000,
       superficieMin: 0,
@@ -307,6 +340,60 @@ const MapaLotes = () => {
             {rol === 'admin' ? '👑 Admin' : rol === 'cliente' ? '👤 Cliente' : '🌐 Invitado'}
           </span>
         </div>
+
+        {/* Búsqueda por Cliente - Solo Admin */}
+        {rol === 'admin' && (
+          <div className="busqueda-cliente-container">
+            <div className="busqueda-cliente-select-wrapper">
+              <Select
+                options={clientes.map(cliente => ({
+                  value: cliente.uid,
+                  label: `${cliente.nombres} ${cliente.apellidos} - ${cliente.documento}`,
+                  cliente: cliente
+                }))}
+                value={clienteSeleccionado}
+                onChange={(selected) => {
+                  setClienteSeleccionado(selected);
+                  // Actualizar filtro con nombre o cédula
+                  if (selected) {
+                    setFiltros({ ...filtros, busquedaCliente: selected.label });
+                  } else {
+                    setFiltros({ ...filtros, busquedaCliente: '' });
+                  }
+                }}
+                isClearable
+                isSearchable
+                isLoading={cargandoClientes}
+                placeholder="Buscar cliente por nombre o cédula..."
+                noOptionsMessage={() => 'No se encontraron clientes'}
+                loadingMessage={() => 'Cargando clientes...'}
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    borderRadius: '8px',
+                    borderColor: '#e5e7eb',
+                    boxShadow: 'none',
+                    '&:hover': {
+                      borderColor: '#3b82f6'
+                    }
+                  }),
+                  menu: (base) => ({
+                    ...base,
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                  })
+                }}
+              />
+            </div>
+            {clienteSeleccionado && (
+              <p className="busqueda-cliente-info">
+                {lotesFiltrados.length === 1 
+                  ? `1 lote encontrado para ${clienteSeleccionado.label}` 
+                  : `${lotesFiltrados.length} lotes encontrados para ${clienteSeleccionado.label}`}
+              </p>
+            )}
+          </div>
+        )}
 
         {/* Selector de Capas */}
         <div className="selector-capas">
