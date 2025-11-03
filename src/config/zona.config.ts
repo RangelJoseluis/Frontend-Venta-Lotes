@@ -51,7 +51,7 @@ export const ZONA_PREDETERMINADA: ConfiguracionZona = {
   zoom: 18,  // Zoom cercano para ver lotes (máximo 22)
   nombre: "Urbanización Principal - Valledupar",
   
-  // Límites opcionales (descomenta y ajusta si quieres restringir el área)
+  // Límites opcionales (funcionalidad activa, polígono oculto visualmente con CSS)
   limites: {
     norte: 11.380,   // Límite norte
     sur: 11.370,     // Límite sur

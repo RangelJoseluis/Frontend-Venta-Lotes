@@ -1,0 +1,42 @@
+/**
+ * ESTILOS: ERROR ALERT
+ * Componente de alerta de error para el mapa de lotes
+ */
+
+.mapalotes-alert-error {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 10000;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.mapalotes-alert-error p {
+  color: #dc2626;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.mapalotes-alert-error button {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mapalotes-alert-error button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}

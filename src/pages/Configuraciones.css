@@ -230,10 +230,10 @@
 
 .mapa-container {
   margin: 1rem 0;
-  border: 3px solid #7c3aed;
+  border: 2px solid #e2e8f0;
   border-radius: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .mapa-info {
@@ -341,4 +341,42 @@
   .configuraciones-header h1 {
     font-size: 1.5rem;
   }
+}
+
+/* OCULTAR POLÍGONO MORADO DE LA ZONA */
+/* Estrategia inteligente: Ocultar paths sin fill (líneas) pero mantener con fill (polígonos de lotes) */
+.leaflet-overlay-pane path:not([fill]),
+.leaflet-overlay-pane path[fill="none"] {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Ocultar paths interactivos sin fill (la línea morada de zona) */
+path.leaflet-interactive:not([fill]),
+path.leaflet-interactive[fill="none"],
+path.leaflet-interactive[stroke]:not([fill]) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Mantener visibles los polígonos de lotes (tienen fill) */
+path.leaflet-interactive[fill]:not([fill="none"]) {
+  display: block !important;
+}
+
+/* Eliminar outline en todos los paths */
+.leaflet-interactive {
+  outline: none !important;
+}
+
+path.leaflet-interactive:focus,
+path.leaflet-interactive:active {
+  outline: none !important;
+}
+
+/* Esconder cualquier SVG con clase de edición */
+.leaflet-editable-drawing,
+.leaflet-editable {
+  display: none !important;
 }

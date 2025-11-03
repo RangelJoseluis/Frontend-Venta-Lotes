@@ -11,7 +11,7 @@ import RegistrarPago from './pages/RegistrarPago';
 import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
 import ModelosCasa from './pages/ModelosCasa';
-import MapaLotes from './pages/MapaLotes';
+import MapaLotes from './pages/MapaLotes/MapaLotes';
 import ConfiguracionesLayout from './pages/ConfiguracionesLayout';
 import ConfiguracionZona from './pages/ConfiguracionZona';
 import ConfiguracionMora from './pages/ConfiguracionMora';
