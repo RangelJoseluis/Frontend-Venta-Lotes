@@ -86,8 +86,43 @@ const MapHeader: React.FC<MapHeaderProps> = ({
           <Filter size={18} />
           <span>Filtros</span>
         </button>
+      </div>
 
-        {/* Búsqueda de cliente - Solo admin, al final de la fila */}
+      {/* FILA 2: Leyenda */}
+      <div className="mapalotes-header-row-2">
+        <div className="mapalotes-leyenda">
+          {/* Disponible - Visible para todos */}
+          <div className="mapalotes-leyenda-item">
+            <span className="mapalotes-leyenda-color" style={{ backgroundColor: COLORES_MAPA.disponible }}></span>
+            <span>Disponible ({lotesFiltrados.filter(l => l.estado === 'disponible').length})</span>
+          </div>
+          
+          {/* En Cuotas - Solo admin y cliente */}
+          {(rol === 'admin' || rol === 'cliente') && (
+            <div className="mapalotes-leyenda-item">
+              <span className="mapalotes-leyenda-color" style={{ backgroundColor: COLORES_MAPA.en_cuotas }}></span>
+              <span>En Cuotas ({lotesFiltrados.filter(l => l.estado === 'en_cuotas').length})</span>
+            </div>
+          )}
+          
+          {/* Vendido - Solo admin */}
+          {rol === 'admin' && (
+            <div className="mapalotes-leyenda-item">
+              <span className="mapalotes-leyenda-color" style={{ backgroundColor: COLORES_MAPA.vendido }}></span>
+              <span>Vendido ({lotesFiltrados.filter(l => l.estado === 'vendido').length})</span>
+            </div>
+          )}
+          
+          {/* Indicador especial para clientes */}
+          {rol === 'cliente' && (
+            <div className="mapalotes-leyenda-item mapalotes-leyenda-item-destacado">
+              <span className="mapalotes-leyenda-color" style={{ backgroundColor: '#f59e0b' }}>⭐</span>
+              <span>Mi Lote</span>
+            </div>
+          )}
+        </div>
+
+        {/* Búsqueda de cliente - Solo admin, junto a la leyenda */}
         {rol === 'admin' && (
           <div className="mapalotes-busqueda-cliente-wrapper">
             <div className="mapalotes-busqueda-cliente-inline">
@@ -146,41 +181,6 @@ const MapHeader: React.FC<MapHeaderProps> = ({
             </div>
           </div>
         )}
-      </div>
-
-      {/* FILA 2: Leyenda */}
-      <div className="mapalotes-header-row-2">
-        <div className="mapalotes-leyenda">
-          {/* Disponible - Visible para todos */}
-          <div className="mapalotes-leyenda-item">
-            <span className="mapalotes-leyenda-color" style={{ backgroundColor: COLORES_MAPA.disponible }}></span>
-            <span>Disponible ({lotesFiltrados.filter(l => l.estado === 'disponible').length})</span>
-          </div>
-          
-          {/* En Cuotas - Solo admin y cliente */}
-          {(rol === 'admin' || rol === 'cliente') && (
-            <div className="mapalotes-leyenda-item">
-              <span className="mapalotes-leyenda-color" style={{ backgroundColor: COLORES_MAPA.en_cuotas }}></span>
-              <span>En Cuotas ({lotesFiltrados.filter(l => l.estado === 'en_cuotas').length})</span>
-            </div>
-          )}
-          
-          {/* Vendido - Solo admin */}
-          {rol === 'admin' && (
-            <div className="mapalotes-leyenda-item">
-              <span className="mapalotes-leyenda-color" style={{ backgroundColor: COLORES_MAPA.vendido }}></span>
-              <span>Vendido ({lotesFiltrados.filter(l => l.estado === 'vendido').length})</span>
-            </div>
-          )}
-          
-          {/* Indicador especial para clientes */}
-          {rol === 'cliente' && (
-            <div className="mapalotes-leyenda-item mapalotes-leyenda-item-destacado">
-              <span className="mapalotes-leyenda-color" style={{ backgroundColor: '#f59e0b' }}>⭐</span>
-              <span>Mi Lote</span>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
