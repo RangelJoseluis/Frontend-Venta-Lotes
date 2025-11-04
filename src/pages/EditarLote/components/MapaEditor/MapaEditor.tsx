@@ -79,14 +79,15 @@ const MapaEditor: React.FC<MapaEditorProps> = ({
     if (ubicacionX && ubicacionY && !isNaN(ubicacionX) && !isNaN(ubicacionY)) {
       return [ubicacionY, ubicacionX];
     }
-    // Si hay polígono pero no hay coordenadas de centro, calcular el centroide
-    if (puntosPoligono.length > 0) {
+    // Si hay polígono pero NO está en modo dibujo, calcular el centroide
+    // IMPORTANTE: NO recalcular durante el dibujo para evitar que el mapa se mueva
+    if (puntosPoligono.length > 0 && !modoDibujo) {
       const sumaLat = puntosPoligono.reduce((sum, punto) => sum + punto[0], 0);
       const sumaLng = puntosPoligono.reduce((sum, punto) => sum + punto[1], 0);
       return [sumaLat / puntosPoligono.length, sumaLng / puntosPoligono.length];
     }
     return centroZona;
-  }, [ubicacionX, ubicacionY, puntosPoligono, centroZona]);
+  }, [ubicacionX, ubicacionY, puntosPoligono, centroZona, modoDibujo]);
 
   // Key único para forzar re-render del mapa cuando cambia el centro
   const mapKey = React.useMemo(() => {
