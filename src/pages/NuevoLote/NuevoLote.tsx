@@ -35,7 +35,7 @@ import { calcularSuperficie } from '../EditarLote/utils/calculosLote';
 import { crearGeoJsonDesdePoligono, calcularCentroPoligono } from '../EditarLote/utils/geoJsonHelper';
 
 // CSS
-import '../NuevoLote.css';
+import './NuevoLote.css';
 
 // Configurar iconos de Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;

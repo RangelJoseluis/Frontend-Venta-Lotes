@@ -19,59 +19,13 @@ import {
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { lotesService } from '../services/lotes.service';
-import { cuotasService } from '../services/cuotas.service';
-import { obtenerVentasPorLote } from '../services/ventas.service';
-import { getErrorMessage } from '../services/http.service';
-import type { Venta } from '../types';
+import { lotesService } from '../../services/lotes.service';
+import { cuotasService } from '../../services/cuotas.service';
+import { obtenerVentasPorLote } from '../../services/ventas.service';
+import { getErrorMessage } from '../../services/http.service';
+import type { Venta } from '../../types';
+import type { Lote, Cuota } from './types';
 import './DetalleLote.css';
-
-interface Lote {
-  uid: string;
-  codigo: string;
-  anchoM: string;
-  largoM: string;
-  superficieM2: string;
-  precioLista: string;
-  direccion: string;
-  manzana: string;
-  numeroLote: string;
-  topografia: string;
-  orientacion?: string;
-  vista?: string;
-  estado: 'disponible' | 'en_cuotas' | 'vendido';
-  estadoDocumentacion: string;
-  amueblado: boolean;
-  observaciones?: string;
-  imagenesUrls?: string;
-  ubicacionX?: string;
-  ubicacionY?: string;
-  geojson?: string;
-  modeloCasa?: {
-    uid: string;
-    nombre: string;
-    precioBase?: number;
-  };
-  servicios?: Array<{
-    uid: string;
-    nombre: string;
-    descripcion?: string;
-  }>;
-  creadoEn: string;
-  actualizadoEn: string;
-}
-
-interface Cuota {
-  uid: string;
-  numeroCuota: number;
-  valor: number;
-  fechaVencimiento: string;
-  montoPagado: number;
-  montoPendiente: number;
-  estado: string;
-  diasVencimiento?: number;
-  estaVencida: boolean;
-}
 
 const DetalleLote = () => {
   const navigate = useNavigate();
