@@ -29,6 +29,9 @@ const ModelosCasa = () => {
     observaciones: ''
   });
 
+  // Estado para el precio formateado
+  const [precioFormateado, setPrecioFormateado] = useState('');
+
   useEffect(() => {
     cargarModelos();
   }, []);
@@ -57,7 +60,7 @@ const ModelosCasa = () => {
       
       if (type === 'number') {
         // Campos que deben ser enteros (sin decimales)
-        const camposEnteros = ['precioBase', 'ambientes', 'banos', 'pisos'];
+        const camposEnteros = ['ambientes', 'banos', 'pisos'];
         
         if (camposEnteros.includes(name)) {
           // Convertir a entero, o 0 si está vacío
@@ -71,6 +74,24 @@ const ModelosCasa = () => {
       // Para campos de texto
       return { ...prev, [name]: value };
     });
+  };
+
+  /**
+   * Manejar cambio en el input de precio con formato
+   */
+  const handlePrecioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valor = e.target.value;
+    
+    // Remover todo excepto números
+    const soloNumeros = valor.replace(/\D/g, '');
+    
+    // Formatear con puntos como separadores de miles
+    const formateado = soloNumeros ? new Intl.NumberFormat('es-CO').format(parseInt(soloNumeros, 10)) : '';
+    setPrecioFormateado(formateado);
+    
+    // Actualizar el valor numérico real en el formulario
+    const valorNumerico = soloNumeros ? parseInt(soloNumeros, 10) : 0;
+    setFormulario(prev => ({ ...prev, precioBase: valorNumerico }));
   };
 
   const handleCrear = async (e: React.FormEvent) => {
@@ -140,6 +161,8 @@ const ModelosCasa = () => {
       imagenUrl: modelo.imagenUrl || '',
       observaciones: modelo.observaciones || ''
     });
+    // Formatear precio para edición
+    setPrecioFormateado(modelo.precioBase ? new Intl.NumberFormat('es-CO').format(modelo.precioBase) : '');
   };
 
   const resetFormulario = () => {
@@ -156,6 +179,7 @@ const ModelosCasa = () => {
       imagenUrl: '',
       observaciones: ''
     });
+    setPrecioFormateado(''); // Limpiar precio formateado
     setModoEdicion(false);
     setModeloEditando(null);
     setMostrarFormulario(false);
@@ -251,7 +275,7 @@ const ModelosCasa = () => {
                   />
                 </div>
 
-                {/* Precio Base */}
+                {/* Precio Base - Input formateado */}
                 <div className="form-group">
                   <label className="form-label">
                     <div className="label-with-icon">
@@ -260,18 +284,22 @@ const ModelosCasa = () => {
                     </div>
                   </label>
                   <input
-                    type="number"
-                    name="precioBase"
-                    value={formulario.precioBase || ''}
-                    onChange={handleChange}
-                    step="1000000"
-                    min="0"
+                    type="text"
+                    value={precioFormateado}
+                    onChange={handlePrecioChange}
                     className="form-input"
-                    placeholder="150000000"
+                    placeholder="Ej: 150.000.000"
                   />
-                  <small style={{ color: '#64748b', fontSize: '0.75rem', marginTop: '0.25rem', display: 'block' }}>
-                    Ej: 150000000 = $150.000.000
-                  </small>
+                  {precioFormateado && (
+                    <small style={{ color: '#10b981', fontSize: '0.875rem', marginTop: '0.5rem', display: 'block', fontWeight: 600 }}>
+                      ✅ Valor: ${precioFormateado} COP
+                    </small>
+                  )}
+                  {!precioFormateado && (
+                    <small style={{ color: '#64748b', fontSize: '0.75rem', marginTop: '0.25rem', display: 'block' }}>
+                      Ingresa el precio con separadores: 150.000.000
+                    </small>
+                  )}
                 </div>
 
                 {/* Metros Cubiertos */}
