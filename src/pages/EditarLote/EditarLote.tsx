@@ -35,7 +35,7 @@ import { calcularSuperficie } from './utils/calculosLote';
 import { parsearGeoJson, crearGeoJsonDesdePoligono, calcularCentroPoligono } from './utils/geoJsonHelper';
 
 // CSS
-import '../NuevoLote.css';
+import '../NuevoLote/NuevoLote.css';
 
 const EditarLote = () => {
   const navigate = useNavigate();
