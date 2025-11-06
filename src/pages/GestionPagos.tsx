@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, Plus, Search, ArrowLeft } from 'lucide-react';
+import { Eye, Plus, Search, ArrowLeft, Download } from 'lucide-react';
 import pagosService from '../services/pagos.service';
+import facturasService from '../services/facturas.service';
 import type { Pago } from '../types';
 import './GestionPagos.css';
 
@@ -33,6 +34,24 @@ const GestionPagos = () => {
       alert('Error al cargar pagos');
     } finally {
       setCargando(false);
+    }
+  };
+
+  const previsualizarTicket = async (uid: string) => {
+    try {
+      await facturasService.previsualizarTicketPago(uid);
+    } catch (error) {
+      console.error('Error al previsualizar ticket:', error);
+      alert('Error al previsualizar ticket');
+    }
+  };
+
+  const descargarTicket = async (uid: string) => {
+    try {
+      await facturasService.descargarTicketPago(uid);
+    } catch (error) {
+      console.error('Error al descargar ticket:', error);
+      alert('Error al descargar ticket');
     }
   };
 
@@ -183,6 +202,20 @@ const GestionPagos = () => {
                             title="Ver detalles"
                           >
                             <Eye size={16} />
+                          </button>
+                          <button
+                            className="btn-accion btn-preview"
+                            onClick={() => previsualizarTicket(pago.uid)}
+                            title="Previsualizar Ticket"
+                          >
+                            <Eye size={16} />
+                          </button>
+                          <button
+                            className="btn-accion btn-download"
+                            onClick={() => descargarTicket(pago.uid)}
+                            title="Descargar Ticket"
+                          >
+                            <Download size={16} />
                           </button>
                         </div>
                       </td>

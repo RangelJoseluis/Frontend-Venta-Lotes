@@ -15,6 +15,7 @@ import MapaLotes from './pages/MapaLotes/MapaLotes';
 import ConfiguracionesLayout from './pages/ConfiguracionesLayout';
 import ConfiguracionZona from './pages/ConfiguracionZona';
 import ConfiguracionMora from './pages/ConfiguracionMora';
+import ConfiguracionSistema from './pages/ConfiguracionSistema';
 import GestionServicios from './pages/GestionServicios';
 import FormularioServicio from './pages/FormularioServicio';
 import GestionVentas from './pages/GestionVentas';
@@ -249,6 +250,7 @@ function App() {
           <Route index element={<ConfiguracionZona />} />
           <Route path="zona" element={<ConfiguracionZona />} />
           <Route path="mora" element={<ConfiguracionMora />} />
+          <Route path="negocio" element={<ConfiguracionSistema />} />
         </Route>
 
         {/* Ruta 404 - Redirige al login */}

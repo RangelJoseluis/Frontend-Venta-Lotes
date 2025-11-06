@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, Trash2, Plus, Search, ArrowLeft } from 'lucide-react';
+import { Eye, Trash2, Plus, Search, ArrowLeft, Download } from 'lucide-react';
 import { obtenerVentasPaginadas, eliminarVenta } from '../services/ventas.service';
+import facturasService from '../services/facturas.service';
 import type { VentaResumen } from '../types';
 import './GestionVentas.css';
 
@@ -44,6 +45,24 @@ const GestionVentas = () => {
     } catch (error) {
       console.error('Error al eliminar venta:', error);
       alert('Error al eliminar venta');
+    }
+  };
+
+  const previsualizarFactura = async (uid: string) => {
+    try {
+      await facturasService.previsualizarFacturaVenta(uid);
+    } catch (error) {
+      console.error('Error al previsualizar factura:', error);
+      alert('Error al previsualizar factura');
+    }
+  };
+
+  const descargarFactura = async (uid: string) => {
+    try {
+      await facturasService.descargarFacturaVenta(uid);
+    } catch (error) {
+      console.error('Error al descargar factura:', error);
+      alert('Error al descargar factura');
     }
   };
 
@@ -164,6 +183,20 @@ const GestionVentas = () => {
                             title="Ver detalles"
                           >
                             <Eye size={16} />
+                          </button>
+                          <button
+                            className="btn-accion btn-preview"
+                            onClick={() => previsualizarFactura(venta.uid)}
+                            title="Previsualizar Factura"
+                          >
+                            <Eye size={16} />
+                          </button>
+                          <button
+                            className="btn-accion btn-download"
+                            onClick={() => descargarFactura(venta.uid)}
+                            title="Descargar Factura"
+                          >
+                            <Download size={16} />
                           </button>
                           <button
                             className="btn-accion btn-eliminar"

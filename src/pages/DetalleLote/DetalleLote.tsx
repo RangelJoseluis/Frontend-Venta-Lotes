@@ -15,13 +15,16 @@ import {
   AlertCircle,
   Edit,
   FileText,
-  Calculator
+  Calculator,
+  Eye,
+  Download
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { lotesService } from '../../services/lotes.service';
 import { cuotasService } from '../../services/cuotas.service';
 import { obtenerVentasPorLote } from '../../services/ventas.service';
+import facturasService from '../../services/facturas.service';
 import { getErrorMessage } from '../../services/http.service';
 import type { Venta } from '../../types';
 import type { Lote, Cuota } from './types';
@@ -221,6 +224,40 @@ const DetalleLote = () => {
           >
             {obtenerTextoEstado(lote.estado)}
           </span>
+          {venta && (
+            <>
+              <button
+                onClick={async () => {
+                  try {
+                    await facturasService.previsualizarFacturaVenta(venta.uid);
+                  } catch (error) {
+                    console.error('Error al previsualizar factura:', error);
+                    alert('Error al previsualizar la factura');
+                  }
+                }}
+                className="btn-preview"
+                title="Previsualizar Factura"
+              >
+                <Eye size={20} />
+                Previsualizar
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await facturasService.descargarFacturaVenta(venta.uid);
+                  } catch (error) {
+                    console.error('Error al descargar factura:', error);
+                    alert('Error al descargar la factura');
+                  }
+                }}
+                className="btn-download"
+                title="Descargar Factura"
+              >
+                <Download size={20} />
+                Descargar
+              </button>
+            </>
+          )}
           <button
             onClick={() => navigate(`/lotes/editar/${lote.uid}`)}
             className="btn-editar"

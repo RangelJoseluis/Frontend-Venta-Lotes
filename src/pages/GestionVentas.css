@@ -200,6 +200,26 @@
   color: white;
 }
 
+.gestion-ventas .btn-preview {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.gestion-ventas .btn-preview:hover {
+  background: #0ea5e9;
+  color: white;
+}
+
+.gestion-ventas .btn-download {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.gestion-ventas .btn-download:hover {
+  background: #22c55e;
+  color: white;
+}
+
 .gestion-ventas .btn-eliminar {
   background: #fee2e2;
   color: #991b1b;

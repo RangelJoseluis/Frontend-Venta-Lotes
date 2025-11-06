@@ -4,7 +4,7 @@
  */
 
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { ArrowLeft, Map, AlertTriangle, Settings } from 'lucide-react';
+import { ArrowLeft, Map, AlertTriangle, Settings, Building2 } from 'lucide-react';
 import './ConfiguracionesLayout.css';
 
 const ConfiguracionesLayout = () => {
@@ -23,6 +23,12 @@ const ConfiguracionesLayout = () => {
       icon: AlertTriangle,
       label: 'Sistema de Mora',
       description: 'Tasas y parámetros'
+    },
+    {
+      path: '/configuraciones/negocio',
+      icon: Building2,
+      label: 'Datos del Negocio',
+      description: 'Información de contacto y facturas'
     },
     {
       path: '/configuraciones/general',

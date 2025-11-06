@@ -219,6 +219,26 @@
   color: white;
 }
 
+.gestion-pagos .btn-preview {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.gestion-pagos .btn-preview:hover {
+  background: #0ea5e9;
+  color: white;
+}
+
+.gestion-pagos .btn-download {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.gestion-pagos .btn-download:hover {
+  background: #22c55e;
+  color: white;
+}
+
 /* Paginación */
 .gestion-pagos .paginacion {
   display: flex;

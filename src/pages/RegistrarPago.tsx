@@ -19,11 +19,14 @@ import {
   User,
   TrendingUp,
   Clock,
-  ArrowLeft
+  ArrowLeft,
+  Eye,
+  Download
 } from 'lucide-react';
 import { obtenerVentasPaginadas } from '../services/ventas.service';
 import { cuotasService } from '../services/cuotas.service';
 import { pagosService } from '../services/pagos.service';
+import facturasService from '../services/facturas.service';
 import { getErrorMessage } from '../services/http.service';
 import type { VentaResumen, Cuota, CrearPagoDto, CrearPagoResponse, MetodoPago } from '../types';
 import DiscriminacionPago from '../components/DiscriminacionPago';
@@ -257,6 +260,34 @@ export default function RegistrarPago() {
               )}
 
               <div className="success-actions">
+                <button
+                  onClick={async () => {
+                    try {
+                      await facturasService.previsualizarTicketPago(pagoResponse.pago.uid);
+                    } catch (error) {
+                      console.error('Error al previsualizar ticket:', error);
+                      alert('Error al previsualizar el ticket');
+                    }
+                  }}
+                  className="btn btn-preview"
+                >
+                  <Eye size={20} />
+                  Previsualizar Ticket
+                </button>
+                <button
+                  onClick={async () => {
+                    try {
+                      await facturasService.descargarTicketPago(pagoResponse.pago.uid);
+                    } catch (error) {
+                      console.error('Error al descargar ticket:', error);
+                      alert('Error al descargar el ticket');
+                    }
+                  }}
+                  className="btn btn-download"
+                >
+                  <Download size={20} />
+                  Descargar Ticket
+                </button>
                 <button
                   onClick={() => {
                     setSuccess(false);
