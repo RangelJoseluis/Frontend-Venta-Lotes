@@ -97,6 +97,13 @@ const ModelosCasa = () => {
   const handleCrear = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // 🔍 DEBUG: Ver qué valor exacto se está enviando
+    console.log('🔍 VALOR ENVIADO AL BACKEND:', {
+      precioBase: formulario.precioBase,
+      tipo: typeof formulario.precioBase,
+      formularioCompleto: formulario
+    });
+
     try {
       setLoading(true);
       await modelosCasaService.crear(formulario);
@@ -104,7 +111,8 @@ const ModelosCasa = () => {
       await cargarModelos();
     } catch (err: any) {
       setError(err.response?.data?.message || 'No se pudo crear el modelo');
-      console.error('Error:', err);
+      console.error('❌ Error al crear:', err);
+      console.error('❌ Response data:', err.response?.data);
     } finally {
       setLoading(false);
     }
