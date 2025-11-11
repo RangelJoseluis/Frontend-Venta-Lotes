@@ -137,12 +137,16 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   min-height: 400px;
+  overflow: visible;
+  height: auto;
 }
 
 @media (min-width: 768px) {
   .tab-content {
     padding: 2rem;
     min-height: 500px;
+    overflow: visible;
+    height: auto;
   }
 }
 

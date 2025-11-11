@@ -27,6 +27,17 @@ export interface Lote {
     uid: string;
     nombre: string;
     precioBase?: number;
+    metrosCubiertos?: number;
+    ambientes?: number;
+    pisos?: number;
+    banos?: number;
+    dormitorios?: number;
+    garaje?: boolean;
+    descripcion?: string;
+    observaciones?: string;
+    imagenUrl?: string; // Una sola imagen (legacy)
+    imagenesUrls?: string[]; // Múltiples imágenes (nuevo)
+    estado?: 'activo' | 'inactivo';
   };
   servicios?: Array<{
     uid: string;
