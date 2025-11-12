@@ -1,0 +1,89 @@
+/* Estadísticas - EXACTO PATRÓN DE GESTIONLOTES */
+.estadisticas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: white;
+  border-radius: 0.75rem;
+  border: 2px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 0.5rem;
+  color: white;
+}
+
+.stat-total .stat-icono {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.stat-clientes .stat-icono {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-admins .stat-icono {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-valor {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Estado de carga */
+.stat-loading {
+  justify-content: center;
+  text-align: center;
+  min-height: 100px;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.stat-loading p {
+  color: #6b7280;
+  font-weight: 500;
+  margin: 0;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
