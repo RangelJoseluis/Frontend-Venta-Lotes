@@ -25,7 +25,6 @@ export const useModelosCasa = (): UseModelosCasaReturn => {
       
       const data = await modelosCasaService.obtenerTodos();
       setModelos(data);
-      console.log('✅ Modelos cargados:', data.length);
     } catch (err) {
       const errorMsg = getErrorMessage(err);
       console.error('❌ Error al cargar modelos:', errorMsg);
@@ -44,15 +43,8 @@ export const useModelosCasa = (): UseModelosCasaReturn => {
       setLoading(true);
       setError(null);
 
-      // 🔍 DEBUG: Ver qué valor exacto se está enviando
-      console.log('🔍 CREANDO MODELO:', {
-        precioBase: datos.precioBase,
-        tipo: typeof datos.precioBase,
-        datosCompletos: datos
-      });
-
       await modelosCasaService.crear(datos);
-      console.log('✅ Modelo creado exitosamente');
+
       
       // Recargar la lista de modelos
       await cargarModelos();
@@ -76,10 +68,8 @@ export const useModelosCasa = (): UseModelosCasaReturn => {
       setLoading(true);
       setError(null);
 
-      console.log('🔍 ACTUALIZANDO MODELO:', { uid, datos });
-
       await modelosCasaService.actualizar(uid, datos);
-      console.log('✅ Modelo actualizado exitosamente');
+
       
       // Recargar la lista de modelos
       await cargarModelos();

@@ -17,7 +17,7 @@ const FormularioModelo = ({
   onLimpiarError
 }: FormularioModeloProps) => {
 
-  const { datos, precioFormateado, errores, tocado } = formulario;
+  const { datos, errores, tocado } = formulario;
 
   const handleInputChange = (campo: keyof typeof datos, valor: any) => {
     onCambioFormulario(campo, valor);
@@ -85,7 +85,7 @@ const FormularioModelo = ({
             <div className="campo-grupo">
               <label htmlFor="precioBase">Precio Base *</label>
               <InputPrecio
-                valor={precioFormateado}
+                valor={datos.precioBase || 0}
                 onChange={onCambioPrecio}
                 placeholder="Ingrese el precio base"
                 disabled={loading}

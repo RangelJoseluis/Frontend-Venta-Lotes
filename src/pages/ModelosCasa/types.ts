@@ -10,7 +10,6 @@ export type ModoVista = 'lista' | 'crear' | 'editar';
 // Estado del formulario
 export interface FormularioEstado {
   datos: CrearModeloCasaDto;
-  precioFormateado: string;
   errores: Record<string, string>;
   tocado: Record<string, boolean>;
 }
@@ -46,7 +45,7 @@ export interface FormularioModeloProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancelar: () => void;
   onCambioFormulario: (campo: keyof CrearModeloCasaDto, valor: any) => void;
-  onCambioPrecio: (precio: string) => void;
+  onCambioPrecio: (precio: number) => void;
   errorFormulario?: string | null;
   onLimpiarError?: () => void;
 }
@@ -58,8 +57,8 @@ export interface GestorImagenesProps {
 }
 
 export interface InputPrecioProps {
-  valor: string;
-  onChange: (valor: string) => void;
+  valor: number;
+  onChange: (valor: number) => void;
   placeholder?: string;
   disabled?: boolean;
   error?: string;
@@ -84,7 +83,7 @@ export interface UseFormularioModeloReturn {
   iniciarEdicion: (modelo: ModeloCasa) => void;
   cancelarFormulario: () => void;
   actualizarCampo: (campo: keyof CrearModeloCasaDto, valor: any) => void;
-  actualizarPrecio: (precio: string) => void;
+  actualizarPrecio: (precio: number) => void;
   validarFormulario: () => boolean;
   resetFormulario: () => void;
 }

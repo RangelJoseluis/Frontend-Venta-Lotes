@@ -95,11 +95,11 @@ const ModelosCasa = () => {
       if (modoEdicion && modeloEditando) {
         // Actualizar modelo existente
         await actualizarModelo(modeloEditando.uid, formulario.datos);
-        console.log('✅ Modelo actualizado exitosamente');
+  
       } else {
         // Crear nuevo modelo
         await crearModelo(formulario.datos);
-        console.log('✅ Modelo creado exitosamente');
+  
       }
 
       // Cerrar formulario y resetear

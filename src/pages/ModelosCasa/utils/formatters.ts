@@ -22,11 +22,16 @@ export const formatearPrecio = (precio: number): string => {
  * @returns String con formato de miles (ej: "1.234.567")
  */
 export const formatearNumeroConMiles = (valor: number | string): string => {
-  const numero = typeof valor === 'string' ? parseFloat(valor.replace(/[^\d]/g, '')) : valor;
+  // Convertir a número preservando decimales
+  const numero = typeof valor === 'string' ? parseFloat(valor) : valor;
   
   if (isNaN(numero) || numero === 0) return '';
   
-  return new Intl.NumberFormat('es-CO').format(numero);
+  // Formatear sin decimales para mostrar en el input
+  return new Intl.NumberFormat('es-CO', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(numero);
 };
 
 /**
@@ -35,7 +40,8 @@ export const formatearNumeroConMiles = (valor: number | string): string => {
  * @returns Número sin formato
  */
 export const parsearNumeroConMiles = (valorFormateado: string): number => {
-  const numeroLimpio = valorFormateado.replace(/[^\d]/g, '');
+  // Eliminar solo los separadores de miles (puntos), mantener números
+  const numeroLimpio = valorFormateado.replace(/\./g, '');
   const numero = parseInt(numeroLimpio, 10);
   
   return isNaN(numero) ? 0 : numero;

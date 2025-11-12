@@ -1,14 +1,13 @@
 // Hook para gestión del formulario de modelo de casa
 import { useState } from 'react';
 import { FORMULARIO_INICIAL } from '../constants';
-import { formatearNumeroConMiles, parsearNumeroConMiles, validarFormulario as validarFormularioModelo } from '../utils/formatters';
+import { validarFormulario as validarFormularioModelo } from '../utils/formatters';
 import type { ModeloCasa, CrearModeloCasaDto } from '../types';
 import type { UseFormularioModeloReturn, FormularioEstado } from '../types';
 
 export const useFormularioModelo = (): UseFormularioModeloReturn => {
   const [formulario, setFormulario] = useState<FormularioEstado>({
     datos: { ...FORMULARIO_INICIAL },
-    precioFormateado: '',
     errores: {},
     tocado: {},
   });
@@ -24,7 +23,6 @@ export const useFormularioModelo = (): UseFormularioModeloReturn => {
     setModeloEditando(null);
     setFormulario({
       datos: { ...FORMULARIO_INICIAL },
-      precioFormateado: '',
       errores: {},
       tocado: {},
     });
@@ -35,6 +33,8 @@ export const useFormularioModelo = (): UseFormularioModeloReturn => {
    * @param modelo - Modelo a editar
    */
   const iniciarEdicion = (modelo: ModeloCasa): void => {
+
+    
     setModoEdicion(true);
     setModeloEditando(modelo);
     
@@ -42,19 +42,20 @@ export const useFormularioModelo = (): UseFormularioModeloReturn => {
       nombre: modelo.nombre,
       descripcion: modelo.descripcion,
       amueblado: modelo.amueblado,
-      metrosCubiertos: modelo.metrosCubiertos,
+      metrosCubiertos: typeof modelo.metrosCubiertos === 'string' ? parseFloat(modelo.metrosCubiertos) : modelo.metrosCubiertos,
       ambientes: modelo.ambientes,
       banos: modelo.banos,
       pisos: modelo.pisos,
       estado: modelo.estado,
-      precioBase: modelo.precioBase,
+      precioBase: typeof modelo.precioBase === 'string' ? parseFloat(modelo.precioBase) : modelo.precioBase,
       imagenUrl: modelo.imagenUrl || '',
       observaciones: modelo.observaciones || '',
     };
 
+
+
     setFormulario({
       datos: datosFormulario,
-      precioFormateado: modelo.precioBase ? formatearNumeroConMiles(modelo.precioBase) : '',
       errores: {},
       tocado: {},
     });
@@ -68,7 +69,6 @@ export const useFormularioModelo = (): UseFormularioModeloReturn => {
     setModeloEditando(null);
     setFormulario({
       datos: { ...FORMULARIO_INICIAL },
-      precioFormateado: '',
       errores: {},
       tocado: {},
     });
@@ -105,19 +105,16 @@ export const useFormularioModelo = (): UseFormularioModeloReturn => {
   };
 
   /**
-   * Actualiza el precio con formato de miles
-   * @param precioFormateado - Precio con formato visual
+   * Actualiza el precio directamente con valor numérico
+   * @param precio - Precio como número
    */
-  const actualizarPrecio = (precioFormateado: string): void => {
-    const precioNumerico = parsearNumeroConMiles(precioFormateado);
-    
+  const actualizarPrecio = (precio: number): void => {
     setFormulario(prev => ({
       ...prev,
       datos: {
         ...prev.datos,
-        precioBase: precioNumerico,
+        precioBase: precio,
       },
-      precioFormateado,
       tocado: {
         ...prev.tocado,
         precioBase: true,

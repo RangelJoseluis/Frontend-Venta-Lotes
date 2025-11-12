@@ -18,11 +18,11 @@ const InputPrecio = ({
     // Permitir solo números y puntos
     const valorLimpio = inputValue.replace(/[^\d.]/g, '');
     
-    // Convertir a número y formatear
+    // Convertir a número
     const numero = parsearNumeroConMiles(valorLimpio);
-    const valorFormateado = numero > 0 ? formatearNumeroConMiles(numero) : '';
     
-    onChange(valorFormateado);
+    // ✅ CORREGIDO: Devolver el número, no el string formateado
+    onChange(numero);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -52,7 +52,7 @@ const InputPrecio = ({
         </div>
         <input
           type="text"
-          value={valor}
+          value={valor > 0 ? formatearNumeroConMiles(valor) : ''}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
