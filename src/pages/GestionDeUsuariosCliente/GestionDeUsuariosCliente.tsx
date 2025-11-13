@@ -19,7 +19,7 @@ import {
   useUsuarios,
   useFormularioUsuario
 } from './hooks';
-import '../GestionDeUsuariosCliente.css';
+import './GestionDeUsuariosCliente.css';
 
 const GestionDeUsuariosCliente: React.FC = () => {
   // ============================================================================

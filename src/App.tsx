@@ -8,7 +8,7 @@ import EditarLote from './pages/EditarLote';
 import DetalleLote from './pages/DetalleLote';
 import FormularioCrearVenta from './pages/FormularioCrearVenta';
 import RegistrarPago from './pages/RegistroPagos';
-import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente/';
+import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
 import ModelosCasa from './pages/ModelosCasa';
 import MapaLotes from './pages/MapaLotes/MapaLotes';
