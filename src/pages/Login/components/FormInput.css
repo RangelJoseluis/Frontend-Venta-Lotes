@@ -11,12 +11,17 @@
   color: #1e293b;
   margin-bottom: 0.5rem;
   transition: color 0.2s ease;
+  line-height: 1.2; /* helps vertical centering with icons */
 }
 
 .label-icon {
   width: 1rem;
   height: 1rem;
   color: #3b82f6;
+  display: block;        /* avoid inline alignment quirks */
+  flex-shrink: 0;        /* keep consistent size next to text */
+  position: relative;    /* fine-tune vertical alignment */
+  top: -1px;             /* nudge up to align with text baseline */
 }
 
 .input-wrapper {

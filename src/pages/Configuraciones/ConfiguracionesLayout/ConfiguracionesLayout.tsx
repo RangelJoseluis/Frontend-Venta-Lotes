@@ -1,8 +1,3 @@
-/**
- * LAYOUT: CONFIGURACIONES CON SIDEBAR
- * Layout principal para la sección de configuraciones con sidebar interno
- */
-
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { ArrowLeft, Map, AlertTriangle, Settings, Building2 } from 'lucide-react';
 import './ConfiguracionesLayout.css';
@@ -45,10 +40,9 @@ const ConfiguracionesLayout = () => {
 
   return (
     <div className="config-layout-container">
-      {/* Header Global */}
       <div className="config-layout-header">
-        <button 
-          onClick={() => navigate('/dashboard')} 
+        <button
+          onClick={() => navigate('/dashboard')}
           className="btn-volver"
         >
           <ArrowLeft size={20} />
@@ -57,9 +51,7 @@ const ConfiguracionesLayout = () => {
         <h1>⚙️ Configuraciones del Sistema</h1>
       </div>
 
-      {/* Layout con Sidebar */}
       <div className="config-layout-content">
-        {/* Sidebar Interno */}
         <aside className="config-sidebar">
           <nav className="config-sidebar-nav">
             {menuItems.map((item) => {
@@ -84,7 +76,6 @@ const ConfiguracionesLayout = () => {
           </nav>
         </aside>
 
-        {/* Contenido Principal */}
         <main className="config-main">
           <Outlet />
         </main>
