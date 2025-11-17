@@ -3,10 +3,10 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { crearVenta } from '../../../services/ventas.service';
-import { getErrorMessage } from '../../../services/http.service';
+import { crearVenta } from '../../../../services/ventas.service';
+import { getErrorMessage } from '../../../../services/http.service';
 import type { VentaFormData, FormularioState, Lote } from '../types';
-import type { CrearVentaDto } from '../../../types';
+import type { CrearVentaDto } from '../../../../types';
 import { FORM_DEFAULTS, MESSAGES } from '../constants';
 import { validateFormularioVenta } from '../utils/validaciones';
 import { parsePrecio } from '../utils/formatters';
@@ -123,8 +123,8 @@ export const useFormularioVenta = ({ lotes }: UseFormularioVentaProps): UseFormu
         clienteUid: formData.clienteUid,
         precioVenta: Number(formData.precioVenta),
         modalidadPago: formData.modalidadPago,
-        cantidadCuotas: formData.modalidadPago === 'cuotas' ? Number(formData.cantidadCuotas) : undefined,
-        montoInicial: formData.modalidadPago === 'cuotas' ? Number(formData.montoInicial) : undefined,
+        cantidadCuotas: formData.modalidadPago === 'cuotas' ? Number(formData.cantidadCuotas) : 0,
+        montoInicial: formData.modalidadPago === 'cuotas' ? Number(formData.montoInicial) : 0,
         observaciones: formData.observaciones || undefined,
       };
 

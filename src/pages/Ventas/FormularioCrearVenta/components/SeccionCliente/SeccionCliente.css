@@ -1,0 +1,135 @@
+/* Estilos para SeccionCliente */
+/* Selector de cliente con react-select */
+
+.formulario-section {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.formulario-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.formulario-section-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.formulario-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.formulario-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.formulario-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formulario-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.formulario-required {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.formulario-select {
+  font-size: 0.875rem;
+}
+
+.formulario-help {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Estilos específicos para react-select */
+.formulario-select__control {
+  min-height: 42px !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.formulario-select__control:hover {
+  border-color: #3b82f6 !important;
+}
+
+.formulario-select__control--is-focused {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 1px #3b82f6 !important;
+}
+
+.formulario-select__placeholder {
+  color: #9ca3af !important;
+  font-size: 0.875rem !important;
+}
+
+.formulario-select__single-value {
+  color: #1e293b !important;
+  font-size: 0.875rem !important;
+}
+
+.formulario-select__option {
+  font-size: 0.875rem !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.formulario-select__option--is-selected {
+  background-color: #3b82f6 !important;
+  color: white !important;
+}
+
+.formulario-select__option--is-focused {
+  background-color: #f1f5f9 !important;
+  color: #1e293b !important;
+}
+
+.formulario-select__menu {
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.formulario-select__loading-message,
+.formulario-select__no-options-message {
+  color: #64748b !important;
+  font-size: 0.875rem !important;
+  padding: 1rem !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-section {
+    padding: 1rem;
+  }
+  
+  .formulario-section-header {
+    margin-bottom: 1rem;
+  }
+}

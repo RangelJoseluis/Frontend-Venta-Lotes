@@ -6,7 +6,7 @@ import GestionLotes from './pages/GestionLotes';
 import NuevoLote from './pages/NuevoLote';
 import EditarLote from './pages/EditarLote';
 import DetalleLote from './pages/DetalleLote';
-import FormularioCrearVenta from './pages/FormularioCrearVenta';
+import { GestionVentas, FormularioCrearVenta } from './pages/Ventas';
 import RegistrarPago from './pages/RegistroPagos';
 import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
@@ -18,7 +18,6 @@ import ConfiguracionMora from './pages/ConfiguracionMora';
 import ConfiguracionSistema from './pages/ConfiguracionSistema';
 import GestionServicios from './pages/GestionServicios';
 import FormularioServicio from './pages/FormularioServicio';
-import GestionVentas from './pages/GestionVentas';
 import GestionPagos from './pages/GestionPagos';
 import GestionMora from './pages/GestionMora';
 import ReportesMora from './pages/ReportesMora';
@@ -106,7 +105,7 @@ function App() {
         />
 
         <Route
-          path="/crear-venta"
+          path="/ventas/crear"
           element={
             <PrivateRoute>
               <FormularioCrearVenta />

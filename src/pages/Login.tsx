@@ -78,15 +78,16 @@ const Login = () => {
             ============================================ */}
             <div className="logo-placeholder">
               <Shield className="logo-icon" />
+              
             </div>
           </div>
 
           <h1 className="login-title">
-            Venta de Lotes
+            Lote Smart
           </h1>
           <p className="login-subtitle">
             <Shield className="subtitle-icon" />
-            Sistema de Gestión Profesional
+            Sistema de Gestión de lotes Profesional
           </p>
         </div>
 

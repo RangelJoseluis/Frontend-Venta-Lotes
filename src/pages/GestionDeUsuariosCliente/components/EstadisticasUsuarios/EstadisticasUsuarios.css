@@ -1,70 +1,128 @@
-/* Estadísticas - EXACTO PATRÓN DE GESTIONLOTES */
-.estadisticas-grid {
+/* Estadísticas Clientes - alineadas a Ventas */
+.clientes-estadisticas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
-  margin-bottom: 2rem;
+  width: 60%;
+  margin: 0 auto 2rem auto;
+  max-width: 1100px;
+  padding: 0 1rem;
 }
 
-.stat-card {
+@media (min-width: 640px) {
+  .clientes-estadisticas-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .clientes-estadisticas-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 tarjetas */
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .clientes-estadisticas-grid {
+    gap: 1.5rem;
+  }
+}
+
+.clientes-stat-card {
+  background: #eeecec; /* como dashboard */
+  border-radius: 12px;
+  border: 1px solid #e5e7eb; /* borde sutil */
+  padding: 1.25rem 1rem; /* un poco más de alto */
+  min-height: 190px; /* aumentar altura vertical */
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.25rem;
-  background: white;
-  border-radius: 0.75rem;
-  border: 2px solid #e2e8f0;
-  transition: all 0.2s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.stat-icono {
-  display: flex;
-  align-items: center;
+  flex-direction: column; /* icono arriba, contenido abajo */
+  align-items: center; /* centrar horizontalmente */
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 0.5rem;
-  color: white;
+  gap: 0.75rem;
+  min-width: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(2, 8, 23, 0.06); /* shadow suave */
 }
 
-.stat-total .stat-icono {
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
+@media (min-width: 768px) {
+  .clientes-stat-card { padding: 1.5rem 1.25rem; min-height: 200px; }
 }
 
-.stat-clientes .stat-icono {
-  background: linear-gradient(135deg, #10b981, #059669);
+.clientes-stat-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(2, 8, 23, 0.08);
 }
 
-.stat-admins .stat-icono {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-}
-
-.stat-info {
+.clientes-stat-content {
   display: flex;
   flex-direction: column;
+  align-items: center; /* centrar valores */
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  min-width: 0;
+  gap: 0.5rem;
 }
 
-.stat-valor {
-  font-size: 1.75rem;
+.clientes-stat-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px; /* pill cuadrado suave como dashboard */
+  color: #1f2937;
+  border: 1px solid rgba(15, 23, 42, 0.06); /* borde interno sutil */
+  background: #f1f5f9; /* base gris suave, se sobreescribe por variante */
+  line-height: 0; /* evita desplazamiento por línea */
+  margin-bottom: 0.25rem; /* separación del valor */
+}
+
+/* Centrar el ícono dentro del badge y normalizar tamaño */
+.clientes-stat-icono svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  stroke: currentColor;
+}
+
+.clientes-stat-total .clientes-stat-icono {
+  background: #eef2ff; /* indigo claro */
+  color: #4338ca;
+}
+
+.clientes-stat-clientes .clientes-stat-icono {
+  background: #dcfce7; /* verde claro */
+  color: #166534;
+}
+
+.clientes-stat-admins .clientes-stat-icono {
+  background: #fef3c7; /* amarillo claro */
+  color: #92400e;
+}
+
+.clientes-stat-valor {
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem); /* un poco más pequeño */
   font-weight: 700;
-  color: #1e293b;
+  color: #0f172a;
+  line-height: 1.2;
 }
 
-.stat-label {
-  font-size: 0.875rem;
+.clientes-stat-label {
+  font-size: 0.7rem; /* ligeramente más pequeña */
   color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 /* Estado de carga */
-.stat-loading {
+.clientes-stat-loading {
   justify-content: center;
   text-align: center;
-  min-height: 100px;
+  min-height: 95px;
 }
 
 .spinner {
@@ -73,17 +131,7 @@
   margin-bottom: 0.5rem;
 }
 
-.stat-loading p {
-  color: #6b7280;
-  font-weight: 500;
-  margin: 0;
-}
-
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

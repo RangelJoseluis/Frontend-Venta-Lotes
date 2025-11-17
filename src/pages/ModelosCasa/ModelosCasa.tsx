@@ -13,7 +13,7 @@ import FormularioModelo from './components/FormularioModelo/FormularioModelo';
 import { useModelosCasa } from './hooks/useModelosCasa';
 import { useFormularioModelo } from './hooks/useFormularioModelo';
 import { MENSAJES } from './constants';
-import '../ModelosCasa.css';
+import './ModelosCasa.css';
 
 const ModelosCasa = () => {
   const navigate = useNavigate();

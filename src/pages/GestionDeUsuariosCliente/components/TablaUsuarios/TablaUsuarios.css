@@ -1,4 +1,352 @@
-/* Estilos para TablaUsuarios */
+/* ============================================================================
+   ESTILOS: TABLA DE USUARIOS/CLIENTES (PATRÓN PROFESIONAL VENTAS)
+   ============================================================================ */
+
+/* Contenedor principal */
+.usuarios-tabla-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb; /* borde sutil como en Ventas */
+  overflow: hidden;
+  /* Delimitación respecto a los bordes de pantalla */
+  max-width: 1200px; /* igual criterio que Ventas */
+  margin: 0 auto 2rem auto; /* centrar */
+  padding: 0 1.25rem; /* respiro lateral */
+}
+
+.usuarios-tabla-container {
+  overflow-x: auto;
+}
+
+/* Tabla principal */
+.usuarios-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  min-width: 800px;
+}
+
+/* Header de la tabla */
+.usuarios-tabla thead {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.usuarios-tabla th {
+  padding: 1rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 2px solid #cbd5e1; /* línea definida del header */
+  white-space: nowrap;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Filas de la tabla */
+.usuarios-tabla-row {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.usuarios-tabla-row:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.usuarios-tabla-row:last-child {
+  border-bottom: none;
+}
+
+/* Celdas generales */
+.usuarios-tabla td {
+  padding: 1rem 0.75rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Celda de usuario con avatar */
+.usuarios-info-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.usuarios-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 8px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.usuarios-info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.usuarios-nombre {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.875rem;
+}
+
+.usuarios-cedula {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Celda de contacto */
+.usuarios-contacto-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.usuarios-email {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.875rem;
+}
+
+.usuarios-telefono {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Badge de rol */
+.usuarios-rol-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.usuarios-rol-admin {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.usuarios-rol-cliente {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+}
+
+/* Badge de estado */
+.usuarios-estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.usuarios-estado-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.usuarios-estado-activo {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.usuarios-estado-activo .usuarios-estado-dot {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.usuarios-estado-inactivo {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.usuarios-estado-inactivo .usuarios-estado-dot {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Acciones */
+.usuarios-acciones-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.usuarios-btn-accion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.usuarios-btn-ver {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+}
+
+.usuarios-btn-ver:hover {
+  background: #bfdbfe;
+  transform: translateY(-1px);
+}
+
+.usuarios-btn-editar {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: white;
+}
+
+/* Eliminar/Desactivar (rojo) */
+.usuarios-btn-desactivar, .usuarios-btn-eliminar {
+  background: #fee2e2; /* rojo claro */
+  color: #991b1b; /* rojo oscuro para el icono */
+}
+
+.usuarios-btn-editar:hover {
+  background: #c7d2fe;
+  transform: translateY(-1px);
+}
+
+.usuarios-btn-desactivar {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.usuarios-btn-desactivar:hover,
+.usuarios-btn-eliminar:hover {
+  background: #fecaca;
+  transform: translateY(-1px);
+}
+
+.usuarios-btn-reactivar {
+  background: #dcfce7; /* verde claro */
+  color: #166534;
+}
+
+.usuarios-btn-reactivar:hover {
+  background: #bbf7d0;
+  transform: translateY(-1px);
+}
+
+/* Estados de carga y vacío */
+.usuarios-tabla-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.usuarios-loading-content {
+  text-align: center;
+  color: #64748b;
+}
+
+.usuarios-loading-spinner {
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+  color: #3b82f6;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.usuarios-tabla-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.usuarios-empty-content {
+  text-align: center;
+  color: #64748b;
+}
+
+.usuarios-empty-icon {
+  margin-bottom: 1rem;
+  color: #cbd5e1;
+}
+
+.usuarios-empty-content h3 {
+  margin: 0 0 0.5rem 0;
+  color: #475569;
+  font-size: 1.25rem;
+}
+
+.usuarios-empty-content p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .usuarios-tabla-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .usuarios-tabla-wrapper {
+    padding: 0 0.75rem; /* un poco menos de padding en móvil */
+  }
+  
+  .usuarios-tabla {
+    min-width: 600px;
+  }
+  
+  .usuarios-tabla th,
+  .usuarios-tabla td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .usuarios-info-cell {
+    gap: 0.5rem;
+  }
+  
+  .usuarios-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .usuarios-acciones-cell {
+    gap: 0.35rem;
+  }
+  
+  .usuarios-btn-accion {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Legacy support (mantener por compatibilidad) */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -221,47 +569,43 @@
   gap: 0.5rem;
 }
 
+/* Unificar botones a estilo profesional (gradientes) */
 .usuarios-btn-accion {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  background: transparent;
-  position: relative;
+  transition: all 0.2s ease;
+  line-height: 0; /* evita que el line-height oculte el SVG */
+  padding: 0; /* centra el icono y evita recortes */
+}
+
+/* Asegurar que los íconos Lucide se vean siempre */
+.usuarios-btn-accion svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  color: inherit; /* usa el color del botón */
+  stroke: currentColor;
 }
 
 .usuarios-btn-accion:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Paleta pastel como en Ventas */
 .usuarios-btn-ver {
-  color: #6366f1;
-  background: #eef2ff;
-  border: 1px solid #c7d2fe;
-}
-
-.usuarios-btn-ver:hover {
-  background: #e0e7ff;
-  color: #4f46e5;
-  border-color: #a5b4fc;
+  background: #dbeafe; /* azul claro */
+  color: #1e40af;
 }
 
 .usuarios-btn-editar {
-  color: #059669;
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-}
-
-.usuarios-btn-editar:hover {
-  background: #d1fae5;
-  color: #047857;
-  border-color: #6ee7b7;
+  background: #e0e7ff; /* índigo claro */
+  color: #3730a3;
 }
 
 .usuarios-btn-eliminar {

@@ -2,10 +2,10 @@
 // Maneja la carga inicial de datos necesarios para el formulario
 
 import { useState, useEffect } from 'react';
-import { lotesService } from '../../../services/lotes.service';
-import { obtenerClientes } from '../../../services/clientes.service';
+import { lotesService } from '../../../../services/lotes.service';
+import { obtenerClientes } from '../../../../services/clientes.service';
 import type { Lote, LoteOption, ClienteOption } from '../types';
-import type { Cliente } from '../../../types';
+import type { Cliente } from '../../../../types';
 import { formatLoteLabel, formatClienteLabel } from '../utils/formatters';
 import { MESSAGES } from '../constants';
 

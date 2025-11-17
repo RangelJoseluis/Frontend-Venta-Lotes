@@ -1,0 +1,59 @@
+/* Estilos para SeccionObservaciones */
+/* Campo de notas y comentarios */
+
+/* Importar estilos base */
+@import '../SeccionCliente/SeccionCliente.css';
+
+/* Textarea específico */
+.formulario-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+  background: white;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.2s ease;
+}
+
+.formulario-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.formulario-textarea::placeholder {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Icono específico para observaciones */
+.seccion-observaciones .formulario-section-icon {
+  color: #8b5cf6; /* Púrpura para notas */
+}
+
+/* Contador de caracteres si se necesita */
+.formulario-textarea-counter {
+  text-align: right;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+/* Estados de validación */
+.formulario-textarea.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 1px #ef4444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-textarea {
+    min-height: 80px;
+    font-size: 16px; /* Evitar zoom en iOS */
+  }
+}

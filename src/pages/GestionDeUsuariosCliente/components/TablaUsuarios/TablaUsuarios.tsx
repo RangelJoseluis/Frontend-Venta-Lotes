@@ -1,5 +1,5 @@
 import React from 'react';
-import { Edit, UserX, RotateCcw, Eye, Loader, User, Shield } from 'lucide-react';
+import { Edit, Trash2, RotateCcw, Eye, Loader, User, Shield } from 'lucide-react';
 import type { Usuario } from '../../types';
 import './TablaUsuarios.css';
 
@@ -111,11 +111,25 @@ const TablaUsuarios: React.FC<TablaUsuariosProps> = ({
                     {/* Botón dinámico según el estado del usuario */}
                     {usuario.estado === 'activo' ? (
                       <button
-                        className="usuarios-btn-accion usuarios-btn-desactivar"
+                        className="usuarios-btn-accion usuarios-btn-desactivar btn-accion btn-eliminar"
                         onClick={() => onEliminar(usuario)}
-                        title="Desactivar usuario (eliminación lógica)"
+                        title="Eliminar / desactivar usuario"
+                        style={{
+                          width: 32,
+                          height: 32,
+                          minWidth: 32,
+                          padding: 0,
+                          lineHeight: 0,
+                          border: 'none',
+                          borderRadius: 6,
+                          background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                          color: '#ffffff',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
                       >
-                        <UserX size={16} />
+                        <Trash2 size={16} />
                       </button>
                     ) : (
                       onReactivar && (

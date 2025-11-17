@@ -11,8 +11,8 @@ const EstadisticasUsuarios: React.FC<EstadisticasUsuariosProps> = ({
 }) => {
   if (loading) {
     return (
-      <div className="estadisticas-grid">
-        <div className="stat-card stat-loading">
+      <div className="clientes-estadisticas-grid">
+        <div className="clientes-stat-card clientes-stat-loading">
           <Loader className="spinner" size={24} />
           <p>Cargando estadísticas...</p>
         </div>
@@ -21,37 +21,37 @@ const EstadisticasUsuarios: React.FC<EstadisticasUsuariosProps> = ({
   }
 
   return (
-    <div className="estadisticas-grid">
+    <div className="clientes-estadisticas-grid">
       {/* Total Usuarios */}
-      <div className="stat-card stat-total">
-        <div className="stat-icono">
-          <Users size={24} />
+      <div className="clientes-stat-card clientes-stat-total">
+        <div className="clientes-stat-icono">
+          <Users size={20} />
         </div>
-        <div className="stat-info">
-          <span className="stat-valor">{totalUsuarios}</span>
-          <span className="stat-label">Total Usuarios</span>
+        <div className="clientes-stat-content">
+          <span className="clientes-stat-valor">{totalUsuarios}</span>
+          <span className="clientes-stat-label">Total Usuarios</span>
         </div>
       </div>
 
       {/* Clientes */}
-      <div className="stat-card stat-clientes">
-        <div className="stat-icono">
-          <UserCheck size={24} />
+      <div className="clientes-stat-card clientes-stat-clientes">
+        <div className="clientes-stat-icono">
+          <UserCheck size={20} />
         </div>
-        <div className="stat-info">
-          <span className="stat-valor">{totalClientes}</span>
-          <span className="stat-label">Clientes</span>
+        <div className="clientes-stat-content">
+          <span className="clientes-stat-valor">{totalClientes}</span>
+          <span className="clientes-stat-label">Clientes</span>
         </div>
       </div>
 
       {/* Administradores */}
-      <div className="stat-card stat-admins">
-        <div className="stat-icono">
-          <Shield size={24} />
+      <div className="clientes-stat-card clientes-stat-admins">
+        <div className="clientes-stat-icono">
+          <Shield size={20} />
         </div>
-        <div className="stat-info">
-          <span className="stat-valor">{totalAdmins}</span>
-          <span className="stat-label">Administradores</span>
+        <div className="clientes-stat-content">
+          <span className="clientes-stat-valor">{totalAdmins}</span>
+          <span className="clientes-stat-label">Administradores</span>
         </div>
       </div>
     </div>
