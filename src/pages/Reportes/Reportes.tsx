@@ -2,9 +2,9 @@
 // Orquesta todos los componentes de reportes y estadísticas
 import { useState, useEffect } from 'react';
 import { BarChart3, History, TrendingUp, Search } from 'lucide-react';
-import Sidebar from '../components/Dashboard/Sidebar/Sidebar';
-import Header from '../components/Dashboard/Header/Header';
-import LoadingSpinner from '../components/Dashboard/UI/LoadingSpinner';
+import Sidebar from '../Dashboard/components/Sidebar/Sidebar';
+import Header from '../Dashboard/components/Header/Header';
+import LoadingSpinner from '../Dashboard/components/UI/LoadingSpinner';
 import ErrorMessage from '../../components/ErrorMessage';
 import TabEstadisticas from './components/TabEstadisticas/TabEstadisticas';
 import TabHistorial from './components/TabHistorial/TabHistorial';
