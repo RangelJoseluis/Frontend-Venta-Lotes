@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
-import serviciosService from '../services/servicios.service';
-import type { CrearServicioDto, Servicio } from '../types';
+import serviciosService from '../../../../services/servicios.service';
+import type { CrearServicioDto, Servicio } from '../../../../types';
 import './FormularioServicio.css';
 
-const FormularioServicio = () => {
-  const navigate = useNavigate();
-  const { uid } = useParams();
-  const esEdicion = !!uid;
+interface FormularioServicioProps {
+  servicioUid?: string;
+  onGuardar: () => void;
+  onCancelar: () => void;
+}
+
+const FormularioServicio: React.FC<FormularioServicioProps> = ({
+  servicioUid,
+  onGuardar,
+  onCancelar
+}) => {
+  const esEdicion = !!servicioUid;
 
   const [cargando, setCargando] = useState(false);
   const [guardando, setGuardando] = useState(false);
@@ -23,15 +30,15 @@ const FormularioServicio = () => {
   });
 
   useEffect(() => {
-    if (esEdicion && uid) {
-      cargarServicio(uid);
+    if (esEdicion && servicioUid) {
+      cargarServicio(servicioUid);
     }
-  }, [uid, esEdicion]);
+  }, [servicioUid, esEdicion]);
 
-  const cargarServicio = async (servicioUid: string) => {
+  const cargarServicio = async (uid: string) => {
     try {
       setCargando(true);
-      const servicio: Servicio = await serviciosService.obtenerPorUid(servicioUid);
+      const servicio: Servicio = await serviciosService.obtenerPorUid(uid);
       setFormData({
         nombre: servicio.nombre,
         descripcion: servicio.descripcion,
@@ -44,7 +51,7 @@ const FormularioServicio = () => {
     } catch (error) {
       console.error('Error al cargar servicio:', error);
       alert('Error al cargar servicio');
-      navigate('/servicios');
+      onCancelar();
     } finally {
       setCargando(false);
     }
@@ -72,15 +79,15 @@ const FormularioServicio = () => {
     try {
       setGuardando(true);
 
-      if (esEdicion && uid) {
-        await serviciosService.actualizar(uid, formData);
+      if (esEdicion && servicioUid) {
+        await serviciosService.actualizar(servicioUid, formData);
         alert('Servicio actualizado exitosamente');
       } else {
         await serviciosService.crear(formData);
         alert('Servicio creado exitosamente');
       }
 
-      navigate('/servicios');
+      onGuardar();
     } catch (error: any) {
       console.error('Error al guardar servicio:', error);
       alert(error.response?.data?.message || 'Error al guardar servicio');
@@ -91,14 +98,14 @@ const FormularioServicio = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    
+
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' 
-        ? (e.target as HTMLInputElement).checked 
-        : type === 'number' 
-        ? parseFloat(value) || 0 
-        : value
+      [name]: type === 'checkbox'
+        ? (e.target as HTMLInputElement).checked
+        : type === 'number'
+          ? parseFloat(value) || 0
+          : value
     }));
   };
 
@@ -114,9 +121,9 @@ const FormularioServicio = () => {
     <div className="formulario-servicio">
       {/* Header */}
       <div className="header">
-        <button 
+        <button
           className="btn-volver"
-          onClick={() => navigate('/servicios')}
+          onClick={onCancelar}
         >
           <ArrowLeft size={20} />
           Volver
@@ -128,7 +135,7 @@ const FormularioServicio = () => {
       <form onSubmit={handleSubmit} className="formulario">
         <div className="seccion">
           <h2>Información Básica</h2>
-          
+
           <div className="campo">
             <label htmlFor="nombre">Nombre *</label>
             <input
@@ -237,7 +244,7 @@ const FormularioServicio = () => {
           <button
             type="button"
             className="btn-cancelar"
-            onClick={() => navigate('/servicios')}
+            onClick={onCancelar}
             disabled={guardando}
           >
             Cancelar

@@ -14,9 +14,8 @@ import ModelosCasa from './pages/ModelosCasa';
 import MapaLotes from './pages/MapaLotes/MapaLotes';
 import ConfiguracionesLayout from './pages/Configuraciones/ConfiguracionesLayout';
 import { ConfiguracionZona, ConfiguracionMora, ConfiguracionSistema } from './pages/Configuraciones/index';
-import GestionServicios from './pages/GestionServicios';
-import FormularioServicio from './pages/FormularioServicio';
-import GestionPagos from './pages/GestionPagos';
+import GestionServicios from './pages/GestionServicios/GestionServicios';
+import GestionPagos from './pages/GestionPagos/GestionPagos';
 import GestionMora from './pages/GestionMora';
 import ReportesMora from './pages/ReportesMora';
 import Perfil from './pages/Perfil/Perfil';
@@ -46,8 +45,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Ruta raíz - Redirige según autenticación */}
-        <Route 
-          path="/" 
+        <Route
+          path="/"
           element={
             <Navigate to="/dashboard" replace />
           } 
@@ -162,24 +161,6 @@ function App() {
           element={
             <PrivateRoute>
               <GestionServicios />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/servicios/nuevo"
-          element={
-            <PrivateRoute>
-              <FormularioServicio />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/servicios/:uid/editar"
-          element={
-            <PrivateRoute>
-              <FormularioServicio />
             </PrivateRoute>
           }
         />

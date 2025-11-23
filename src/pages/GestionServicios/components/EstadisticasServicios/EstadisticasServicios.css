@@ -1,0 +1,128 @@
+/* ============================================================================
+   ESTADÍSTICAS DE SERVICIOS
+   ============================================================================ */
+
+/* Contenedor principal de estadísticas */
+.estadisticas-servicios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Tarjeta de estadística */
+.estadistica-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.estadistica-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Íconos de estadísticas con colores específicos */
+.estadistica-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+
+.estadistica-icono.total {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+    color: #2563eb;
+    border-color: #2563eb;
+}
+
+.estadistica-card:has(.estadistica-icono.total) {
+    border-left-color: #2563eb;
+}
+
+.estadistica-icono.activos {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+    color: #10b981;
+}
+
+.estadistica-card:has(.estadistica-icono.activos) {
+    border-left-color: #10b981;
+}
+
+.estadistica-icono.inactivos {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+    color: #ef4444;
+}
+
+.estadistica-card:has(.estadistica-icono.inactivos) {
+    border-left-color: #ef4444;
+}
+
+.estadistica-icono.esenciales {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(124, 58, 237, 0.1));
+    color: #8b5cf6;
+}
+
+.estadistica-card:has(.estadistica-icono.esenciales) {
+    border-left-color: #8b5cf6;
+}
+
+.estadistica-icono.costo {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
+    color: #f59e0b;
+}
+
+.estadistica-card:has(.estadistica-icono.costo) {
+    border-left-color: #f59e0b;
+}
+
+/* Contenido de la estadística */
+.estadistica-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.estadistica-label {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin: 0 0 0.25rem 0;
+    font-weight: 500;
+}
+
+.estadistica-valor {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .estadisticas-servicios {
+        grid-template-columns: 1fr;
+    }
+
+    .estadistica-valor {
+        font-size: 1.25rem;
+    }
+
+    .estadistica-icono {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .estadisticas-servicios {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
