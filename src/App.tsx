@@ -49,7 +49,7 @@ function App() {
           path="/"
           element={
             <Navigate to="/dashboard" replace />
-          } 
+          }
         />
 
         {/* Ruta pública - Login */}
