@@ -1,0 +1,22 @@
+/* ============================================================================
+   GESTIÓN DE LOTES - LAYOUT PRINCIPAL
+   ============================================================================ */
+
+.gestion-lotes {
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .gestion-lotes {
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .gestion-lotes {
+        padding: 2rem;
+    }
+}

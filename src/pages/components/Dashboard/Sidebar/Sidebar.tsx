@@ -36,19 +36,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const navItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Panel de control", active: true },
+     { href: "/mapa", icon: Map, label: "Mapa Visual" },
     { 
       href: "/lotes", 
       icon: Building2, 
       label: "Lotes",
       submenu: [
-        { href: "/lotes", label: "Lista de Lotes" },
+        { href: "/lotes", label: "Gestion Lotes" },
         { href: "/lotes/nuevo", label: "Nuevo Lote" },
-        { href: "/mapa", label: "Mapa Interactivo" }
       ]
     },
     { href: "/modelos-casa", icon: Home, label: "Modelos de Casa" },
     { href: "/servicios", icon: Settings, label: "Servicios" },
-    { href: "/mapa", icon: Map, label: "Mapa Visual" },
     { href: "/ventas", icon: FileText, label: "Ventas" },
     { href: "/reportes", icon: BarChart3, label: "Reportes" },
     { href: "/pagos", icon: CreditCard, label: "Pagos" },

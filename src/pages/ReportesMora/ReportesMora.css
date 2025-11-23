@@ -1,0 +1,53 @@
+/* ============================================================================
+   REPORTES DE MORA - LAYOUT PRINCIPAL
+   ============================================================================ */
+
+.mora-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #f9fafb;
+    min-height: 100vh;
+}
+
+.reporte-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    color: #64748b;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.spinner-large {
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 20px;
+    color: #f97316;
+}
+
+.loading-container p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #475569;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .mora-container {
+        padding: 16px;
+    }
+}
