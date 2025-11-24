@@ -66,13 +66,7 @@
 
 @media (min-width: 1024px) {
   .dashboard-grid-2 {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 1280px) {
-  .dashboard-grid-2 {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   }
 }
 
