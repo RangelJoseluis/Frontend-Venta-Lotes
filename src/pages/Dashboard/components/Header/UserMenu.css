@@ -6,7 +6,8 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem;
+  /* Reducido porque solo muestra avatar */
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.75rem;
@@ -37,7 +38,8 @@
 }
 
 .user-details {
-  display: flex;
+  display: none;
+  /* Oculto para reducir espacio - solo mostrar avatar */
   flex-direction: column;
   min-width: 0;
 }
@@ -60,6 +62,8 @@
 }
 
 .chevron-icon {
+  display: none;
+  /* Oculto para reducir espacio - solo mostrar avatar */
   width: 1rem;
   height: 1rem;
   color: #64748b;
@@ -156,15 +160,8 @@
   flex-shrink: 0;
 }
 
+/* Responsive - Reglas ya aplicadas globalmente arriba */
 @media (max-width: 640px) {
-  .user-details {
-    display: none;
-  }
-  
-  .chevron-icon {
-    display: none;
-  }
-  
   .user-menu-button {
     padding: 0.5rem;
   }

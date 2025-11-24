@@ -29,6 +29,17 @@
   padding: 16px 20px;
   min-height: 70px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.rep-stats-header:hover {
+  opacity: 0.95;
+}
+
+.rep-stats-header:active {
+  transform: scale(0.98);
 }
 
 .rep-stats-ventas .rep-stats-header {
@@ -59,6 +70,18 @@
   font-weight: 700 !important;
   color: white !important;
   letter-spacing: 0.02em !important;
+  flex: 1;
+}
+
+/* Chevron Icon */
+.rep-stats-chevron {
+  color: white !important;
+  transition: transform 0.3s ease !important;
+  flex-shrink: 0;
+}
+
+.rep-stats-chevron.expanded {
+  transform: rotate(180deg) !important;
 }
 
 /* Body */
@@ -106,6 +129,31 @@
   text-align: right !important;
   white-space: nowrap !important;
   font-variant-numeric: tabular-nums !important;
+}
+
+/* Collapsed/Expanded States */
+.rep-stats-collapsed {
+  height: auto;
+}
+
+.rep-stats-expanded {
+  height: auto;
+}
+
+.rep-stats-body {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive */
