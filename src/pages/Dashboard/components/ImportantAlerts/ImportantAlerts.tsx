@@ -1,5 +1,4 @@
 import { AlertTriangle, Calendar, CheckCircle } from 'lucide-react';
-import './ImportantAlerts.css';
 
 interface Alerta {
   id: string;
@@ -82,68 +81,91 @@ const ImportantAlerts = ({
     }
   };
 
-  const getColorClase = (tipo: string) => {
+  const getAlertStyles = (tipo: string) => {
     switch (tipo) {
       case 'danger':
-        return 'alert-danger';
+        return {
+          container: 'bg-gradient-to-br from-red-50 to-red-100 border-l-4 border-red-600',
+          icon: 'text-red-600'
+        };
       case 'warning':
-        return 'alert-warning';
+        return {
+          container: 'bg-gradient-to-br from-amber-50 to-amber-100 border-l-4 border-amber-600',
+          icon: 'text-amber-600'
+        };
       case 'success':
-        return 'alert-success';
+        return {
+          container: 'bg-gradient-to-br from-emerald-50 to-emerald-100 border-l-4 border-emerald-600',
+          icon: 'text-emerald-600'
+        };
       case 'info':
-        return 'alert-info';
+        return {
+          container: 'bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-blue-600',
+          icon: 'text-blue-600'
+        };
       default:
-        return 'alert-info';
+        return {
+          container: 'bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-blue-600',
+          icon: 'text-blue-600'
+        };
     }
   };
 
   if (alertas.length === 0) {
     return (
-      <div className="important-alerts-card">
-        <div className="important-alerts-header">
-          <h3 className="important-alerts-title">
+      <div className="bg-white rounded-2xl shadow-sm overflow-hidden w-full">
+        <div className="p-4 md:p-6 border-b border-slate-100 flex justify-between items-center gap-3 flex-wrap">
+          <h3 className="text-base md:text-lg font-bold text-slate-800 flex items-center gap-3 m-0">
             <CheckCircle size={24} />
             Estado del Sistema
           </h3>
         </div>
-        <div className="alerts-empty">
-          <CheckCircle size={48} />
-          <p>Todo está en orden</p>
-          <span>No hay alertas importantes en este momento</span>
+        <div className="flex flex-col items-center justify-center p-12 sm:p-16 text-emerald-600">
+          <CheckCircle size={48} className="mb-4 opacity-70" />
+          <p className="m-0 mb-2 text-base font-semibold text-slate-800">Todo está en orden</p>
+          <span className="m-0 text-sm text-slate-500">No hay alertas importantes en este momento</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="important-alerts-card">
-      <div className="important-alerts-header">
-        <h3 className="important-alerts-title">
+    <div className="bg-white rounded-2xl shadow-sm overflow-hidden w-full">
+      <div className="p-4 md:p-6 border-b border-slate-100 flex justify-between items-center gap-3 flex-wrap">
+        <h3 className="text-base md:text-lg font-bold text-slate-800 flex items-center gap-3 m-0">
           <AlertTriangle size={24} />
           Alertas Importantes
         </h3>
-        <span className="alerts-badge">
+        <span className="bg-red-100 text-red-600 px-3 py-1 rounded-xl text-xs font-semibold whitespace-nowrap">
           {alertas.length} alerta{alertas.length > 1 ? 's' : ''}
         </span>
       </div>
 
-      <div className="alerts-list">
-        {alertas.map((alerta) => (
-          <div key={alerta.id} className={`alert-item ${getColorClase(alerta.tipo)}`}>
-            <div className="alert-icon">
-              {getIcono(alerta.tipo)}
-            </div>
-            <div className="alert-content">
-              <div className="alert-header-row">
-                <h4 className="alert-title">{alerta.titulo}</h4>
-                {alerta.cantidad !== undefined && (
-                  <span className="alert-count">{alerta.cantidad}</span>
-                )}
+      <div className="p-4 md:p-6 space-y-3">
+        {alertas.map((alerta) => {
+          const styles = getAlertStyles(alerta.tipo);
+          return (
+            <div
+              key={alerta.id}
+              className={`flex gap-3 md:gap-4 p-3.5 md:p-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${styles.container}`}
+            >
+              <div className={`flex-shrink-0 flex items-center justify-center ${styles.icon}`}>
+                {getIcono(alerta.tipo)}
               </div>
-              <p className="alert-description">{alerta.descripcion}</p>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-1.5 gap-2 flex-col sm:flex-row sm:items-center">
+                  <h4 className="text-sm font-bold text-slate-800 m-0">{alerta.titulo}</h4>
+                  {alerta.cantidad !== undefined && (
+                    <span className="bg-black/10 text-slate-800 px-2.5 py-0.5 rounded-xl text-xs font-bold">
+                      {alerta.cantidad}
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs md:text-sm text-slate-600 m-0 leading-relaxed">{alerta.descripcion}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

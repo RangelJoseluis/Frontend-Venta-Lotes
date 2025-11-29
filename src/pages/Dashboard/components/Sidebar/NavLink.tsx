@@ -22,42 +22,60 @@ const NavLink = ({ href, icon: Icon, label, active = false, sidebarOpen, submenu
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const baseLinkClasses = `
+    relative flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1
+    transition-all duration-200 group
+    ${sidebarOpen ? '' : 'justify-center'}
+  `;
+
+  const activeClasses = active || currentPath === href
+    ? 'bg-blue-600 text-white'
+    : 'text-slate-300 hover:bg-slate-800 hover:text-white';
+
   // Si tiene submenú
   if (submenu && submenu.length > 0) {
     return (
-      <div className="nav-link-with-submenu">
+      <div className="mb-1">
         <button
           onClick={() => setIsSubmenuOpen(!isSubmenuOpen)}
-          className={`nav-link ${active ? 'nav-link-active' : 'nav-link-inactive'} ${
-            sidebarOpen ? 'nav-link-expanded' : 'nav-link-collapsed'
-          }`}
+          className={`${baseLinkClasses} ${activeClasses} w-full`}
         >
-          <Icon className="nav-link-icon" />
+          <Icon className="w-5 h-5 flex-shrink-0" />
           {sidebarOpen && (
             <>
-              <span className="nav-link-text">{label}</span>
+              <span className="flex-1 text-sm font-medium text-left whitespace-nowrap">{label}</span>
               {isSubmenuOpen ? (
-                <ChevronDown className="nav-link-chevron" size={16} />
+                <ChevronDown className="w-4 h-4 flex-shrink-0" />
               ) : (
-                <ChevronRight className="nav-link-chevron" size={16} />
+                <ChevronRight className="w-4 h-4 flex-shrink-0" />
               )}
             </>
           )}
           {!sidebarOpen && (
-            <span className="nav-link-tooltip">{label}</span>
+            <span className="
+              absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-xs rounded
+              opacity-0 pointer-events-none group-hover:opacity-100
+              whitespace-nowrap z-50 transition-opacity duration-200
+            ">
+              {label}
+            </span>
           )}
         </button>
 
         {/* Submenú */}
         {sidebarOpen && isSubmenuOpen && (
-          <div className="nav-submenu">
+          <div className="ml-8 mt-1 space-y-1">
             {submenu.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
-                className={`nav-submenu-item ${
-                  currentPath === item.href ? 'nav-submenu-item-active' : ''
-                }`}
+                className={`
+                  block px-3 py-2 text-sm rounded-lg transition-colors duration-200
+                  ${currentPath === item.href
+                    ? 'bg-blue-600 text-white'
+                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                  }
+                `}
               >
                 {item.label}
               </Link>
@@ -72,16 +90,20 @@ const NavLink = ({ href, icon: Icon, label, active = false, sidebarOpen, submenu
   return (
     <Link
       to={href}
-      className={`nav-link ${active ? 'nav-link-active' : 'nav-link-inactive'} ${
-        sidebarOpen ? 'nav-link-expanded' : 'nav-link-collapsed'
-      }`}
+      className={`${baseLinkClasses} ${activeClasses}`}
     >
-      <Icon className="nav-link-icon" />
+      <Icon className="w-5 h-5 flex-shrink-0" />
       {sidebarOpen && (
-        <span className="nav-link-text">{label}</span>
+        <span className="text-sm font-medium whitespace-nowrap">{label}</span>
       )}
       {!sidebarOpen && (
-        <span className="nav-link-tooltip">{label}</span>
+        <span className="
+          absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-xs rounded
+          opacity-0 pointer-events-none group-hover:opacity-100
+          whitespace-nowrap z-50 transition-opacity duration-200
+        ">
+          {label}
+        </span>
       )}
     </Link>
   );

@@ -1,6 +1,5 @@
 import { Building2, CheckCircle2, Calculator } from 'lucide-react';
 import StatCard from './StatCard';
-import './StatsGrid.css';
 import type { EstadisticasLotes } from '../../../../types';
 
 interface StatsGridProps {
@@ -15,7 +14,7 @@ const StatsGrid = ({ stats }: StatsGridProps) => {
   const vendidosPercent = ((stats.vendidos || 0) / (stats.totalLotes || 1) * 100);
 
   return (
-    <div className="stats-grid">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4 lg:gap-5 xl:gap-6 w-full">
       <StatCard
         icon={Building2}
         title="Total"

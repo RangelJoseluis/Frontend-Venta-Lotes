@@ -14,7 +14,6 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import NavLink from './NavLink';
-import './Sidebar.css';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -36,10 +35,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const navItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Panel de control", active: true },
-     { href: "/mapa", icon: Map, label: "Mapa Visual" },
-    { 
-      href: "/lotes", 
-      icon: Building2, 
+    { href: "/mapa", icon: Map, label: "Mapa Visual" },
+    {
+      href: "/lotes",
+      icon: Building2,
       label: "Lotes",
       submenu: [
         { href: "/lotes", label: "Gestion Lotes" },
@@ -51,9 +50,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     { href: "/ventas", icon: FileText, label: "Ventas" },
     { href: "/reportes", icon: BarChart3, label: "Reportes" },
     { href: "/pagos", icon: CreditCard, label: "Pagos" },
-    { 
-      href: "/gestion-mora", 
-      icon: AlertTriangle, 
+    {
+      href: "/gestion-mora",
+      icon: AlertTriangle,
       label: "Mora",
       submenu: [
         { href: "/gestion-mora", label: "Gestión de Mora" },
@@ -67,37 +66,41 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <>
       {sidebarOpen && isMobile && (
         <div
-          className="sidebar-overlay"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-        <div className="sidebar-header">
-          <div className="sidebar-header-content">
-            {sidebarOpen ? (
-              <div className="sidebar-logo">
-                <h2 className="sidebar-logo-title">Venta Lotes</h2>
-                <p className="sidebar-logo-subtitle">Sistema de Gestión</p>
+      <aside className={`
+        fixed top-0 left-0 h-full bg-slate-900 text-white z-50
+        transition-all duration-300 ease-in-out
+        ${sidebarOpen ? 'w-72' : 'w-20'}
+        ${!sidebarOpen && isMobile ? '-translate-x-full' : 'translate-x-0'}
+        lg:translate-x-0
+        flex flex-col
+      `}>
+        <div className="flex-shrink-0 border-b border-slate-700 p-4">
+          <div className="flex items-center justify-between">
+            {sidebarOpen && (
+              <div className="flex flex-col">
+                <h2 className="text-lg font-bold text-white">Venta Lotes</h2>
+                <p className="text-xs text-slate-400">Sistema de Gestión</p>
               </div>
-            ) : null}
+            )}
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="sidebar-toggle-btn"
+              className={`
+                p-2 rounded-lg hover:bg-slate-800 transition-colors duration-200
+                ${!sidebarOpen ? 'mx-auto' : ''}
+              `}
               aria-label={sidebarOpen ? 'Cerrar sidebar' : 'Abrir sidebar'}
-              style={!sidebarOpen ? {
-                margin: '0 auto',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              } : {}}
             >
-              {sidebarOpen ? <X className="sidebar-toggle-icon" /> : <Menu className="sidebar-toggle-icon" />}
+              {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
 
-        <nav className="sidebar-nav">
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide py-4 px-2">
           {navItems.map((item) => (
             <NavLink
               key={item.label}
@@ -111,15 +114,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           ))}
         </nav>
 
-        <div className="sidebar-profile">
-          <div className={`sidebar-profile-content ${sidebarOpen ? 'profile-expanded' : 'profile-collapsed'}`}>
-            <div className="user-avatar-large">
-              <span className="avatar-text">A</span>
+        <div className="flex-shrink-0 border-t border-slate-700 p-4">
+          <div className={`flex items-center gap-3 ${!sidebarOpen ? 'justify-center' : ''}`}>
+            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+              <span className="text-sm font-semibold text-white">A</span>
             </div>
             {sidebarOpen && (
-              <div className="user-info">
-                <p className="user-name">Administrador</p>
-                <p className="user-role">Administrador</p>
+              <div className="flex flex-col min-w-0">
+                <p className="text-sm font-medium text-white truncate">Administrador</p>
+                <p className="text-xs text-slate-400 truncate">Administrador</p>
               </div>
             )}
           </div>

@@ -1,6 +1,5 @@
 import { Plus, FileText, Wallet, AlertTriangle, BarChart3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import './QuickActions.css';
 
 const QuickActions = () => {
   const navigate = useNavigate();
@@ -52,25 +51,25 @@ const QuickActions = () => {
   };
 
   return (
-    <div className="quick-actions-container">
-      <h3 className="quick-actions-title">Acciones Rápidas</h3>
-      <div className="quick-actions-grid">
+    <div className="w-full">
+      <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4">Acciones Rápidas</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4">
         {actions.map((action) => {
           const Icon = action.icon;
           const currentColor = colorClasses[action.color as keyof typeof colorClasses];
 
           return (
-            <button 
-              key={action.title} 
-              className="quick-action-button group"
+            <button
+              key={action.title}
+              className="group bg-white border border-slate-200 rounded-xl p-4 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 hover:border-blue-300 text-left"
               onClick={action.onClick}
             >
-              <div className={`quick-action-icon ${currentColor.icon}`}>
-                <Icon className="quick-action-icon-svg" />
+              <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-3 transition-all duration-200 ${currentColor.icon}`}>
+                <Icon className="w-6 h-6" />
               </div>
-              <div className="quick-action-content">
-                <p className="quick-action-title">{action.title}</p>
-                <p className="quick-action-description">{action.description}</p>
+              <div className="space-y-1">
+                <p className="font-semibold text-slate-900 text-sm leading-tight">{action.title}</p>
+                <p className="text-xs text-slate-600 leading-tight">{action.description}</p>
               </div>
             </button>
           );
