@@ -6,16 +6,10 @@ export default function ThemeToggle() {
     const { theme, toggleTheme } = useThemeStore();
     const [mounted, setMounted] = useState(false);
 
-    // Evitar hidratación incorrecta y asegurar sincronización
+    // El ThemeProvider se encarga de la sincronización con el DOM
     useEffect(() => {
         setMounted(true);
-        // Sincronizar clase con el estado actual
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    }, [theme]);
+    }, []);
 
     if (!mounted) return null;
 
