@@ -66,9 +66,9 @@ const MoraWidget = () => {
     estadisticas.totalCuotasConMora >= 5 ? 'media' : 'baja';
 
   const severidadColors = {
-    alta: 'border-red-200 bg-gradient-to-br from-red-50 to-red-100',
-    media: 'border-amber-200 bg-gradient-to-br from-amber-50 to-amber-100',
-    baja: 'border-blue-200 bg-gradient-to-br from-blue-50 to-blue-100'
+    alta: 'border-red-200 dark:border-red-800 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-900/10',
+    media: 'border-amber-200 dark:border-amber-800 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-900/10',
+    baja: 'border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-900/10'
   };
 
   const badgeColors = {
@@ -78,12 +78,12 @@ const MoraWidget = () => {
   };
 
   return (
-    <div className={`rounded-2xl shadow-sm border-2 overflow-hidden ${tieneMora ? severidadColors[severidad] : 'bg-white border-slate-200'}`}>
+    <div className={`rounded-2xl shadow-sm border-2 overflow-hidden transition-colors duration-200 ${tieneMora ? severidadColors[severidad] : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
       {/* Header */}
-      <div className="p-4 md:p-6 border-b border-slate-200 flex justify-between items-center gap-3 flex-wrap bg-white/50 backdrop-blur-sm">
+      <div className="p-4 md:p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center gap-3 flex-wrap bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <AlertTriangle className={`w-6 h-6 ${tieneMora ? 'text-red-600' : 'text-slate-600'}`} />
-          <h3 className="text-base md:text-lg font-bold text-slate-900 m-0">Mora Acumulada</h3>
+          <AlertTriangle className={`w-6 h-6 ${tieneMora ? 'text-red-600 dark:text-red-400' : 'text-slate-600 dark:text-slate-400'}`} />
+          <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white m-0">Mora Acumulada</h3>
         </div>
         {tieneMora && (
           <span className={`px-3 py-1 rounded-full text-xs font-bold ${badgeColors[severidad]}`}>
@@ -97,11 +97,11 @@ const MoraWidget = () => {
         {tieneMora ? (
           <>
             {/* Monto principal */}
-            <div className="flex items-center gap-4 mb-6 p-4 bg-white/80 rounded-xl backdrop-blur-sm">
-              <DollarSign className="w-8 h-8 text-red-600 flex-shrink-0" />
+            <div className="flex items-center gap-4 mb-6 p-4 bg-white/80 dark:bg-slate-800/80 rounded-xl backdrop-blur-sm">
+              <DollarSign className="w-8 h-8 text-red-600 dark:text-red-400 flex-shrink-0" />
               <div className="flex flex-col">
-                <span className="text-sm text-slate-600 font-medium">Mora Total</span>
-                <span className="text-2xl md:text-3xl font-bold text-red-600">
+                <span className="text-sm text-slate-600 dark:text-slate-300 font-medium">Mora Total</span>
+                <span className="text-2xl md:text-3xl font-bold text-red-600 dark:text-red-400">
                   {formatCurrency(estadisticas.moraAcumuladaTotal)}
                 </span>
               </div>
@@ -109,21 +109,21 @@ const MoraWidget = () => {
 
             {/* Estadísticas secundarias */}
             <div className="grid grid-cols-2 gap-3 mb-6">
-              <div className="flex items-center gap-2 p-3 bg-white/80 rounded-lg backdrop-blur-sm">
-                <Clock size={16} className="text-amber-600 flex-shrink-0" />
+              <div className="flex items-center gap-2 p-3 bg-white/80 dark:bg-slate-800/80 rounded-lg backdrop-blur-sm">
+                <Clock size={16} className="text-amber-600 dark:text-amber-400 flex-shrink-0" />
                 <div className="flex flex-col min-w-0">
-                  <span className="text-xs text-slate-600">Pendiente</span>
-                  <span className="text-sm font-semibold text-slate-900 truncate">
+                  <span className="text-xs text-slate-600 dark:text-slate-300">Pendiente</span>
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white truncate">
                     {formatCurrency(estadisticas.moraPendientePago)}
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 p-3 bg-white/80 rounded-lg backdrop-blur-sm">
-                <TrendingUp size={16} className="text-blue-600 flex-shrink-0" />
+              <div className="flex items-center gap-2 p-3 bg-white/80 dark:bg-slate-800/80 rounded-lg backdrop-blur-sm">
+                <TrendingUp size={16} className="text-blue-600 dark:text-blue-400 flex-shrink-0" />
                 <div className="flex flex-col min-w-0">
-                  <span className="text-xs text-slate-600">Promedio</span>
-                  <span className="text-sm font-semibold text-slate-900 truncate">
+                  <span className="text-xs text-slate-600 dark:text-slate-300">Promedio</span>
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white truncate">
                     {formatCurrency(estadisticas.promedioMoraPorCuota)}
                   </span>
                 </div>
@@ -140,11 +140,11 @@ const MoraWidget = () => {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
-              <span className="text-3xl text-emerald-600">✓</span>
+            <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mb-4">
+              <span className="text-3xl text-emerald-600 dark:text-emerald-400">✓</span>
             </div>
-            <p className="text-base font-bold text-slate-900 mb-1">Sin Mora Pendiente</p>
-            <p className="text-sm text-slate-600 max-w-xs">
+            <p className="text-base font-bold text-slate-900 dark:text-white mb-1">Sin Mora Pendiente</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xs">
               ¡Excelente! No hay cuotas vencidas con mora acumulada
             </p>
           </div>

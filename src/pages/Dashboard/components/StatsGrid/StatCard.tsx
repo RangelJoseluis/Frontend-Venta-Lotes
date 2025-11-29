@@ -36,23 +36,23 @@ const StatCard = ({ icon: Icon, title, value, subtitle, percentage, color }: Sta
   const currentColor = colorClasses[color];
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4 transition-all duration-200 ease-in-out hover:shadow-xl hover:-translate-y-0.5 flex flex-col items-center text-center h-full">
+    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 transition-all duration-200 ease-in-out hover:shadow-xl hover:-translate-y-0.5 flex flex-col items-center text-center h-full">
       <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-2 shadow-sm ${currentColor.icon}`}>
         <Icon className="w-5 h-5" strokeWidth={2.5} />
       </div>
 
-      <p className={`text-3xl md:text-4xl font-bold mb-1 tracking-tight ${currentColor.value}`}>
+      <p className={`text-3xl md:text-4xl font-bold mb-1 tracking-tight ${currentColor.value} dark:text-slate-100`}>
         {value}
       </p>
 
-      <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+      <span className="text-[10px] md:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
         {title}
       </span>
 
-      <div className="mt-auto flex items-center justify-center gap-2 text-xs md:text-sm font-medium text-slate-600">
+      <div className="mt-auto flex items-center justify-center gap-2 text-xs md:text-sm font-medium text-slate-600 dark:text-slate-400">
         <span>{subtitle}</span>
         {percentage !== undefined && (
-          <span className={`${currentColor.percentage} bg-slate-50 px-1.5 py-0.5 rounded-md text-[10px] md:text-xs`}>
+          <span className={`${currentColor.percentage} bg-slate-50 dark:bg-slate-700/50 px-1.5 py-0.5 rounded-md text-[10px] md:text-xs`}>
             {percentage}%
           </span>
         )}

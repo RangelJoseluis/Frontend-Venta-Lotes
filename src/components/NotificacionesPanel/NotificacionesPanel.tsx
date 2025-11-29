@@ -69,13 +69,13 @@ export default function NotificacionesPanel() {
   const getColorClasses = (prioridad: Notificacion['prioridad']) => {
     switch (prioridad) {
       case 'urgente':
-        return 'bg-red-100 text-red-600';
+        return 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400';
       case 'media':
-        return 'bg-amber-100 text-amber-600';
+        return 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400';
       case 'baja':
-        return 'bg-blue-100 text-blue-600';
+        return 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400';
       default:
-        return 'bg-amber-100 text-amber-600';
+        return 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400';
     }
   };
 
@@ -106,7 +106,7 @@ export default function NotificacionesPanel() {
     <div className="relative">
       {/* Botón de notificaciones */}
       <button
-        className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-100 text-slate-600 transition-colors duration-200"
+        className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors duration-200"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Notificaciones"
       >
@@ -125,12 +125,12 @@ export default function NotificacionesPanel() {
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
 
           {/* Panel */}
-          <div className="absolute top-full right-0 mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden flex flex-col max-h-[600px]">
+          <div className="absolute top-full right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 z-50 overflow-hidden flex flex-col max-h-[600px] transition-colors duration-200">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50/50">
-              <h3 className="font-bold text-slate-800">Notificaciones</h3>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50">
+              <h3 className="font-bold text-slate-800 dark:text-white">Notificaciones</h3>
               <button
-                className="p-1 rounded-md hover:bg-slate-200 text-slate-500 transition-colors"
+                className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 <X size={18} />
@@ -140,12 +140,12 @@ export default function NotificacionesPanel() {
             {/* Lista de notificaciones */}
             <div className="flex-1 overflow-y-auto max-h-[400px]">
               {isLoading ? (
-                <div className="flex flex-col items-center justify-center py-8 text-slate-500 gap-3">
+                <div className="flex flex-col items-center justify-center py-8 text-slate-500 dark:text-slate-400 gap-3">
                   <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                   <p className="text-sm">Cargando...</p>
                 </div>
               ) : notificaciones.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-slate-400 gap-3">
+                <div className="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500 gap-3">
                   <Bell size={40} className="opacity-50" />
                   <p className="text-sm">No hay notificaciones</p>
                 </div>
@@ -153,7 +153,7 @@ export default function NotificacionesPanel() {
                 notificaciones.map((notif) => (
                   <div
                     key={notif.uid}
-                    className={`flex gap-3 px-4 py-3 border-b border-slate-50 cursor-pointer transition-colors hover:bg-slate-50 relative ${notif.leida ? 'opacity-60' : ''
+                    className={`flex gap-3 px-4 py-3 border-b border-slate-50 dark:border-slate-700/50 cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 relative ${notif.leida ? 'opacity-60' : ''
                       }`}
                     onClick={handleClickNotificacion}
                   >
@@ -161,9 +161,9 @@ export default function NotificacionesPanel() {
                       {getIconByTipo(notif.tipo)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-slate-800 mb-1">{notif.titulo}</div>
-                      <div className="text-xs text-slate-600 leading-snug mb-2 line-clamp-2">{notif.mensaje}</div>
-                      <div className="flex items-center justify-between gap-2 text-[11px] text-slate-400">
+                      <div className="text-sm font-semibold text-slate-800 dark:text-white mb-1">{notif.titulo}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 leading-snug mb-2 line-clamp-2">{notif.mensaje}</div>
+                      <div className="flex items-center justify-between gap-2 text-[11px] text-slate-400 dark:text-slate-500">
                         <span className="font-medium truncate">{notif.clienteNombre}</span>
                         <span className="flex-shrink-0">{formatearTiempo(notif.fechaCreacion)}</span>
                       </div>
@@ -178,9 +178,9 @@ export default function NotificacionesPanel() {
 
             {/* Footer */}
             {notificaciones.length > 0 && (
-              <div className="p-3 border-t border-slate-100 bg-slate-50">
+              <div className="p-3 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
                 <button
-                  className="w-full py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100"
+                  className="w-full py-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors border border-transparent hover:border-blue-100 dark:hover:border-blue-900/30"
                   onClick={() => {
                     navigate('/gestion-mora');
                     setIsOpen(false);

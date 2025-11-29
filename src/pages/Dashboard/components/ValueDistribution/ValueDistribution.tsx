@@ -12,8 +12,8 @@ const ValueDistribution = ({ stats }: ValueDistributionProps) => {
   const precioPorM2 = (stats.valorTotal || 0) / (stats.superficieTotal || 1);
 
   return (
-    <div className="block w-full max-w-lg">
-      <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-5 md:p-6 text-white shadow-md transition-all duration-300 hover:shadow-xl">
+    <div className="block w-full h-full">
+      <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-5 md:p-6 text-white shadow-md transition-all duration-300 hover:shadow-xl h-full flex flex-col justify-between">
         <div className="flex items-center mb-3">
           <DollarSign className="w-6 h-6 mr-2.5 flex-shrink-0" />
           <h3 className="text-base md:text-lg font-semibold m-0 leading-tight">
