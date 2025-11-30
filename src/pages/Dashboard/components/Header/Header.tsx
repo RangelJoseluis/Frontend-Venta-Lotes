@@ -1,7 +1,8 @@
-import { Menu, Bell } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import UserMenu from './UserMenu';
 import NotificacionesPanel from '../../../../components/NotificacionesPanel/NotificacionesPanel';
 import ThemeToggle from '../../../../components/ThemeToggle/ThemeToggle';
+import { useState } from 'react';
 
 interface HeaderProps {
   sidebarOpen: boolean;
@@ -9,6 +10,8 @@ interface HeaderProps {
 }
 
 const Header = ({ sidebarOpen, setSidebarOpen }: HeaderProps) => {
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-10 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
       <div className="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
@@ -32,7 +35,7 @@ const Header = ({ sidebarOpen, setSidebarOpen }: HeaderProps) => {
           <ThemeToggle />
           <NotificacionesPanel />
           <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block"></div>
-          <UserMenu isOpen={false} setIsOpen={() => { }} />
+          <UserMenu isOpen={isUserMenuOpen} setIsOpen={setIsUserMenuOpen} />
         </div>
       </div>
     </header>
