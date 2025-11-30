@@ -17,6 +17,7 @@ import {
 import type { Lote } from './types';
 import './GestionLotes.css';
 
+
 const GestionLotes: React.FC = () => {
     const navigate = useNavigate();
 
@@ -64,10 +65,6 @@ const GestionLotes: React.FC = () => {
         navigate('/lotes/nuevo');
     };
 
-    const handleVolverDashboard = () => {
-        navigate('/dashboard');
-    };
-
     const handleVer = (uid: string) => {
         navigate(`/lotes/${uid}`);
     };
@@ -105,8 +102,6 @@ const GestionLotes: React.FC = () => {
             <HeaderGestion
                 totalLotes={lotes.length}
                 lotesFiltrados={lotesFiltrados.length}
-                onNuevoLote={handleNuevoLote}
-                onVolverDashboard={handleVolverDashboard}
             />
 
             {/* Alertas de estado */}
@@ -117,11 +112,12 @@ const GestionLotes: React.FC = () => {
                 onLimpiarSuccess={() => { }}
             />
 
-            {/* Filtros */}
+            {/* Filtros con botón Nuevo Lote integrado */}
             <FiltrosLotes
                 filtros={filtros}
                 onBusquedaChange={(busqueda) => actualizarFiltro('busqueda', busqueda)}
                 onEstadoChange={(estado) => actualizarFiltro('estado', estado)}
+                onNuevoLote={handleNuevoLote}
             />
 
             {/* Estadísticas */}

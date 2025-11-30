@@ -1,51 +1,21 @@
 import React from 'react';
-import { Home, Plus, ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Home } from 'lucide-react';
 import type { HeaderGestionProps } from '../../types';
-import './HeaderGestion.css';
 
 const HeaderGestion: React.FC<HeaderGestionProps> = ({
     totalLotes,
-    lotesFiltrados,
-    onNuevoLote,
-    onVolverDashboard
+    lotesFiltrados
 }) => {
-    const navigate = useNavigate();
-
-    const handleVolver = () => {
-        if (onVolverDashboard) {
-            onVolverDashboard();
-        } else {
-            navigate('/dashboard');
-        }
-    };
-
     return (
-        <div className="gestion-header">
-            <div className="header-left">
-                <h1>
-                    <Home size={24} />
+        <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-200 dark:border-slate-700">
+            <Home size={22} className="text-blue-600 dark:text-blue-400 shrink-0" />
+            <div className="flex items-baseline gap-2 flex-wrap">
+                <h1 className="text-xl font-bold text-slate-800 dark:text-white md:text-2xl">
                     Gestión de Lotes
                 </h1>
-                <p className="header-subtitle">
-                    {lotesFiltrados} de {totalLotes} lotes
-                </p>
-            </div>
-            <div className="header-actions">
-                <button
-                    onClick={handleVolver}
-                    className="btn-volver-dashboard"
-                >
-                    <ArrowLeft size={20} />
-                    Volver al Dashboard
-                </button>
-                <button
-                    onClick={onNuevoLote}
-                    className="btn-nuevo-lote"
-                >
-                    <Plus size={20} />
-                    Nuevo Lote
-                </button>
+                <span className="text-sm text-slate-500 dark:text-slate-400">
+                    ({lotesFiltrados} de {totalLotes})
+                </span>
             </div>
         </div>
     );

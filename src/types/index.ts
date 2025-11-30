@@ -48,6 +48,9 @@ export interface Lote {
   // Propiedades del backend
   superficieM2: number; // Backend usa superficieM2
   precioLista: number; // Backend usa precioLista
+  direccion: string;
+  manzana: string;
+  numeroLote: string;
   // Propiedades legacy (mantener para compatibilidad)
   superficie?: number;
   precio?: number;

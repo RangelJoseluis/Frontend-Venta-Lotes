@@ -24,8 +24,6 @@ export interface FiltrosLotes {
 export interface HeaderGestionProps {
     totalLotes: number;
     lotesFiltrados: number;
-    onNuevoLote: () => void;
-    onVolverDashboard: () => void;
 }
 
 export interface AlertasEstadoProps {

@@ -3,20 +3,18 @@
    ============================================================================ */
 
 .gestion-lotes {
-    padding: 1rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    padding: 0;
     width: 100%;
 }
 
 @media (min-width: 768px) {
     .gestion-lotes {
-        padding: 1.5rem;
+        padding: 0;
     }
 }
 
 @media (min-width: 1024px) {
     .gestion-lotes {
-        padding: 2rem;
+        padding: 0;
     }
 }
