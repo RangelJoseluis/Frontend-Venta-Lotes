@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Download, Trash2, Loader, ShoppingCart, MapPin, FileText, AlertCircle } from 'lucide-react';
+import { Eye, Download, Trash2, Loader, MapPin, FileText, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { TablaVentasProps } from '../../types';
 import {
@@ -44,7 +44,7 @@ const TablaVentas: React.FC<TablaVentasProps> = ({
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden w-full mb-8">
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-sm min-w-[1000px]">
+        <table className="w-full table-fixed border-collapse text-sm">
           <thead className="bg-slate-50 dark:bg-slate-800/50">
             <tr>
               <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">LOTE</th>
@@ -98,8 +98,8 @@ const TablaVentas: React.FC<TablaVentasProps> = ({
                 {/* Columna: MODALIDAD */}
                 <td className="px-4 py-4 align-middle">
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide ${venta.modalidadPago?.toLowerCase() === 'cuotas'
-                      ? 'bg-amber-500/10 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300'
-                      : 'bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
+                    ? 'bg-amber-500/10 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300'
+                    : 'bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
                     }`}>
                     {formatearModalidadPago(venta.modalidadPago)}
                   </span>
@@ -108,14 +108,14 @@ const TablaVentas: React.FC<TablaVentasProps> = ({
                 {/* Columna: ESTADO */}
                 <td className="px-4 py-4 align-middle">
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide inline-flex items-center gap-1.5 ${venta.estado?.toLowerCase() === 'activa'
-                      ? 'bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
-                      : venta.estado?.toLowerCase() === 'pendiente'
-                        ? 'bg-amber-500/10 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300'
-                        : 'bg-red-500/10 text-red-700 dark:bg-red-500/20 dark:text-red-300'
+                    ? 'bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
+                    : venta.estado?.toLowerCase() === 'pendiente'
+                      ? 'bg-amber-500/10 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300'
+                      : 'bg-red-500/10 text-red-700 dark:bg-red-500/20 dark:text-red-300'
                     }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${venta.estado?.toLowerCase() === 'activa' ? 'bg-emerald-500'
-                        : venta.estado?.toLowerCase() === 'pendiente' ? 'bg-amber-500'
-                          : 'bg-red-500'
+                      : venta.estado?.toLowerCase() === 'pendiente' ? 'bg-amber-500'
+                        : 'bg-red-500'
                       }`}></span>
                     {venta.estado}
                   </span>

@@ -66,7 +66,7 @@ const TablaServicios: React.FC<TablaServiciosProps> = ({
     return (
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden w-full mb-8">
             <div className="overflow-x-auto">
-                <table className="w-full border-collapse text-sm min-w-[900px]">
+                <table className="w-full table-fixed border-collapse text-sm">
                     <thead className="bg-slate-50 dark:bg-slate-800/50">
                         <tr>
                             <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">SERVICIO</th>
