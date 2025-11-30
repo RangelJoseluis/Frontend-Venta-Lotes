@@ -2,7 +2,6 @@ import React from 'react';
 import { DollarSign, CreditCard, Banknote, Receipt } from 'lucide-react';
 import type { EstadisticasPagosProps } from '../../types';
 import { formatearMoneda } from '../../utils/formatters';
-import './EstadisticasPagos.css';
 
 const EstadisticasPagos: React.FC<EstadisticasPagosProps> = ({
     totalPagos,
@@ -13,7 +12,13 @@ const EstadisticasPagos: React.FC<EstadisticasPagosProps> = ({
     loading
 }) => {
     if (loading) {
-        return null;
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                {[...Array(4)].map((_, i) => (
+                    <div key={i} className="h-24 bg-slate-100 dark:bg-slate-800 rounded-xl animate-pulse" />
+                ))}
+            </div>
+        );
     }
 
     const estadisticas = [
@@ -21,48 +26,57 @@ const EstadisticasPagos: React.FC<EstadisticasPagosProps> = ({
             icon: <Receipt size={24} />,
             label: 'Total Pagos',
             value: totalPagos,
-            color: '#3b82f6',
+            borderColor: 'border-blue-500',
+            iconBg: 'bg-blue-100 dark:bg-blue-900/30',
+            iconColor: 'text-blue-500',
             isCount: true
         },
         {
             icon: <DollarSign size={24} />,
             label: 'Efectivo',
             value: totalEfectivo,
-            color: '#10b981',
+            borderColor: 'border-emerald-500',
+            iconBg: 'bg-emerald-100 dark:bg-emerald-900/30',
+            iconColor: 'text-emerald-500',
             isCount: false
         },
         {
             icon: <Banknote size={24} />,
             label: 'Transferencia',
             value: totalTransferencia,
-            color: '#0ea5e9',
+            borderColor: 'border-sky-500',
+            iconBg: 'bg-sky-100 dark:bg-sky-900/30',
+            iconColor: 'text-sky-500',
             isCount: false
         },
         {
             icon: <CreditCard size={24} />,
             label: 'Tarjeta/Cheque',
             value: totalTarjeta + totalCheque,
-            color: '#ec4899',
+            borderColor: 'border-pink-500',
+            iconBg: 'bg-pink-100 dark:bg-pink-900/30',
+            iconColor: 'text-pink-500',
             isCount: false
         }
     ];
 
     return (
-        <div className="estadisticas-pagos">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {estadisticas.map((stat, index) => (
                 <div
                     key={index}
-                    className="estadistica-card"
-                    style={{ borderLeftColor: stat.color }}
+                    className={`bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border-l-4 ${stat.borderColor} flex items-center gap-4 transition-transform hover:-translate-y-0.5 hover:shadow-md`}
                 >
-                    <div className="estadistica-icon" style={{ color: stat.color }}>
+                    <div className={`flex items-center justify-center w-12 h-12 rounded-lg shrink-0 ${stat.iconBg} ${stat.iconColor}`}>
                         {stat.icon}
                     </div>
-                    <div className="estadistica-content">
-                        <div className="estadistica-label">{stat.label}</div>
-                        <div className="estadistica-value">
+                    <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">
+                            {stat.label}
+                        </p>
+                        <h3 className="text-2xl font-bold text-slate-800 dark:text-white">
                             {stat.isCount ? stat.value : formatearMoneda(stat.value)}
-                        </div>
+                        </h3>
                     </div>
                 </div>
             ))}

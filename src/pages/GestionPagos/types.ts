@@ -9,8 +9,6 @@ export type MetodoPago = 'efectivo' | 'transferencia' | 'cheque' | 'tarjeta';
 
 // Props para componentes
 export interface HeaderGestionProps {
-    onVolver: () => void;
-    onNuevoPago: () => void;
     totalPagos: number;
 }
 

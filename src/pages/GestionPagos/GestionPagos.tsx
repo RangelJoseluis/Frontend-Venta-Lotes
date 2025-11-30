@@ -18,7 +18,6 @@ import {
     usePagos,
     useFiltrosPagos
 } from './hooks';
-import './GestionPagos.css';
 
 const GestionPagos: React.FC = () => {
     const navigate = useNavigate();
@@ -80,10 +79,6 @@ const GestionPagos: React.FC = () => {
     }, [pagos]);
 
     // Handlers
-    const handleVolver = () => {
-        navigate('/dashboard');
-    };
-
     const handleNuevoPago = () => {
         navigate('/registrar-pago');
     };
@@ -106,10 +101,8 @@ const GestionPagos: React.FC = () => {
 
     return (
         <div className="gestion-pagos">
-            {/* Header */}
+            {/* Header compacto */}
             <HeaderGestion
-                onVolver={handleVolver}
-                onNuevoPago={handleNuevoPago}
                 totalPagos={pagos.length}
             />
 
@@ -121,12 +114,13 @@ const GestionPagos: React.FC = () => {
                 onLimpiarSuccess={limpiarMensajes}
             />
 
-            {/* Filtros - ARRIBA de las estadísticas */}
+            {/* Filtros con botón Registrar Pago */}
             <FiltrosPagos
                 busqueda={busqueda}
                 onBusquedaChange={setBusqueda}
                 filtroMetodo={filtroMetodo}
                 onFiltroMetodoChange={setFiltroMetodo}
+                onNuevoPago={handleNuevoPago}
             />
 
             {/* Estadísticas - DEBAJO de los filtros */}
