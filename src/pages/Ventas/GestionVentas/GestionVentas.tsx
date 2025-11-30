@@ -12,13 +12,12 @@ import {
   TablaVentas
 } from './components';
 import { useGestionVentas } from './hooks/useGestionVentas';
-import './GestionVentas.css';
 
 const GestionVentas: React.FC = () => {
   // ============================================================================
   // HOOKS PERSONALIZADOS
   // ============================================================================
-  
+
   // Hook para gestión de ventas (CRUD)
   const {
     ventas,
@@ -33,7 +32,7 @@ const GestionVentas: React.FC = () => {
   // ============================================================================
   // ESTADOS PARA FILTROS (PATRÓN GESTIONLOTES)
   // ============================================================================
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filtroEstado, setFiltroEstado] = useState<string>('todos');
   const [filtroModalidad, setFiltroModalidad] = useState<string>('todos');
@@ -42,7 +41,7 @@ const GestionVentas: React.FC = () => {
   // ============================================================================
   // CÁLCULOS Y FILTROS
   // ============================================================================
-  
+
   const ventasFiltradas = ventas.filter(venta => {
     // Filtro por búsqueda
     if (searchTerm) {
@@ -87,12 +86,8 @@ const GestionVentas: React.FC = () => {
   return (
     <div className="gestion-ventas-container">
       <div className="ventas-wrapper">
-        {/* Header con navegación y botones */}
+        {/* Header compacto */}
         <HeaderGestionVentas
-          titulo="Gestión de Ventas"
-          subtitulo="Administra todas las ventas de lotes"
-          onNuevo={handleNuevaVenta}
-          textoBotonNuevo="Nueva Venta"
           totalVentas={ventas.length}
         />
 
@@ -104,7 +99,7 @@ const GestionVentas: React.FC = () => {
           </div>
         )}
 
-        {/* Filtros de búsqueda - ARRIBA de las tarjetas (patrón GestionLotes) */}
+        {/* Filtros de búsqueda con botón Nueva Venta */}
         <FiltrosVentas
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
@@ -114,6 +109,7 @@ const GestionVentas: React.FC = () => {
           onFiltroModalidadChange={setFiltroModalidad}
           mostrarFiltros={mostrarFiltros}
           onToggleFiltros={() => setMostrarFiltros(!mostrarFiltros)}
+          onNuevaVenta={handleNuevaVenta}
         />
 
         {/* Estadísticas - DEBAJO del buscador */}

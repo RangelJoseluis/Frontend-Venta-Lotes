@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
     HeaderGestion,
     AlertasEstado,
@@ -11,10 +10,8 @@ import {
     Paginacion
 } from './components';
 import { useServicios, useFiltrosServicios } from './hooks';
-import './GestionServicios.css';
 
 const GestionServicios: React.FC = () => {
-    const navigate = useNavigate();
     const {
         servicios,
         loading,
@@ -115,10 +112,6 @@ const GestionServicios: React.FC = () => {
         cargarServicios(filtros);
     };
 
-    const handleVolverDashboard = () => {
-        navigate('/dashboard');
-    };
-
     // Si se está mostrando el formulario, renderizar solo el formulario
     if (mostrarFormulario) {
         return (
@@ -138,8 +131,6 @@ const GestionServicios: React.FC = () => {
             <HeaderGestion
                 totalServicios={estadisticas.totalServicios}
                 serviciosFiltrados={servicios.length}
-                onNuevoServicio={handleNuevoServicio}
-                onVolverDashboard={handleVolverDashboard}
             />
 
             {/* Alertas de estado */}
@@ -150,13 +141,14 @@ const GestionServicios: React.FC = () => {
                 onLimpiarSuccess={limpiarMensajes}
             />
 
-            {/* Filtros */}
+            {/* Filtros con botón Nuevo Servicio integrado */}
             <FiltrosServicios
                 filtros={filtros}
                 onBusquedaChange={(busqueda) => actualizarFiltro('busqueda', busqueda)}
                 onCategoriaChange={(categoria) => actualizarFiltro('categoria', categoria)}
                 onTipoChange={(tipo) => actualizarFiltro('tipo', tipo)}
                 onEstadoChange={(estado) => actualizarFiltro('estado', estado)}
+                onNuevoServicio={handleNuevoServicio}
             />
 
             {/* Estadísticas */}

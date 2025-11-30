@@ -23,8 +23,6 @@ export interface FiltrosVentasProps {
 }
 
 export interface HeaderGestionVentasProps {
-   onNuevoVentas: () => void;
-  onVolver: () => void;
   totalVentas: number;
 }
 

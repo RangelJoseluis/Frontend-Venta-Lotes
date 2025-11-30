@@ -26,8 +26,6 @@ export interface FiltrosServicios {
 export interface HeaderGestionProps {
     totalServicios: number;
     serviciosFiltrados: number;
-    onNuevoServicio: () => void;
-    onVolverDashboard: () => void;
 }
 
 export interface AlertasEstadoProps {

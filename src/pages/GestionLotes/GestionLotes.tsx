@@ -15,7 +15,6 @@ import {
     ModalConfirmacion
 } from './components';
 import type { Lote } from './types';
-import './GestionLotes.css';
 
 
 const GestionLotes: React.FC = () => {
