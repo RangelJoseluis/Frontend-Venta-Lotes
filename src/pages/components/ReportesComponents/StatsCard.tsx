@@ -1,12 +1,7 @@
 /**
  * STATS CARD - Componente de Tarjeta de Estadísticas
- * Completamente aislado para evitar interferencias CSS
- * Ahora con funcionalidad de colapso/expansión
+ * Migrado a Tailwind CSS - Siempre expandido
  */
-
-import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import './StatsCard.css';
 
 interface StatRow {
   label: string;
@@ -20,33 +15,52 @@ interface StatsCardProps {
   variant: 'ventas' | 'cuotas' | 'pagos' | 'lotes';
 }
 
-export default function StatsCard({ title, icon, rows, variant }: StatsCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+const variantStyles = {
+  ventas: {
+    header: 'bg-gradient-to-br from-blue-500 to-blue-600',
+    border: 'border-l-4 border-blue-500'
+  },
+  cuotas: {
+    header: 'bg-gradient-to-br from-emerald-500 to-emerald-600',
+    border: 'border-l-4 border-emerald-500'
+  },
+  pagos: {
+    header: 'bg-gradient-to-br from-amber-500 to-amber-600',
+    border: 'border-l-4 border-amber-500'
+  },
+  lotes: {
+    header: 'bg-gradient-to-br from-purple-500 to-purple-600',
+    border: 'border-l-4 border-purple-500'
+  }
+};
 
-  const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
-  };
+export default function StatsCard({ title, icon, rows, variant }: StatsCardProps) {
+  const styles = variantStyles[variant];
 
   return (
-    <div className={`rep-stats-card rep-stats-${variant} ${isExpanded ? 'rep-stats-expanded' : 'rep-stats-collapsed'}`}>
-      <div className="rep-stats-header" onClick={toggleExpanded}>
-        <span className="rep-stats-icon">{icon}</span>
-        <h3 className="rep-stats-title">{title}</h3>
-        <ChevronDown
-          className={`rep-stats-chevron ${isExpanded ? 'expanded' : ''}`}
-          size={20}
-        />
+    <div className={`bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-all hover:-translate-y-1 hover:shadow-md ${styles.border}`}>
+      {/* Header */}
+      <div className={`${styles.header} px-5 py-4 flex items-center justify-center gap-3 min-h-[80px]`}>
+        <span className="text-3xl flex-shrink-0">{icon}</span>
+        <h3 className="text-base font-bold text-white text-center leading-tight">{title}</h3>
       </div>
-      {isExpanded && (
-        <div className="rep-stats-body">
-          {rows.map((row, index) => (
-            <div key={index} className="rep-stats-row">
-              <span className="rep-stats-label">{row.label}</span>
-              <span className="rep-stats-value">{row.value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+
+      {/* Body - Siempre visible */}
+      <div className="p-4 space-y-2">
+        {rows.map((row, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-between px-3 py-2.5 bg-slate-50 dark:bg-slate-900 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">
+              {row.label}
+            </span>
+            <span className="text-sm font-bold text-slate-900 dark:text-white tabular-nums">
+              {row.value}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
