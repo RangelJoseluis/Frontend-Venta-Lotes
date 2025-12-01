@@ -19,13 +19,12 @@ import {
   useUsuarios,
   useFormularioUsuario
 } from './hooks';
-import './GestionDeUsuariosCliente.css';
 
 const GestionDeUsuariosCliente: React.FC = () => {
   // ============================================================================
   // HOOKS PERSONALIZADOS
   // ============================================================================
-  
+
   // Hook para gestión de usuarios (CRUD)
   const {
     usuarios,
@@ -56,16 +55,15 @@ const GestionDeUsuariosCliente: React.FC = () => {
   // ============================================================================
   // ESTADOS PARA EL MODAL (PATRÓN MODELOSCASA)
   // ============================================================================
-  
+
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [errorFormulario, setErrorFormulario] = useState<string | null>(null);
-  
+
   // Estados para filtros (patrón GestionLotes)
   const [searchTerm, setSearchTerm] = useState('');
   const [filtroEstado, setFiltroEstado] = useState<string>('todos');
   const [filtroRol, setFiltroRol] = useState<string>('todos');
-  const [mostrarFiltros, setMostrarFiltros] = useState(false);
-  
+
   // Estados para el modal de confirmación
   const [mostrarModalConfirmacion, setMostrarModalConfirmacion] = useState(false);
   const [tipoAccion, setTipoAccion] = useState<'desactivar' | 'reactivar'>('desactivar');
@@ -74,7 +72,7 @@ const GestionDeUsuariosCliente: React.FC = () => {
   // ============================================================================
   // CÁLCULOS Y FILTROS
   // ============================================================================
-  
+
   const usuariosFiltrados = usuarios.filter(usuario => {
     // Filtro por búsqueda
     if (searchTerm) {
@@ -142,7 +140,7 @@ const GestionDeUsuariosCliente: React.FC = () => {
    */
   const handleSubmitFormulario = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    
+
     // Validar formulario usando el hook
     if (!validarFormulario()) {
       setErrorFormulario('Por favor, corrija los errores en el formulario');
@@ -151,7 +149,7 @@ const GestionDeUsuariosCliente: React.FC = () => {
 
     try {
       const modoEdicion = vistaActiva === 'edit';
-      
+
       if (modoEdicion && usuarioEditando) {
         // Actualizar usuario existente
         const datosActualizar: ActualizarUsuarioDto = {
@@ -162,7 +160,7 @@ const GestionDeUsuariosCliente: React.FC = () => {
           telefono: formulario.datos.telefono,
           direccion: formulario.datos.direccion, // ✅ AGREGADO: campo direccion
         };
-        
+
         // 🔍 DEBUG: Logs detallados para debugging
         console.log('🔍 [DEBUG] Usuario editando:', usuarioEditando);
         console.log('🔍 [DEBUG] Datos del formulario:', formulario.datos);
@@ -173,7 +171,7 @@ const GestionDeUsuariosCliente: React.FC = () => {
           'tipo': typeof datosActualizar.direccion,
           'longitud': datosActualizar.direccion?.length || 0
         });
-        
+
         await actualizarUsuario(usuarioEditando.uid, datosActualizar);
       } else {
         // Crear nuevo usuario
@@ -188,10 +186,10 @@ const GestionDeUsuariosCliente: React.FC = () => {
         };
         await crearUsuario(nuevoUsuario);
       }
-      
+
       // Cerrar modal después de éxito y limpiar mensajes
       handleCancelarFormulario();
-      
+
       // Forzar actualización de la lista después de un pequeño delay
       setTimeout(() => {
         limpiarMensajes();
@@ -241,7 +239,7 @@ const GestionDeUsuariosCliente: React.FC = () => {
       } else {
         await reactivarUsuario(usuarioSeleccionado.uid);
       }
-      
+
       // Cerrar modal tras éxito
       handleCancelarModal();
     } catch (error) {
@@ -268,14 +266,12 @@ const GestionDeUsuariosCliente: React.FC = () => {
       <div className="usuarios-wrapper">
         {/* Header con navegación y botones */}
         <HeaderGestion
-          onNuevoUsuario={handleNuevoUsuario}
-          onVolver={() => window.history.back()}
           totalUsuarios={usuarios.length}
         />
 
         {/* Error general - Solo mostrar cuando el formulario no esté abierto */}
         {error && !mostrarFormulario && (
-          <div className="alert-error">
+          <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-lg flex items-center gap-2">
             <AlertCircle size={20} />
             <span>{error}</span>
           </div>
@@ -289,8 +285,7 @@ const GestionDeUsuariosCliente: React.FC = () => {
           onFiltroEstadoChange={setFiltroEstado}
           filtroRol={filtroRol}
           onFiltroRolChange={setFiltroRol}
-          mostrarFiltros={mostrarFiltros}
-          onToggleFiltros={() => setMostrarFiltros(!mostrarFiltros)}
+          onNuevoUsuario={handleNuevoUsuario}
         />
 
         {/* Estadísticas - DEBAJO del buscador */}

@@ -27,8 +27,6 @@ export interface EstadoFormulario {
 
 // Props para componentes
 export interface HeaderGestionProps {
-  onNuevoUsuario: () => void;
-  onVolver: () => void;
   totalUsuarios: number;
 }
 
@@ -46,8 +44,7 @@ export interface FiltrosUsuariosProps {
   onFiltroEstadoChange: (estado: string) => void;
   filtroRol: string;
   onFiltroRolChange: (rol: string) => void;
-  mostrarFiltros: boolean;
-  onToggleFiltros: () => void;
+  onNuevoUsuario?: () => void;
 }
 
 export interface TablaUsuariosProps {

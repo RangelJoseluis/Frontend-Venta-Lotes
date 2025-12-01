@@ -14,7 +14,6 @@ import { useReportesData } from './hooks/useReportesData';
 import { useHistorialLote } from './hooks/useHistorialLote';
 import { TABS } from './constants';
 import type { TabType } from './types';
-import './Reportes.css';
 
 const Reportes = () => {
   // ============================================================================
@@ -28,7 +27,6 @@ const Reportes = () => {
     }
     return true;
   });
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   // ============================================================================
   // CUSTOM HOOKS
@@ -65,33 +63,29 @@ const Reportes = () => {
   // RENDERIZADO
   // ============================================================================
   return (
-    <div className="reportes-container">
+    <div className="flex h-screen bg-slate-50 dark:bg-slate-900">
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Contenido Principal */}
-      <div className={`main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+      <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${sidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
         {/* Header */}
-        <Header
-          setSidebarOpen={setSidebarOpen}
-          userMenuOpen={userMenuOpen}
-          setUserMenuOpen={setUserMenuOpen}
-        />
+        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         {/* Página de Reportes */}
-        <main className="reportes-main">
-          <div className="reportes-content">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">
             {/* Header de Reportes */}
-            <div className="reportes-header">
-              <div>
-                <h1 className="reportes-title">
-                  <BarChart3 size={32} />
+            <div className="mb-8">
+              <div className="flex items-center gap-3 mb-2">
+                <BarChart3 size={32} className="text-blue-600 dark:text-blue-400" />
+                <h1 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white">
                   Reportes y Estadísticas
                 </h1>
-                <p className="reportes-subtitle">
-                  Análisis detallado del sistema de venta de lotes
-                </p>
               </div>
+              <p className="text-slate-500 dark:text-slate-400">
+                Análisis detallado del sistema de venta de lotes
+              </p>
             </div>
 
             {/* Error Message */}
@@ -99,46 +93,58 @@ const Reportes = () => {
 
             {/* Loading State */}
             {loading ? (
-              <div className="loading-container">
+              <div className="flex flex-col items-center justify-center py-16">
                 <LoadingSpinner />
-                <p>Cargando reportes...</p>
+                <p className="mt-4 text-slate-500 dark:text-slate-400">Cargando reportes...</p>
               </div>
             ) : (
               <>
                 {/* Pestañas de Navegación */}
-                <div className="reportes-tabs">
+                <div className="flex flex-wrap gap-2 mb-6 border-b border-slate-200 dark:border-slate-700 pb-2">
                   <button
-                    className={`tab-button ${activeTab === TABS.ESTADISTICAS ? 'active' : ''}`}
+                    className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-t-lg transition-all ${activeTab === TABS.ESTADISTICAS
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}
                     onClick={() => setActiveTab(TABS.ESTADISTICAS as TabType)}
                   >
-                    <BarChart3 size={20} />
-                    Estadísticas Generales
+                    <BarChart3 size={18} />
+                    <span>Estadísticas Generales</span>
                   </button>
                   <button
-                    className={`tab-button ${activeTab === TABS.HISTORIAL ? 'active' : ''}`}
+                    className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-t-lg transition-all ${activeTab === TABS.HISTORIAL
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}
                     onClick={() => setActiveTab(TABS.HISTORIAL as TabType)}
                   >
-                    <History size={20} />
-                    Historial de Lotes
+                    <History size={18} />
+                    <span>Historial de Lotes</span>
                   </button>
                   <button
-                    className={`tab-button ${activeTab === TABS.COBRANZA ? 'active' : ''}`}
+                    className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-t-lg transition-all ${activeTab === TABS.COBRANZA
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}
                     onClick={() => setActiveTab(TABS.COBRANZA as TabType)}
                   >
-                    <TrendingUp size={20} />
-                    Análisis de Cobranza
+                    <TrendingUp size={18} />
+                    <span>Análisis de Cobranza</span>
                   </button>
                   <button
-                    className={`tab-button ${activeTab === TABS.ALERTAS ? 'active' : ''}`}
+                    className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-t-lg transition-all ${activeTab === TABS.ALERTAS
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}
                     onClick={() => setActiveTab(TABS.ALERTAS as TabType)}
                   >
-                    <Search size={20} />
-                    Alertas y Vencimientos
+                    <Search size={18} />
+                    <span>Alertas y Vencimientos</span>
                   </button>
                 </div>
 
                 {/* Contenido de las Pestañas */}
-                <div className="tab-content">
+                <div className="min-h-[400px]">
                   {/* Tab Estadísticas */}
                   {activeTab === TABS.ESTADISTICAS && (
                     <TabEstadisticas
