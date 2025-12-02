@@ -38,15 +38,15 @@ const TablaLotes: React.FC<TablaLotesProps> = ({
     return (
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden w-full mb-8">
             <div className="overflow-x-auto">
-                <table className="w-full table-fixed border-collapse text-sm">
+                <table className="w-full border-collapse text-sm">
                     <thead className="bg-slate-50 dark:bg-slate-800/50">
                         <tr>
-                            <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">CÓDIGO</th>
-                            <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">UBICACIÓN</th>
+                            <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider w-20">CÓDIGO</th>
+                            <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider min-w-[300px]">UBICACIÓN</th>
                             <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">SUPERFICIE</th>
                             <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">PRECIO</th>
                             <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">ESTADO</th>
-                            <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">MODELO CASA</th>
+                            <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider min-w-[150px]">MODELO CASA</th>
                             <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">ACTUALIZADO</th>
                             <th className="px-4 py-4 text-left font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap text-xs uppercase tracking-wider">ACCIONES</th>
                         </tr>
@@ -65,8 +65,8 @@ const TablaLotes: React.FC<TablaLotesProps> = ({
                                         <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-indigo-500 text-white shrink-0">
                                             <MapPin size={20} />
                                         </div>
-                                        <div className="flex flex-col gap-1">
-                                            <span className="font-semibold text-slate-800 dark:text-white">{lote.direccion}</span>
+                                        <div className="flex flex-col gap-0.5">
+                                            <span className="font-semibold text-slate-800 dark:text-white leading-tight">{lote.direccion}</span>
                                             <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                                                 Mz: {lote.manzana} - Lote: {lote.numeroLote}
                                             </span>
