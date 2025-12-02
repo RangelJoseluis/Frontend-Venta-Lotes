@@ -12,7 +12,8 @@ import {
     FiltrosPagos,
     TablaPagos,
     Paginacion,
-    AlertasEstado
+    AlertasEstado,
+    ModalRegistrarPago
 } from './components';
 import {
     usePagos,
@@ -78,9 +79,23 @@ const GestionPagos: React.FC = () => {
         };
     }, [pagos]);
 
+    // Estado para el modal de registro
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
     // Handlers
     const handleNuevoPago = () => {
-        navigate('/registrar-pago');
+        setIsModalOpen(true);
+    };
+
+    const handleCerrarModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handlePagoRegistrado = () => {
+        // Recargar pagos manteniendo filtros actuales
+        const filtros = filtroMetodo ? { metodoPago: filtroMetodo } : undefined;
+        cargarPagos(filtros);
+        // Opcional: Mostrar mensaje de éxito global si se desea
     };
 
     const handleVerDetalle = (uid: string) => {
@@ -154,6 +169,13 @@ const GestionPagos: React.FC = () => {
             <div className="resumen">
                 <p>Total de pagos: <strong>{pagosFiltrados.length}</strong></p>
             </div>
+
+            {/* Modal de Registro de Pago */}
+            <ModalRegistrarPago
+                isOpen={isModalOpen}
+                onClose={handleCerrarModal}
+                onPagoRegistrado={handlePagoRegistrado}
+            />
         </div>
     );
 };
