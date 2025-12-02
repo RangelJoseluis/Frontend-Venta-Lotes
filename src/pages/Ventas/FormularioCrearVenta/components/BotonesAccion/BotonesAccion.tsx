@@ -1,9 +1,8 @@
 // Componente BotonesAccion - Botones de acción del formulario
-// Maneja limpiar y registrar venta
+// Diseño moderno con Tailwind CSS
 
-import { RotateCcw, Save } from 'lucide-react';
+import { RotateCcw, Save, Loader } from 'lucide-react';
 import type { FormularioState } from '../../types';
-import './BotonesAccion.css';
 
 interface BotonesAccionProps {
   state: FormularioState;
@@ -17,25 +16,34 @@ export const BotonesAccion: React.FC<BotonesAccionProps> = ({
   onSubmit
 }) => {
   return (
-    <div className="formulario-actions">
+    <div className="flex items-center justify-end gap-3 pt-4">
       <button
         type="button"
         onClick={onLimpiar}
-        className="formulario-btn formulario-btn-secondary"
         disabled={state.isSubmitting}
+        className="px-6 py-2.5 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        <RotateCcw size={16} />
+        <RotateCcw size={16} className="inline mr-2" />
         Limpiar
       </button>
-      
+
       <button
         type="submit"
         onClick={onSubmit}
         disabled={state.isSubmitting}
-        className="formulario-btn formulario-btn-primary"
+        className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        <Save size={16} />
-        {state.isSubmitting ? 'Registrando...' : 'Registrar Venta'}
+        {state.isSubmitting ? (
+          <>
+            <Loader size={16} className="animate-spin" />
+            Registrando...
+          </>
+        ) : (
+          <>
+            <Save size={16} />
+            Registrar Venta
+          </>
+        )}
       </button>
     </div>
   );

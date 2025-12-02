@@ -2,14 +2,13 @@
  * COMPONENTE: SeccionPago
  * 
  * Sección del formulario con los campos de información del pago
- * Incluye: monto, fecha, método de pago, referencia, observaciones
+ * Diseño moderno con Tailwind CSS
  */
 
-import { DollarSign, Calendar } from 'lucide-react';
+import { DollarSign, Calendar, CreditCard, FileText } from 'lucide-react';
 import type { Cuota } from '../../../../types';
 import type { PagoFormData } from '../../types';
 import { METODO_PAGO_OPTIONS } from '../../constants';
-import './SeccionPago.css';
 
 interface SeccionPagoProps {
   formData: PagoFormData;
@@ -25,20 +24,30 @@ export default function SeccionPago({
   onAutocompletarMonto
 }: SeccionPagoProps) {
   return (
-    <div className="form-section">
-      <h3 className="section-title">
-        <DollarSign className="section-icon" />
-        Información del Pago
-      </h3>
+    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
+        <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
+          <DollarSign size={20} className="text-emerald-600 dark:text-emerald-400" />
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold text-slate-800 dark:text-white">
+            Información del Pago
+          </h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Detalles del pago a registrar
+          </p>
+        </div>
+      </div>
 
-      <div className="form-grid">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Monto */}
-        <div className="form-field">
-          <label htmlFor="monto" className="form-label">
-            Monto <span className="required">*</span>
+        <div className="space-y-2">
+          <label htmlFor="monto" className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+            <DollarSign size={16} className="text-slate-400" />
+            Monto <span className="text-red-500">*</span>
           </label>
-          <div className="input-currency">
-            <span className="currency-symbol">$</span>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400">$</span>
             <input
               type="number"
               id="monto"
@@ -48,7 +57,7 @@ export default function SeccionPago({
               placeholder="0"
               step="0.01"
               min="0"
-              className="form-input input-with-symbol"
+              className="w-full pl-8 pr-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
               required
             />
           </div>
@@ -56,7 +65,7 @@ export default function SeccionPago({
             <button
               type="button"
               onClick={onAutocompletarMonto}
-              className="btn-autocomplete"
+              className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline transition-colors"
             >
               Usar monto pendiente ({cuotaSeleccionada.montoPendiente.toLocaleString('es-CO')})
             </button>
@@ -64,35 +73,34 @@ export default function SeccionPago({
         </div>
 
         {/* Fecha de Pago */}
-        <div className="form-field">
-          <label htmlFor="fechaPago" className="form-label">
-            Fecha de Pago <span className="required">*</span>
+        <div className="space-y-2">
+          <label htmlFor="fechaPago" className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+            <Calendar size={16} className="text-slate-400" />
+            Fecha de Pago <span className="text-red-500">*</span>
           </label>
-          <div className="input-with-icon">
-            <Calendar className="input-icon" />
-            <input
-              type="date"
-              id="fechaPago"
-              name="fechaPago"
-              value={formData.fechaPago}
-              onChange={onChange}
-              className="form-input"
-              required
-            />
-          </div>
+          <input
+            type="date"
+            id="fechaPago"
+            name="fechaPago"
+            value={formData.fechaPago}
+            onChange={onChange}
+            className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+            required
+          />
         </div>
 
         {/* Método de Pago */}
-        <div className="form-field">
-          <label htmlFor="metodoPago" className="form-label">
-            Método de Pago <span className="required">*</span>
+        <div className="space-y-2">
+          <label htmlFor="metodoPago" className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+            <CreditCard size={16} className="text-slate-400" />
+            Método de Pago <span className="text-red-500">*</span>
           </label>
           <select
             id="metodoPago"
             name="metodoPago"
             value={formData.metodoPago}
             onChange={onChange}
-            className="form-select"
+            className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
             required
           >
             {METODO_PAGO_OPTIONS.map(option => (
@@ -104,8 +112,9 @@ export default function SeccionPago({
         </div>
 
         {/* Referencia */}
-        <div className="form-field">
-          <label htmlFor="referencia" className="form-label">
+        <div className="space-y-2">
+          <label htmlFor="referencia" className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+            <FileText size={16} className="text-slate-400" />
             Referencia
           </label>
           <input
@@ -115,28 +124,29 @@ export default function SeccionPago({
             value={formData.referencia}
             onChange={onChange}
             placeholder="Ej: TRANS-2025-001"
-            className="form-input"
+            className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
           />
-          <p className="field-hint">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Opcional. Se genera automáticamente si no se especifica.
           </p>
         </div>
-      </div>
 
-      {/* Observaciones */}
-      <div className="form-field">
-        <label htmlFor="observaciones" className="form-label">
-          Observaciones
-        </label>
-        <textarea
-          id="observaciones"
-          name="observaciones"
-          value={formData.observaciones}
-          onChange={onChange}
-          placeholder="Información adicional sobre el pago..."
-          className="form-textarea"
-          rows={3}
-        />
+        {/* Observaciones */}
+        <div className="space-y-2 md:col-span-2">
+          <label htmlFor="observaciones" className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+            <FileText size={16} className="text-slate-400" />
+            Observaciones
+          </label>
+          <textarea
+            id="observaciones"
+            name="observaciones"
+            value={formData.observaciones}
+            onChange={onChange}
+            placeholder="Información adicional sobre el pago..."
+            className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors resize-none"
+            rows={3}
+          />
+        </div>
       </div>
     </div>
   );

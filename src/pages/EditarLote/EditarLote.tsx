@@ -280,25 +280,25 @@ const EditarLote = () => {
 
   return (
     <div className="w-full">
-      {/* Header */}
+      {/* Header Compacto */}
       <div className="mb-6">
-        <nav className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-3">
+        <div className="flex items-center gap-3 mb-1">
           <button
             onClick={() => navigate('/lotes')}
-            className="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="p-2 -ml-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all"
+            title="Volver a Gestión de Lotes"
           >
-            <ArrowLeft size={16} />
-            Gestión de Lotes
+            <ArrowLeft size={24} />
           </button>
-          <span>/</span>
-          <span className="text-slate-700 dark:text-slate-300">Editar Lote</span>
-        </nav>
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-2">
-          Editar Lote
-        </h1>
-        <p className="text-slate-500 dark:text-slate-400">
-          Actualiza la información del lote existente
-        </p>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white leading-none">
+              Editar Lote
+            </h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Gestión de Lotes / Actualizar Información
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Mensajes */}

@@ -66,9 +66,9 @@ const FormularioCaracteristicas: React.FC<FormularioCaracteristicasProps> = ({
               </label>
               <select
                 {...register('topografia')}
-                className={`w-full px-3 py-2 bg-white dark:bg-slate-900 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.topografia
-                    ? 'border-red-500 focus:ring-red-200'
-                    : 'border-slate-300 dark:border-slate-600'
+                className={`w-full px-3 py-2 bg-white dark:bg-slate-900 border rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.topografia
+                  ? 'border-red-500 focus:ring-red-200'
+                  : 'border-slate-300 dark:border-slate-600'
                   }`}
               >
                 <option value="plano">Plano</option>
@@ -91,7 +91,7 @@ const FormularioCaracteristicas: React.FC<FormularioCaracteristicasProps> = ({
               </label>
               <select
                 {...register('orientacion')}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               >
                 <option value="">Seleccionar...</option>
                 <option value="norte">Norte</option>
@@ -113,7 +113,7 @@ const FormularioCaracteristicas: React.FC<FormularioCaracteristicasProps> = ({
               </label>
               <select
                 {...register('vista')}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               >
                 <option value="">Seleccionar...</option>
                 <option value="ciudad">Ciudad</option>
@@ -133,7 +133,7 @@ const FormularioCaracteristicas: React.FC<FormularioCaracteristicasProps> = ({
               </label>
               <select
                 {...register('estado')}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               >
                 <option value="disponible">Disponible</option>
                 <option value="en_cuotas">En Cuotas</option>
@@ -149,7 +149,7 @@ const FormularioCaracteristicas: React.FC<FormularioCaracteristicasProps> = ({
               </label>
               <select
                 {...register('estadoDocumentacion')}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               >
                 <option value="pendiente">Pendiente</option>
                 <option value="en_proceso">En Proceso</option>

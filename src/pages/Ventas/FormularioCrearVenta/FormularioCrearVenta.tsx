@@ -14,13 +14,11 @@ import { useCargarDatos } from './hooks/useCargarDatos';
 import { useFormularioVenta } from './hooks/useFormularioVenta';
 
 import { MESSAGES } from './constants';
-import './FormularioCrearVenta.css';
 
 export default function FormularioCrearVenta() {
   // Hook para cargar datos iniciales
   const {
     lotes,
-    clientes,
     lotesOptions,
     clientesOptions,
     isLoading: isLoadingData,
@@ -35,8 +33,7 @@ export default function FormularioCrearVenta() {
     handleCurrencyChange,
     handleSelectChange,
     handleSubmit,
-    handleLimpiar,
-    loteSeleccionado
+    handleLimpiar
   } = useFormularioVenta({ lotes });
 
   // Estado combinado para mostrar loading inicial
@@ -47,8 +44,8 @@ export default function FormularioCrearVenta() {
   };
 
   return (
-    <div className="formulario-crear-venta">
-      <div className="formulario-container">
+    <div className="w-full">
+      <div className="max-w-7xl mx-auto">
         {/* Header con título y navegación */}
         <HeaderFormulario />
 
@@ -56,7 +53,7 @@ export default function FormularioCrearVenta() {
         <MensajesEstado state={combinedState} />
 
         {/* Formulario principal */}
-        <form onSubmit={handleSubmit} className="formulario-form">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Sección Cliente */}
           <SeccionCliente
             clienteSeleccionado={formData.clienteUid}
@@ -98,8 +95,10 @@ export default function FormularioCrearVenta() {
         </form>
 
         {/* Footer */}
-        <div className="formulario-footer">
-          <p>{MESSAGES.REQUIRED_FIELDS}</p>
+        <div className="mt-6 p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg">
+          <p className="text-sm text-slate-600 dark:text-slate-400 text-center">
+            {MESSAGES.REQUIRED_FIELDS}
+          </p>
         </div>
       </div>
     </div>
