@@ -13,11 +13,10 @@ import FormularioModelo from './components/FormularioModelo/FormularioModelo';
 import { useModelosCasa } from './hooks/useModelosCasa';
 import { useFormularioModelo } from './hooks/useFormularioModelo';
 import { MENSAJES } from './constants';
-import './ModelosCasa.css';
 
 const ModelosCasa = () => {
   const navigate = useNavigate();
-  
+
   // Hook para gestión de modelos (CRUD)
   const {
     modelos,
@@ -83,7 +82,7 @@ const ModelosCasa = () => {
    */
   const handleSubmitFormulario = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validar formulario
     if (!validarFormulario()) {
       return;
@@ -95,11 +94,11 @@ const ModelosCasa = () => {
       if (modoEdicion && modeloEditando) {
         // Actualizar modelo existente
         await actualizarModelo(modeloEditando.uid, formulario.datos);
-  
+
       } else {
         // Crear nuevo modelo
         await crearModelo(formulario.datos);
-  
+
       }
 
       // Cerrar formulario y resetear
@@ -107,7 +106,7 @@ const ModelosCasa = () => {
     } catch (err: any) {
       console.error('❌ Error en formulario:', err);
       setErrorFormulario(
-        err.response?.data?.message || 
+        err.response?.data?.message ||
         (modoEdicion ? MENSAJES.ERROR_ACTUALIZAR : MENSAJES.ERROR_CREAR)
       );
     }
@@ -145,18 +144,17 @@ const ModelosCasa = () => {
   // ============================================================================
 
   return (
-    <div className="modelos-container">
-      <div className="modelos-wrapper">
+    <div className="w-full">
+      <div className="max-w-7xl mx-auto">
         {/* Header con navegación y botones */}
         <HeaderModelosCasa
           onNuevoModelo={handleNuevoModelo}
-          onVolver={handleVolver}
           totalModelos={modelos.length}
         />
 
         {/* Error general - Solo mostrar cuando el formulario no esté abierto */}
         {error && !mostrarFormulario && (
-          <div className="alert-error">
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3 text-red-700 dark:text-red-400">
             <AlertCircle size={20} />
             <span>{error}</span>
           </div>
