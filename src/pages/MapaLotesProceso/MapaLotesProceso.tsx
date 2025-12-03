@@ -64,10 +64,10 @@ const MapaLotesProceso = () => {
     }, [rol]);
 
     return (
-        <div className="w-full">
-            <div className="max-w-full mx-auto px-1 sm:px-2 lg:px-0.5 py-0">
+        <div className="w-full -mt-4">
+            <div className="max-w-full mx-auto px-1 sm:px-2 lg:px-0.5">
                 {/* Header Compacto */}
-                <div className="mb-4 pb-1 border-b border-slate-200 dark:border-slate-700">
+                <div className="mb-2.5 pb-0.5 border-b border-slate-200 dark:border-slate-700">
                     <div className="flex items-center gap-2">
                         <div className="w-10 h-10 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center">
                             <svg className="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
