@@ -36,7 +36,6 @@ import MapStats from './components/MapStats/MapStats';
 
 // Estilos
 import 'leaflet/dist/leaflet.css';
-import './MapaLotes.css';
 
 /**
  * Componente principal del mapa de lotes
@@ -48,7 +47,7 @@ const MapaLotes = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tipoCapa, setTipoCapa] = useState<TipoCapaMapa>('satelite');
-  
+
   // Estado de filtros
   const [filtros, setFiltros] = useState<FiltrosState>({
     busqueda: '',
@@ -65,7 +64,7 @@ const MapaLotes = () => {
   });
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [loteSeleccionado, setLoteSeleccionado] = useState<LoteParaMapa | null>(null);
-  
+
   // Estado para clientes y react-select
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [clienteSeleccionado, setClienteSeleccionado] = useState<{ value: string; label: string } | null>(null);
@@ -76,7 +75,7 @@ const MapaLotes = () => {
    */
   const detectarRol = (): RolMapa => {
     let usuarioActual = user;
-    
+
     if (isAuthenticated && !user) {
       console.log('⚠️ isAuthenticated=true pero user=null, leyendo de localStorage...');
       try {
@@ -91,24 +90,24 @@ const MapaLotes = () => {
         console.error('❌ Error al leer usuario de localStorage:', error);
       }
     }
-    
+
     console.log('🔍 Detectando rol:', { isAuthenticated, user: usuarioActual, roles: usuarioActual?.roles });
-    
+
     if (!isAuthenticated || !usuarioActual) {
       return 'invitado';
     }
-    
+
     if (usuarioActual.roles?.includes('admin')) {
       return 'admin';
     }
-    
+
     if (usuarioActual.roles?.includes('cliente')) {
       return 'cliente';
     }
-    
+
     return 'invitado';
   };
-  
+
   const rol = detectarRol();
 
   // Verificar y recargar usuario si está autenticado pero user es null
@@ -225,7 +224,7 @@ const MapaLotes = () => {
   };
 
   return (
-    <div className="mapalotes-container">
+    <div className="w-full min-h-[calc(100vh-64px)] -m-4 sm:-m-5 lg:-m-6 flex flex-col bg-slate-100 dark:bg-slate-900">
       {/* Header del mapa */}
       <MapHeader
         rol={rol}
@@ -269,40 +268,43 @@ const MapaLotes = () => {
       {/* Loading State */}
       {loading && <LoadingOverlay />}
 
-      {/* Mapa */}
-      {!loading && !error && (
-        <MapContainer
-          center={obtenerCentroZona()}
-          zoom={obtenerZoomZona()}
-          style={{ height: '100%', width: '100%' }}
-          className="leaflet-map"
-        >
-          <TileLayer
-            key={tipoCapa}
-            url={TILES_CONFIG[tipoCapa].url}
-            attribution={TILES_CONFIG[tipoCapa].atribucion}
-            maxZoom={22}
-          />
-
-          {/* Componente de zoom automático al cliente */}
-          <ZoomController clienteSeleccionado={clienteSeleccionado} lotes={lotes} />
-
-          {/* Renderizar lotes filtrados */}
-          {lotesFiltrados.map((lote) => (
-            <LoteMarker
-              key={lote.uid}
-              lote={lote}
-              onSelectLote={setLoteSeleccionado}
-              crearIconoLote={crearIconoLote}
-              getEstiloPoligono={getEstiloPoligono}
-              formatearPrecio={formatearPrecio}
+      {/* Contenedor del Mapa - Ocupa el espacio restante */}
+      <div className="relative flex-1 w-full">
+        {/* Mapa */}
+        {!loading && !error && (
+          <MapContainer
+            center={obtenerCentroZona()}
+            zoom={obtenerZoomZona()}
+            style={{ height: '100%', width: '100%' }}
+            className="leaflet-map"
+          >
+            <TileLayer
+              key={tipoCapa}
+              url={TILES_CONFIG[tipoCapa].url}
+              attribution={TILES_CONFIG[tipoCapa].atribucion}
+              maxZoom={22}
             />
-          ))}
-        </MapContainer>
-      )}
 
-      {/* Stats */}
-      <MapStats lotes={lotes} />
+            {/* Componente de zoom automático al cliente */}
+            <ZoomController clienteSeleccionado={clienteSeleccionado} lotes={lotes} />
+
+            {/* Renderizar lotes filtrados */}
+            {lotesFiltrados.map((lote) => (
+              <LoteMarker
+                key={lote.uid}
+                lote={lote}
+                onSelectLote={setLoteSeleccionado}
+                crearIconoLote={crearIconoLote}
+                getEstiloPoligono={getEstiloPoligono}
+                formatearPrecio={formatearPrecio}
+              />
+            ))}
+          </MapContainer>
+        )}
+
+        {/* Stats - Posicionado sobre el mapa */}
+        <MapStats lotes={lotes} />
+      </div>
     </div>
   );
 };

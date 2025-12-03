@@ -35,7 +35,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
     const navItems = [
         { href: "/dashboard", icon: LayoutDashboard, label: "Panel de control", active: true },
-        { href: "/mapa", icon: Map, label: "Mapa Visual" },
+        { href: "/mapa-proceso", icon: Map, label: "Mapa Visual" },
         {
             href: "/lotes",
             icon: Building2,
@@ -79,7 +79,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         lg:translate-x-0
         flex flex-col
       `}>
-                <div className="flex-shrink-0 border-b border-slate-700 p-4">
+                <div className="flex-shrink-0 border-b border-slate-700 p-3">
                     <div className="flex items-center justify-between">
                         {sidebarOpen && (
                             <div className="flex flex-col">
@@ -90,7 +90,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}
                             className={`
-                p-2 rounded-lg hover:bg-slate-800 transition-colors duration-200
+                p-3 rounded-lg hover:bg-slate-800 transition-colors duration-200
                 ${!sidebarOpen ? 'mx-auto' : ''}
               `}
                             aria-label={sidebarOpen ? 'Cerrar sidebar' : 'Abrir sidebar'}

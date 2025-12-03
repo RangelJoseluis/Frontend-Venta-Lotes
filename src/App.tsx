@@ -12,6 +12,7 @@ import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
 import ModelosCasa from './pages/ModelosCasa';
 import MapaLotes from './pages/MapaLotes/MapaLotes';
+import MapaLotesProceso from './pages/MapaLotesProceso';
 import ConfiguracionesLayout from './pages/Configuraciones/ConfiguracionesLayout';
 import { ConfiguracionZona, ConfiguracionMora, ConfiguracionSistema } from './pages/Configuraciones/index';
 import GestionServicios from './pages/GestionServicios/GestionServicios';
@@ -75,6 +76,7 @@ function App() {
           <Route path="/reportes" element={<Reportes />} />
           <Route path="/modelos-casa" element={<ModelosCasa />} />
           <Route path="/mapa" element={<MapaLotes />} />
+          <Route path="/mapa-proceso" element={<MapaLotesProceso />} />
           <Route path="/servicios" element={<GestionServicios />} />
           <Route path="/ventas" element={<GestionVentas />} />
           <Route path="/pagos" element={<GestionPagos />} />

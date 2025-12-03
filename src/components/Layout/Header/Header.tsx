@@ -14,7 +14,7 @@ const Header = ({ sidebarOpen, setSidebarOpen }: HeaderProps) => {
 
     return (
         <header className="sticky top-0 z-10 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
-            <div className="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between px-4 py-[0.45rem] sm:px-6 lg:px-6">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => setSidebarOpen(!sidebarOpen)}
