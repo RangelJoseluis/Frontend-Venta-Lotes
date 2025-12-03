@@ -5,7 +5,7 @@
  * Construido desde cero siguiendo las mejores prácticas de layout.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import lotesMapaService from '../../services/lotes-mapa.service';
 import type { LoteParaMapa, RolMapa, TipoCapaMapa } from '../../types/mapa';
@@ -19,6 +19,11 @@ import 'leaflet/dist/leaflet.css';
 // Componentes
 import LoteMarker from './components/LoteMarker';
 import LotePolygon from './components/LotePolygon';
+import SelectorCapas from './components/SelectorCapas';
+import Leyenda from './components/Leyenda';
+import FiltrosMapa from './components/FiltrosMapa';
+import type { FiltrosState } from './components/FiltrosMapa';
+import PanelDetalles from './components/PanelDetalles';
 
 const MapaLotesProceso = () => {
     const { user, isAuthenticated } = useAuthStore();
@@ -27,7 +32,21 @@ const MapaLotesProceso = () => {
     const [lotes, setLotes] = useState<LoteParaMapa[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [tipoCapa] = useState<TipoCapaMapa>('satelite');
+    const [tipoCapa, setTipoCapa] = useState<TipoCapaMapa>('satelite');
+
+    // Estado de selección y filtros
+    const [loteSeleccionado, setLoteSeleccionado] = useState<LoteParaMapa | null>(null);
+    const [filtros, setFiltros] = useState<FiltrosState>({
+        estados: {
+            disponible: true,
+            en_cuotas: true,
+            vendido: true,
+        },
+        precioMin: 0,
+        precioMax: 100000000,
+        superficieMin: 0,
+        superficieMax: 10000,
+    });
 
     /**
      * Detectar rol del usuario
@@ -64,40 +83,87 @@ const MapaLotesProceso = () => {
         cargarLotes();
     }, [rol]);
 
+    /**
+     * Filtrar lotes según los filtros activos
+     */
+    const lotesFiltrados = useMemo(() => {
+        return lotes.filter((lote) => {
+            // Filtro por estado
+            if (!filtros.estados[lote.estado]) return false;
+
+            // Filtro por precio
+            if (lote.precio < filtros.precioMin || lote.precio > filtros.precioMax) return false;
+
+            // Filtro por superficie
+            if (lote.superficie < filtros.superficieMin || lote.superficie > filtros.superficieMax) return false;
+
+            return true;
+        });
+    }, [lotes, filtros]);
+
+    const handleSelectLote = (lote: LoteParaMapa) => {
+        setLoteSeleccionado(lote);
+    };
+
     return (
         <div className="w-full -mt-4">
             <div className="max-w-full mx-auto px-1 sm:px-2 lg:px-0.5">
                 {/* Header Compacto */}
                 <div className="mb-2.5 pb-0.5 border-b border-slate-200 dark:border-slate-700">
-                    <div className="flex items-center gap-2">
-                        <div className="w-10 h-10 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center">
-                            <svg className="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                            </svg>
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-2">
+                            <div className="w-10 h-10 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center">
+                                <svg className="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                    Mapa de Lotes
+                                    <span className="text-sm font-normal text-slate-500 dark:text-slate-400">
+                                        ({lotesFiltrados.length} visibles de {lotes.length})
+                                    </span>
+                                </h1>
+                            </div>
                         </div>
-                        <div className="flex-1">
-                            <h1 className="text-xl font-bold text-slate-900 dark:text-white">
-                                Mapa de Lotes
-                                <span className="ml-2 text-sm font-normal text-slate-500 dark:text-slate-400">
-                                    ({lotes.length} lotes)
-                                </span>
-                            </h1>
+
+                        {/* Controles en el Header (Capas y Filtros) */}
+                        <div className="flex items-center gap-2">
+                            <SelectorCapas tipoCapa={tipoCapa} onCambiarCapa={setTipoCapa} />
+                            <FiltrosMapa
+                                onFiltrosChange={setFiltros}
+                                totalLotes={lotes.length}
+                                lotesFiltrados={lotesFiltrados.length}
+                            />
                         </div>
                     </div>
                 </div>
 
                 {/* Contenedor del Mapa */}
-                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden relative">
+
+                    <div className="absolute bottom-8 left-4 z-[1000]">
+                        <Leyenda />
+                    </div>
+
+                    {/* Panel de Detalles (Slide-over) */}
+                    {loteSeleccionado && (
+                        <PanelDetalles
+                            lote={loteSeleccionado}
+                            onCerrar={() => setLoteSeleccionado(null)}
+                        />
+                    )}
+
                     {/* Mapa */}
-                    <div className="h-[400px] w-full">
+                    <div className="h-[400px] w-full relative z-0">
                         {loading && (
-                            <div className="h-full flex items-center justify-center">
-                                <p className="text-slate-600 dark:text-slate-300">Cargando mapa...</p>
+                            <div className="absolute inset-0 z-50 bg-white/80 dark:bg-slate-900/80 flex items-center justify-center">
+                                <p className="text-slate-600 dark:text-slate-300 font-medium">Cargando mapa...</p>
                             </div>
                         )}
 
                         {error && (
-                            <div className="h-full flex items-center justify-center">
+                            <div className="absolute inset-0 z-50 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center">
                                 <div className="text-center">
                                     <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
                                     <button
@@ -110,7 +176,7 @@ const MapaLotesProceso = () => {
                             </div>
                         )}
 
-                        {!loading && !error && (
+                        {!error && (
                             <MapContainer
                                 center={obtenerCentroZona()}
                                 zoom={obtenerZoomZona()}
@@ -124,19 +190,23 @@ const MapaLotesProceso = () => {
                                     maxZoom={22}
                                 />
 
-                                {/* Renderizar marcadores de lotes */}
-                                {lotes.map((lote) => (
-                                    <LoteMarker
-                                        key={`marker-${lote.uid}`}
-                                        lote={lote}
-                                        esDestacado={false}
-                                    />
-                                ))}
-                                {lotes.map((lote) => (
+                                {/* Renderizar polígonos de lotes */}
+                                {lotesFiltrados.map((lote) => (
                                     <LotePolygon
                                         key={`poly-${lote.uid}`}
                                         lote={lote}
-                                        esDestacado={false}
+                                        esDestacado={lote.uid === loteSeleccionado?.uid}
+                                        onSelectLote={handleSelectLote}
+                                    />
+                                ))}
+
+                                {/* Renderizar marcadores de lotes */}
+                                {lotesFiltrados.map((lote) => (
+                                    <LoteMarker
+                                        key={`marker-${lote.uid}`}
+                                        lote={lote}
+                                        esDestacado={lote.uid === loteSeleccionado?.uid}
+                                        onSelectLote={handleSelectLote}
                                     />
                                 ))}
                             </MapContainer>

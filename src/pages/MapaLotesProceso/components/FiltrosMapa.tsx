@@ -68,23 +68,31 @@ const FiltrosMapa = ({ onFiltrosChange, totalLotes, lotesFiltrados }: FiltrosMap
     };
 
     return (
-        <div className="absolute top-4 right-4 z-[1000]">
+        <div className="relative">
             {/* Botón toggle */}
             <button
                 onClick={() => setMostrar(!mostrar)}
-                className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700 shadow-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                className={`
+                    flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border
+                    ${mostrar
+                        ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-300'
+                        : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+                    }
+                `}
             >
-                <Filter size={18} />
-                <span className="font-medium">Filtros</span>
-                <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">
-                    {lotesFiltrados}/{totalLotes}
-                </span>
-                {mostrar ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                <Filter size={16} />
+                <span>Filtros</span>
+                {lotesFiltrados < totalLotes && (
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded-full">
+                        {lotesFiltrados}/{totalLotes}
+                    </span>
+                )}
+                {mostrar ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
             </button>
 
             {/* Panel de filtros */}
             {mostrar && (
-                <div className="mt-2 w-80 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl p-4">
+                <div className="absolute top-full right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl p-4 z-[1002]">
                     <div className="flex items-center justify-between mb-4">
                         <h3 className="font-semibold text-slate-900 dark:text-white">Filtros</h3>
                         <button
