@@ -106,7 +106,7 @@ const MapaLotesProceso = () => {
     };
 
     return (
-        <div className="w-full -mt-4">
+        <div className="w-full -mt-4 -mb-6">
             <div className="max-w-full mx-auto px-1 sm:px-2 lg:px-0.5">
                 {/* Header Compacto */}
                 <div className="mb-2.5 pb-0.5 border-b border-slate-200 dark:border-slate-700">
