@@ -18,6 +18,7 @@ import 'leaflet/dist/leaflet.css';
 
 // Componentes
 import LoteMarker from './components/LoteMarker';
+import LotePolygon from './components/LotePolygon';
 
 const MapaLotesProceso = () => {
     const { user, isAuthenticated } = useAuthStore();
@@ -126,7 +127,14 @@ const MapaLotesProceso = () => {
                                 {/* Renderizar marcadores de lotes */}
                                 {lotes.map((lote) => (
                                     <LoteMarker
-                                        key={lote.uid}
+                                        key={`marker-${lote.uid}`}
+                                        lote={lote}
+                                        esDestacado={false}
+                                    />
+                                ))}
+                                {lotes.map((lote) => (
+                                    <LotePolygon
+                                        key={`poly-${lote.uid}`}
                                         lote={lote}
                                         esDestacado={false}
                                     />
