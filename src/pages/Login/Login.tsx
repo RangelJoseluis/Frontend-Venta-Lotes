@@ -14,12 +14,22 @@ import { PasswordInput } from './components/PasswordInput';
 import { SubmitButton } from './components/SubmitButton';
 import { DemoCredentials } from './components/DemoCredentials';
 import { LoginFooter } from './components/LoginFooter';
-import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
   const { login, isAuthenticated, isLoading, error, clearError } = useAuthStore();
   const { register, handleSubmit, formState: { errors } } = useLoginForm();
+
+  // Forzar tema claro en el login (independiente del dashboard)
+  useEffect(() => {
+    // Remover clase dark del html
+    document.documentElement.classList.remove('dark');
+
+    // Cleanup: no restaurar el tema al salir, el dashboard lo manejará
+    return () => {
+      // No hacer nada aquí, dejar que el dashboard maneje su propio tema
+    };
+  }, []);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -42,16 +52,16 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       <LoginBackground />
 
-      <div className="login-content">
+      <div className="w-full max-w-md relative z-10 animate-in slide-in-from-bottom-8 fade-in duration-700">
         <LoginHeader />
 
         <LoginCard>
           {error && <ErrorAlert message={error} />}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
             <FormInput
               id="email"
               label="Correo Electrónico"
@@ -75,7 +85,7 @@ const Login = () => {
             <SubmitButton isLoading={isLoading} />
           </form>
 
-          <DemoCredentials />
+
         </LoginCard>
 
         <LoginFooter />

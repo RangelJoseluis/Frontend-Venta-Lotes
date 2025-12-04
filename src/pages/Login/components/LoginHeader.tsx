@@ -1,20 +1,22 @@
 import { Shield } from 'lucide-react';
-import './LoginHeader.css';
 
 export const LoginHeader = () => {
   return (
-    <div className="login-header">
-      <div className="logo-container">
-        <div className="logo-placeholder">
-          <Shield className="logo-icon" />
+    <div className="text-center mb-6 animate-fade-in">
+      <div className="inline-flex mb-4 relative">
+        <div className="w-[90px] h-[90px] bg-gradient-to-br from-blue-500 to-blue-600 rounded-[1.5rem] flex items-center justify-center shadow-[0_15px_40px_rgba(59,130,246,0.4)] relative overflow-hidden transition-all duration-300 hover:scale-105 hover:rotate-3 hover:shadow-[0_20px_60px_rgba(59,130,246,0.6)] animate-bounce-slow">
+          {/* Shine effect overlay */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent translate-x-[-100%] animate-shine" />
+
+          <Shield className="w-[45px] h-[45px] text-white relative z-10 drop-shadow-md" />
         </div>
       </div>
 
-      <h1 className="login-title">
+      <h1 className="text-3xl font-extrabold bg-gradient-to-br from-white to-blue-100 bg-clip-text text-transparent mb-1.5 tracking-tight drop-shadow-[0_0_40px_rgba(59,130,246,0.3)]">
         Lote Smart
       </h1>
-      <p className="login-subtitle">
-        <Shield className="subtitle-icon" />
+      <p className="text-slate-300 flex items-center justify-center gap-2 text-xs font-medium">
+        <Shield className="w-3.5 h-3.5 text-blue-500" />
         Sistema de Gestión de lotes Profesional
       </p>
     </div>

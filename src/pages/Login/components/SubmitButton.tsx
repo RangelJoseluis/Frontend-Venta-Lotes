@@ -1,5 +1,4 @@
 import { LogIn } from 'lucide-react';
-import './SubmitButton.css';
 
 interface SubmitButtonProps {
   isLoading: boolean;
@@ -10,22 +9,23 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
     <button
       type="submit"
       disabled={isLoading}
-      className="submit-button"
+      className="relative w-full mt-1 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:from-blue-600 disabled:hover:to-blue-700 overflow-hidden group text-sm"
     >
-      <div className="button-content">
+      <div className="relative z-10 flex items-center justify-center gap-2">
         {isLoading ? (
           <>
-            <div className="spinner"></div>
+            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             <span>Iniciando sesión...</span>
           </>
         ) : (
           <>
-            <LogIn className="button-icon" />
+            <LogIn className="w-4 h-4" />
             <span>Iniciar Sesión</span>
           </>
         )}
       </div>
-      <div className="button-shine"></div>
+      {/* Shine effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
     </button>
   );
 };
