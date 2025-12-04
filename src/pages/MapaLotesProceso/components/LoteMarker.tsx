@@ -63,9 +63,10 @@ const LoteMarker = ({ lote, esDestacado = false, onSelectLote }: LoteMarkerProps
     }
 
     const handleClick = () => {
-        if (onSelectLote) {
-            onSelectLote(lote);
-        }
+        // Ya no seleccionamos automáticamente al hacer click
+        // if (onSelectLote) {
+        //     onSelectLote(lote);
+        // }
     };
 
     return (
@@ -78,43 +79,38 @@ const LoteMarker = ({ lote, esDestacado = false, onSelectLote }: LoteMarkerProps
         >
             <Popup>
                 <div className="p-2 min-w-[200px]">
-                    <h3 className="font-bold text-lg mb-2">{lote.codigo}</h3>
-
-                    <div className="space-y-1 text-sm">
-                        <p>
-                            <span className="font-semibold">Ubicación:</span> {lote.ubicacion}
-                        </p>
-                        <p>
-                            <span className="font-semibold">Superficie:</span> {lote.superficie} m²
-                        </p>
-                        <p>
-                            <span className="font-semibold">Precio:</span> {formatearPrecio(lote.precio)}
-                        </p>
-                        <p>
-                            <span className="font-semibold">Estado:</span>{' '}
-                            <span className={`
-                px-2 py-0.5 rounded text-xs font-semibold
-                ${lote.estado === 'disponible' ? 'bg-green-100 text-green-800' : ''}
-                ${lote.estado === 'en_cuotas' ? 'bg-amber-100 text-amber-800' : ''}
-                ${lote.estado === 'vendido' ? 'bg-red-100 text-red-800' : ''}
-              `}>
-                                {lote.estado === 'disponible' ? 'Disponible' : ''}
-                                {lote.estado === 'en_cuotas' ? 'En Cuotas' : ''}
-                                {lote.estado === 'vendido' ? 'Vendido' : ''}
-                            </span>
-                        </p>
-
-                        {lote.modeloCasa && (
-                            <p>
-                                <span className="font-semibold">Modelo:</span> {lote.modeloCasa.nombre}
-                            </p>
-                        )}
+                    <div className="flex justify-between items-start mb-2">
+                        <span className="font-bold text-slate-900">{lote.codigo}</span>
+                        <span
+                            className="px-2 py-0.5 rounded-full text-xs font-medium text-white capitalize"
+                            style={{ backgroundColor: lote.estado === 'disponible' ? '#10b981' : lote.estado === 'vendido' ? '#ef4444' : '#f59e0b' }}
+                        >
+                            {lote.estado.replace('_', ' ')}
+                        </span>
                     </div>
 
-                    {esDestacado && (
-                        <div className="mt-2 pt-2 border-t border-gray-200">
-                            <p className="text-xs text-amber-600 font-semibold">⭐ Tu Lote</p>
+                    <div className="space-y-1 text-sm text-slate-600 mb-3">
+                        <div className="flex justify-between">
+                            <span>Precio:</span>
+                            <span className="font-semibold text-slate-900">
+                                {formatearPrecio(lote.precio)}
+                            </span>
                         </div>
+                        <div className="flex justify-between">
+                            <span>Superficie:</span>
+                            <span className="font-semibold text-slate-900">
+                                {lote.superficie} m²
+                            </span>
+                        </div>
+                    </div>
+
+                    {onSelectLote && (
+                        <button
+                            onClick={() => onSelectLote(lote)}
+                            className="w-full py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded transition-colors flex items-center justify-center gap-1"
+                        >
+                            Ver más detalles
+                        </button>
                     )}
                 </div>
             </Popup>

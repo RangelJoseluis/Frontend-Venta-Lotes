@@ -109,7 +109,7 @@ const MapaLotesProceso = () => {
         <div className="w-full -mt-4 -mb-6">
             <div className="max-w-full mx-auto px-1 sm:px-2 lg:px-0.5">
                 {/* Header Compacto */}
-                <div className="mb-2.5 pb-0.5 border-b border-slate-200 dark:border-slate-700">
+                <div className="mb-1.5 pb-1.5 border-b border-slate-200 dark:border-slate-700">
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex items-center gap-2">
                             <div className="w-10 h-10 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center">
@@ -142,7 +142,7 @@ const MapaLotesProceso = () => {
                 {/* Contenedor del Mapa */}
                 <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden relative">
 
-                    <div className="absolute bottom-8 left-4 z-[1000]">
+                    <div className="absolute bottom-4 left-1 z-[1000]">
                         <Leyenda />
                     </div>
 
@@ -155,7 +155,7 @@ const MapaLotesProceso = () => {
                     )}
 
                     {/* Mapa */}
-                    <div className="h-[400px] w-full relative z-0">
+                    <div className="h-[410px] w-full relative z-0">
                         {loading && (
                             <div className="absolute inset-0 z-50 bg-white/80 dark:bg-slate-900/80 flex items-center justify-center">
                                 <p className="text-slate-600 dark:text-slate-300 font-medium">Cargando mapa...</p>
@@ -214,7 +214,7 @@ const MapaLotesProceso = () => {
                     </div>
 
                     {/* Stats en la parte inferior */}
-                    <div className="px-6 py-[0.37rem] bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-700">
+                    <div className="px-6 py-[0.05rem] bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-700">
                         <div className="flex items-center justify-center gap-8">
                             <div className="text-center">
                                 <p className="text-sm text-slate-500 dark:text-slate-400">Total Lotes</p>
