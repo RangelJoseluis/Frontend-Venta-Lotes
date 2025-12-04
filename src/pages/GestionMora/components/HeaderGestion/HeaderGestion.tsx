@@ -3,7 +3,6 @@ import { AlertTriangle, Calculator } from 'lucide-react';
 import type { HeaderGestionProps } from '../../types';
 
 const HeaderGestion: React.FC<HeaderGestionProps> = ({
-    onVolver,
     onCalcularMora,
     isLoading
 }) => {
