@@ -4,7 +4,6 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { PaginacionVentas as PaginacionVentasType } from '../../../shared/types';
-import './PaginacionVentas.css';
 
 interface PaginacionVentasProps {
   paginacion: PaginacionVentasType;
@@ -43,7 +42,7 @@ const PaginacionVentas: React.FC<PaginacionVentasProps> = ({
   const generarNumerosPagina = () => {
     const numeros: number[] = [];
     const maxVisible = 5;
-    
+
     if (totalPaginas <= maxVisible) {
       // Mostrar todas las páginas si son pocas
       for (let i = 1; i <= totalPaginas; i++) {
@@ -59,21 +58,23 @@ const PaginacionVentas: React.FC<PaginacionVentasProps> = ({
         numeros.push(1, -1, paginaActual - 1, paginaActual, paginaActual + 1, -1, totalPaginas);
       }
     }
-    
+
     return numeros;
   };
 
   return (
-    <div className="paginacion-ventas">
-      <div className="paginacion-info">
+    <div className="flex flex-col md:flex-row justify-between items-center gap-4 p-4 md:p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-8">
+      {/* Info */}
+      <div className="text-slate-600 dark:text-slate-400 text-sm font-medium">
         <span>
           Página {paginaActual} de {totalPaginas}
         </span>
       </div>
 
-      <div className="paginacion-controles">
+      {/* Controles */}
+      <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full md:w-auto">
         <button
-          className="btn-paginacion"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 hover:border-slate-400 dark:hover:border-slate-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-700 w-full md:w-auto text-sm"
           onClick={paginaAnterior}
           disabled={paginaActual === 1}
           title="Página anterior"
@@ -82,14 +83,26 @@ const PaginacionVentas: React.FC<PaginacionVentasProps> = ({
           Anterior
         </button>
 
-        <div className="numeros-pagina">
+        {/* Números de página */}
+        <div className="flex items-center justify-center gap-1 flex-wrap">
           {generarNumerosPagina().map((numero, index) => (
             numero === -1 ? (
-              <span key={`ellipsis-${index}`} className="ellipsis">...</span>
+              <span
+                key={`ellipsis-${index}`}
+                className="flex items-center justify-center w-9 h-9 text-slate-400 dark:text-slate-500 font-bold"
+              >
+                ...
+              </span>
             ) : (
               <button
                 key={numero}
-                className={`btn-numero ${numero === paginaActual ? 'activo' : ''}`}
+                className={`
+                  flex items-center justify-center w-9 h-9 rounded-lg font-medium transition-all text-sm
+                  ${numero === paginaActual
+                    ? 'bg-blue-500 dark:bg-blue-600 text-white border border-blue-500 dark:border-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700'
+                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500'
+                  }
+                `}
                 onClick={() => irAPagina(numero)}
               >
                 {numero}
@@ -99,7 +112,7 @@ const PaginacionVentas: React.FC<PaginacionVentasProps> = ({
         </div>
 
         <button
-          className="btn-paginacion"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 hover:border-slate-400 dark:hover:border-slate-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-700 w-full md:w-auto text-sm"
           onClick={paginaSiguiente}
           disabled={paginaActual === totalPaginas}
           title="Página siguiente"
