@@ -1,312 +1,268 @@
 /**
- * COMPONENTE: MAPA DE LOTES (MODULAR)
+ * MAPA LOTES PROCESO - Versión reconstruida con Tailwind CSS
  * 
- * Mapa interactivo que muestra los lotes disponibles según el rol del usuario.
- * Usa React-Leaflet para renderizar el mapa y los marcadores.
- * 
- * ESTRUCTURA MODULAR:
- * - Componentes extraídos a su propia carpeta
- * - Utilidades separadas en /utils
- * - Tipos definidos en types.ts
+ * Componente principal del mapa interactivo de lotes.
+ * Construido desde cero siguiendo las mejores prácticas de layout.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { useNavigate } from 'react-router-dom';
 import lotesMapaService from '../../services/lotes-mapa.service';
-import { obtenerClientes } from '../../services/clientes.service';
 import type { LoteParaMapa, RolMapa, TipoCapaMapa } from '../../types/mapa';
-import type { Cliente } from '../../types';
 import { TILES_CONFIG } from '../../types/mapa';
 import { useAuthStore } from '../../store/authStore';
 import { obtenerCentroZona, obtenerZoomZona } from '../../config/zona.config';
-import { crearIconoLote } from './utils/iconHelpers';
-import { getEstiloPoligono, formatearPrecio } from './utils/formatters';
-import type { FiltrosState } from './types';
 
-// Componentes modulares
-import ZoomController from './components/ZoomController/ZoomController';
-import MapHeader from './components/MapHeader/MapHeader';
-import FilterPanel from './components/FilterPanel/FilterPanel';
-import LoteDetailsPanel from './components/LoteDetailsPanel/LoteDetailsPanel';
-import ErrorAlert from './components/ErrorAlert/ErrorAlert';
-import LoadingOverlay from './components/LoadingOverlay/LoadingOverlay';
-import LoteMarker from './components/LoteMarker/LoteMarker';
-import MapStats from './components/MapStats/MapStats';
-
-// Estilos
+// Estilos de Leaflet (necesarios)
 import 'leaflet/dist/leaflet.css';
 
-/**
- * Componente principal del mapa de lotes
- */
+// Componentes
+import LoteMarker from './components/LoteMarker';
+import LotePolygon from './components/LotePolygon';
+import SelectorCapas from './components/SelectorCapas';
+import Leyenda from './components/Leyenda';
+import FiltrosMapa from './components/FiltrosMapa';
+import type { FiltrosState } from './components/FiltrosMapa';
+import PanelDetalles from './components/PanelDetalles';
+import BuscadorLotes from './components/BuscadorLotes';
+import MapController from './components/MapController';
+
 const MapaLotes = () => {
-  const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuthStore();
-  const [lotes, setLotes] = useState<LoteParaMapa[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [tipoCapa, setTipoCapa] = useState<TipoCapaMapa>('satelite');
+    const { user, isAuthenticated } = useAuthStore();
 
-  // Estado de filtros
-  const [filtros, setFiltros] = useState<FiltrosState>({
-    busqueda: '',
-    busquedaCliente: '',
-    precioMin: 0,
-    precioMax: 100000000,
-    superficieMin: 0,
-    superficieMax: 10000,
-    estados: {
-      disponible: true,
-      en_cuotas: true,
-      vendido: true
-    }
-  });
-  const [mostrarFiltros, setMostrarFiltros] = useState(false);
-  const [loteSeleccionado, setLoteSeleccionado] = useState<LoteParaMapa | null>(null);
+    // Estados básicos
+    const [lotes, setLotes] = useState<LoteParaMapa[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [tipoCapa, setTipoCapa] = useState<TipoCapaMapa>('satelite');
 
-  // Estado para clientes y react-select
-  const [clientes, setClientes] = useState<Cliente[]>([]);
-  const [clienteSeleccionado, setClienteSeleccionado] = useState<{ value: string; label: string } | null>(null);
-  const [cargandoClientes, setCargandoClientes] = useState(false);
-
-  /**
-   * Detectar rol del usuario
-   */
-  const detectarRol = (): RolMapa => {
-    let usuarioActual = user;
-
-    if (isAuthenticated && !user) {
-      console.log('⚠️ isAuthenticated=true pero user=null, leyendo de localStorage...');
-      try {
-        const userStr = localStorage.getItem('user');
-        if (userStr && userStr !== 'undefined' && userStr !== 'null' && userStr.trim() !== '') {
-          usuarioActual = JSON.parse(userStr);
-          console.log('✅ Usuario recuperado de localStorage:', usuarioActual);
-        } else {
-          console.warn('⚠️ localStorage.user está corrupto:', userStr);
-        }
-      } catch (error) {
-        console.error('❌ Error al leer usuario de localStorage:', error);
-      }
-    }
-
-    console.log('🔍 Detectando rol:', { isAuthenticated, user: usuarioActual, roles: usuarioActual?.roles });
-
-    if (!isAuthenticated || !usuarioActual) {
-      return 'invitado';
-    }
-
-    if (usuarioActual.roles?.includes('admin')) {
-      return 'admin';
-    }
-
-    if (usuarioActual.roles?.includes('cliente')) {
-      return 'cliente';
-    }
-
-    return 'invitado';
-  };
-
-  const rol = detectarRol();
-
-  // Verificar y recargar usuario si está autenticado pero user es null
-  useEffect(() => {
-    if (isAuthenticated && !user) {
-      console.log('⚠️ Usuario autenticado pero user es null, recargando...');
-      const { checkAuth } = useAuthStore.getState();
-      checkAuth();
-    }
-  }, [isAuthenticated, user]);
-
-  // Cargar lotes al montar el componente
-  useEffect(() => {
-    cargarLotes();
-  }, [rol]);
-
-  // Cargar clientes si es admin
-  useEffect(() => {
-    if (rol === 'admin') {
-      cargarClientes();
-    }
-  }, [rol]);
-
-  /**
-   * Cargar lista de clientes
-   */
-  const cargarClientes = async () => {
-    try {
-      setCargandoClientes(true);
-      const clientesData = await obtenerClientes();
-      setClientes(clientesData);
-      console.log(`✅ ${clientesData.length} clientes cargados`);
-    } catch (err: any) {
-      console.error('❌ Error al cargar clientes:', err);
-    } finally {
-      setCargandoClientes(false);
-    }
-  };
-
-  /**
-   * Cargar lotes desde el backend según el rol
-   */
-  const cargarLotes = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const lotesData = await lotesMapaService.obtenerLotesVisibles(rol);
-      setLotes(lotesData);
-      console.log(`✅ ${lotesData.length} lotes cargados para rol: ${rol}`);
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Error al cargar los lotes');
-      console.error('❌ Error al cargar lotes:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  /**
-   * Filtrar lotes según los criterios activos
-   */
-  const lotesFiltrados = lotes.filter(lote => {
-    // Filtro por búsqueda (código)
-    if (filtros.busqueda && !lote.codigo.toLowerCase().includes(filtros.busqueda.toLowerCase())) {
-      return false;
-    }
-
-    // Filtro por precio
-    if (lote.precio < filtros.precioMin || lote.precio > filtros.precioMax) {
-      return false;
-    }
-
-    // Filtro por superficie
-    if (lote.superficie < filtros.superficieMin || lote.superficie > filtros.superficieMax) {
-      return false;
-    }
-
-    // Filtro por estado (solo si el usuario puede ver ese estado)
-    if (rol === 'admin' && !filtros.estados[lote.estado as keyof typeof filtros.estados]) {
-      return false;
-    }
-
-    return true;
-  });
-
-  /**
-   * Limpiar todos los filtros
-   */
-  const limpiarFiltros = () => {
-    setFiltros({
-      busqueda: '',
-      busquedaCliente: '',
-      precioMin: 0,
-      precioMax: 100000000,
-      superficieMin: 0,
-      superficieMax: 10000,
-      estados: {
-        disponible: true,
-        en_cuotas: true,
-        vendido: true
-      }
+    // Estado de selección y filtros
+    const [loteSeleccionado, setLoteSeleccionado] = useState<LoteParaMapa | null>(null);
+    const [terminoBusqueda, setTerminoBusqueda] = useState('');
+    const [filtros, setFiltros] = useState<FiltrosState>({
+        estados: {
+            disponible: true,
+            en_cuotas: true,
+            vendido: true,
+        },
+        precioMin: 0,
+        precioMax: 100000000,
+        superficieMin: 0,
+        superficieMax: 10000,
     });
-  };
 
-  /**
-   * Handler para cambio de cliente seleccionado
-   */
-  const handleClienteChange = (selected: { value: string; label: string } | null) => {
-    setClienteSeleccionado(selected);
-    if (selected) {
-      setFiltros({ ...filtros, busquedaCliente: selected.label });
-    } else {
-      setFiltros({ ...filtros, busquedaCliente: '' });
-    }
-  };
+    /**
+     * Detectar rol del usuario
+     */
+    const detectarRol = (): RolMapa => {
+        if (!isAuthenticated || !user) return 'invitado';
+        if (user.roles?.includes('admin')) return 'admin';
+        if (user.roles?.includes('cliente')) return 'cliente';
+        return 'invitado';
+    };
 
-  return (
-    <div className="w-full min-h-[calc(100vh-64px)] -m-4 sm:-m-5 lg:-m-6 flex flex-col bg-slate-100 dark:bg-slate-900">
-      {/* Header del mapa */}
-      <MapHeader
-        rol={rol}
-        tipoCapa={tipoCapa}
-        setTipoCapa={setTipoCapa}
-        clienteSeleccionado={clienteSeleccionado}
-        setClienteSeleccionado={handleClienteChange}
-        clientes={clientes}
-        cargandoClientes={cargandoClientes}
-        lotesFiltrados={lotesFiltrados}
-        mostrarFiltros={mostrarFiltros}
-        setMostrarFiltros={setMostrarFiltros}
-        onVolverDashboard={() => navigate('/dashboard')}
-      />
+    const rol = detectarRol();
 
-      {/* Panel de Filtros */}
-      <FilterPanel
-        mostrarFiltros={mostrarFiltros}
-        setMostrarFiltros={setMostrarFiltros}
-        filtros={filtros}
-        setFiltros={setFiltros}
-        limpiarFiltros={limpiarFiltros}
-        lotesFiltrados={lotesFiltrados}
-        lotes={lotes}
-        rol={rol}
-      />
+    /**
+     * Cargar lotes desde el backend
+     */
+    const cargarLotes = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const lotesData = await lotesMapaService.obtenerLotesVisibles(rol);
+            setLotes(lotesData);
+            console.log(`✅ ${lotesData.length} lotes cargados para rol: ${rol}`);
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Error al cargar los lotes');
+            console.error('❌ Error al cargar lotes:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      {/* Panel de Detalles del Lote */}
-      <LoteDetailsPanel
-        loteSeleccionado={loteSeleccionado}
-        setLoteSeleccionado={setLoteSeleccionado}
-        rol={rol}
-        onNavigate={(path) => navigate(path)}
-      />
+    // Cargar lotes al montar
+    useEffect(() => {
+        cargarLotes();
+    }, [rol]);
 
-      {/* Error Alert */}
-      {error && (
-        <ErrorAlert error={error} onReintentar={cargarLotes} />
-      )}
+    /**
+     * Filtrar lotes según los filtros activos y búsqueda
+     */
+    const lotesFiltrados = useMemo(() => {
+        return lotes.filter((lote) => {
+            // Filtro por búsqueda (código)
+            if (terminoBusqueda) {
+                const busqueda = terminoBusqueda.toLowerCase();
+                if (!lote.codigo.toLowerCase().includes(busqueda)) {
+                    return false;
+                }
+            }
 
-      {/* Loading State */}
-      {loading && <LoadingOverlay />}
+            // Filtro por estado
+            if (!filtros.estados[lote.estado]) return false;
 
-      {/* Contenedor del Mapa - Ocupa el espacio restante */}
-      <div className="relative flex-1 w-full">
-        {/* Mapa */}
-        {!loading && !error && (
-          <MapContainer
-            center={obtenerCentroZona()}
-            zoom={obtenerZoomZona()}
-            style={{ height: '100%', width: '100%' }}
-            className="leaflet-map"
-          >
-            <TileLayer
-              key={tipoCapa}
-              url={TILES_CONFIG[tipoCapa].url}
-              attribution={TILES_CONFIG[tipoCapa].atribucion}
-              maxZoom={22}
-            />
+            // Filtro por precio
+            if (lote.precio < filtros.precioMin || lote.precio > filtros.precioMax) return false;
 
-            {/* Componente de zoom automático al cliente */}
-            <ZoomController clienteSeleccionado={clienteSeleccionado} lotes={lotes} />
+            // Filtro por superficie
+            if (lote.superficie < filtros.superficieMin || lote.superficie > filtros.superficieMax) return false;
 
-            {/* Renderizar lotes filtrados */}
-            {lotesFiltrados.map((lote) => (
-              <LoteMarker
-                key={lote.uid}
-                lote={lote}
-                onSelectLote={setLoteSeleccionado}
-                crearIconoLote={crearIconoLote}
-                getEstiloPoligono={getEstiloPoligono}
-                formatearPrecio={formatearPrecio}
-              />
-            ))}
-          </MapContainer>
-        )}
+            return true;
+        });
+    }, [lotes, filtros, terminoBusqueda]);
 
-        {/* Stats - Posicionado sobre el mapa */}
-        <MapStats lotes={lotes} />
-      </div>
-    </div>
-  );
+    /**
+     * Lote destacado para zoom automático
+     * Si hay búsqueda activa y solo un resultado, hacer zoom a ese lote
+     */
+    const loteDestacado = useMemo(() => {
+        if (terminoBusqueda && lotesFiltrados.length === 1) {
+            return lotesFiltrados[0];
+        }
+        return null;
+    }, [terminoBusqueda, lotesFiltrados]);
+
+    const handleSelectLote = (lote: LoteParaMapa) => {
+        setLoteSeleccionado(lote);
+    };
+
+    return (
+        <div className="w-full -mt-4 -mb-6">
+            <div className="max-w-full mx-auto px-1 sm:px-2 lg:px-0.5">
+                {/* Header Compacto */}
+                <div className="mb-1.5 pb-1.5 border-b border-slate-200 dark:border-slate-700">
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-2">
+                            <div className="w-10 h-10 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center">
+                                <svg className="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                    Mapa de Lotes
+                                    <span className="text-sm font-normal text-slate-500 dark:text-slate-400">
+                                        ({lotesFiltrados.length} visibles de {lotes.length})
+                                    </span>
+                                </h1>
+                            </div>
+                        </div>
+
+                        {/* Controles en el Header (Capas, Búsqueda y Filtros) */}
+                        <div className="flex items-center gap-2">
+                            <SelectorCapas tipoCapa={tipoCapa} onCambiarCapa={setTipoCapa} />
+                            <BuscadorLotes
+                                lotes={lotes}
+                                onBuscar={setTerminoBusqueda}
+                                terminoBusqueda={terminoBusqueda}
+                                resultados={lotesFiltrados.length}
+                            />
+                            <FiltrosMapa
+                                onFiltrosChange={setFiltros}
+                                totalLotes={lotes.length}
+                                lotesFiltrados={lotesFiltrados.length}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Contenedor del Mapa */}
+                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden relative">
+
+                    <div className="absolute bottom-4 left-1 z-[1000]">
+                        <Leyenda />
+                    </div>
+
+                    {/* Panel de Detalles (Slide-over) */}
+                    {loteSeleccionado && (
+                        <PanelDetalles
+                            lote={loteSeleccionado}
+                            onCerrar={() => setLoteSeleccionado(null)}
+                        />
+                    )}
+
+                    {/* Mapa */}
+                    <div className="h-[410px] w-full relative z-0">
+                        {loading && (
+                            <div className="absolute inset-0 z-50 bg-white/80 dark:bg-slate-900/80 flex items-center justify-center">
+                                <p className="text-slate-600 dark:text-slate-300 font-medium">Cargando mapa...</p>
+                            </div>
+                        )}
+
+                        {error && (
+                            <div className="absolute inset-0 z-50 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center">
+                                <div className="text-center">
+                                    <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
+                                    <button
+                                        onClick={cargarLotes}
+                                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                    >
+                                        Reintentar
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {!error && (
+                            <MapContainer
+                                center={obtenerCentroZona()}
+                                zoom={obtenerZoomZona()}
+                                style={{ height: '100%', width: '100%' }}
+                                className="z-0"
+                            >
+                                <TileLayer
+                                    key={tipoCapa}
+                                    url={TILES_CONFIG[tipoCapa].url}
+                                    attribution={TILES_CONFIG[tipoCapa].atribucion}
+                                    maxZoom={22}
+                                />
+
+                                {/* Controlador de zoom automático */}
+                                <MapController loteDestacado={loteDestacado} />
+
+                                {/* Renderizar polígonos de lotes */}
+                                {lotesFiltrados.map((lote) => (
+                                    <LotePolygon
+                                        key={`poly-${lote.uid}`}
+                                        lote={lote}
+                                        esDestacado={lote.uid === loteSeleccionado?.uid}
+                                        onSelectLote={handleSelectLote}
+                                    />
+                                ))}
+
+                                {/* Renderizar marcadores de lotes */}
+                                {lotesFiltrados.map((lote) => (
+                                    <LoteMarker
+                                        key={`marker-${lote.uid}`}
+                                        lote={lote}
+                                        esDestacado={lote.uid === loteSeleccionado?.uid}
+                                        onSelectLote={handleSelectLote}
+                                    />
+                                ))}
+                            </MapContainer>
+                        )}
+                    </div>
+
+                    {/* Stats en la parte inferior */}
+                    <div className="px-6 py-[0.05rem] bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-700">
+                        <div className="flex items-center justify-center gap-8">
+                            <div className="text-center">
+                                <p className="text-sm text-slate-500 dark:text-slate-400">Total Lotes</p>
+                                <p className="text-2xl font-bold text-slate-900 dark:text-white">{lotes.length}</p>
+                            </div>
+                            <div className="text-center">
+                                <p className="text-sm text-slate-500 dark:text-slate-400">Disponibles</p>
+                                <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                                    {lotes.filter(l => l.estado === 'disponible').length}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default MapaLotes;

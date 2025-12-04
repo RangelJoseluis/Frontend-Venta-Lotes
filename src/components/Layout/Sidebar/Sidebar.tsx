@@ -35,7 +35,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
     const navItems = [
         { href: "/dashboard", icon: LayoutDashboard, label: "Panel de control", active: true },
-        { href: "/mapa-proceso", icon: Map, label: "Mapa Visual" },
+        { href: "/mapa", icon: Map, label: "Mapa Visual" },
         {
             href: "/lotes",
             icon: Building2,
