@@ -25,6 +25,7 @@ import FiltrosMapa from './components/FiltrosMapa';
 import type { FiltrosState } from './components/FiltrosMapa';
 import PanelDetalles from './components/PanelDetalles';
 import BuscadorLotes from './components/BuscadorLotes';
+import MapController from './components/MapController';
 
 const MapaLotesProceso = () => {
     const { user, isAuthenticated } = useAuthStore();
@@ -110,6 +111,17 @@ const MapaLotesProceso = () => {
             return true;
         });
     }, [lotes, filtros, terminoBusqueda]);
+
+    /**
+     * Lote destacado para zoom automático
+     * Si hay búsqueda activa y solo un resultado, hacer zoom a ese lote
+     */
+    const loteDestacado = useMemo(() => {
+        if (terminoBusqueda && lotesFiltrados.length === 1) {
+            return lotesFiltrados[0];
+        }
+        return null;
+    }, [terminoBusqueda, lotesFiltrados]);
 
     const handleSelectLote = (lote: LoteParaMapa) => {
         setLoteSeleccionado(lote);
@@ -205,6 +217,9 @@ const MapaLotesProceso = () => {
                                     attribution={TILES_CONFIG[tipoCapa].atribucion}
                                     maxZoom={22}
                                 />
+
+                                {/* Controlador de zoom automático */}
+                                <MapController loteDestacado={loteDestacado} />
 
                                 {/* Renderizar polígonos de lotes */}
                                 {lotesFiltrados.map((lote) => (
