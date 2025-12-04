@@ -9,7 +9,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
     <button
       type="submit"
       disabled={isLoading}
-      className="relative w-full mt-1 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:from-blue-600 disabled:hover:to-blue-700 overflow-hidden group text-sm"
+      className="relative w-full mt-1 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:from-indigo-600 disabled:hover:to-indigo-700 overflow-hidden group text-sm"
     >
       <div className="relative z-10 flex items-center justify-center gap-2">
         {isLoading ? (

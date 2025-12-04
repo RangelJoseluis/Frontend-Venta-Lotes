@@ -53,12 +53,18 @@ export default {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        'float': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '33%': { transform: 'translate(30px, -30px) scale(1.05)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+        },
       },
       animation: {
         'gradient-shift': 'gradient-shift 3s linear infinite',
         'shine': 'shine 3s linear infinite',
         'bounce-slow': 'bounce-slow 3s ease-in-out infinite',
         'fade-in': 'fade-in 1s ease-out',
+        'float': 'float 8s ease-in-out infinite',
       },
     },
   },

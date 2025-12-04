@@ -12,7 +12,6 @@ import { ErrorAlert } from './components/ErrorAlert';
 import { FormInput } from './components/FormInput';
 import { PasswordInput } from './components/PasswordInput';
 import { SubmitButton } from './components/SubmitButton';
-import { DemoCredentials } from './components/DemoCredentials';
 import { LoginFooter } from './components/LoginFooter';
 
 const Login = () => {
@@ -52,7 +51,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900">
       <LoginBackground />
 
       <div className="w-full max-w-md relative z-10 animate-in slide-in-from-bottom-8 fade-in duration-700">
@@ -84,8 +83,6 @@ const Login = () => {
 
             <SubmitButton isLoading={isLoading} />
           </form>
-
-
         </LoginCard>
 
         <LoginFooter />
