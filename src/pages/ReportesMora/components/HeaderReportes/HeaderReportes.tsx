@@ -9,7 +9,7 @@ const HeaderReportes: React.FC<HeaderReportesProps> = ({
     isLoading
 }) => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] items-center gap-5 mb-6 bg-white dark:bg-slate-800 px-6 py-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] items-center gap-4 mb-4 bg-white dark:bg-slate-800 px-5 py-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
             {/* Contenido del Header */}
             <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 rounded-xl text-white shadow-lg shadow-blue-500/30 dark:shadow-blue-600/40">

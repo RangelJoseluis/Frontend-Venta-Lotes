@@ -9,7 +9,7 @@ const FiltrosFecha: React.FC<FiltrosFechaProps> = ({
     onAplicar
 }) => {
     return (
-        <div className="bg-white dark:bg-slate-800 px-6 py-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-6">
+        <div className="bg-white dark:bg-slate-800 px-5 py-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                 <div className="flex flex-col gap-2">
                     <label className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">

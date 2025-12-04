@@ -9,7 +9,7 @@ const FiltrosMora: React.FC<FiltrosMoraProps> = ({
     onLoteChange
 }) => {
     return (
-        <div className="bg-white dark:bg-slate-800 px-6 py-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-6">
+        <div className="bg-white dark:bg-slate-800 px-5 py-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-4">
             <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white">
                 <Filter size={20} className="text-blue-500 dark:text-blue-400" />
                 <h3 className="font-semibold text-base">Filtros de Búsqueda</h3>

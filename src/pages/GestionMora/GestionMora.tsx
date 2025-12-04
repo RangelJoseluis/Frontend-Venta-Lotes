@@ -57,7 +57,7 @@ const GestionMora: React.FC = () => {
     }
 
     return (
-        <div className="max-w-[1400px] mx-auto px-6 py-6 bg-fondo-pagina dark:bg-slate-950 min-h-screen">
+        <div className="w-full max-w-none mx-auto px-1 py-1 bg-fondo-pagina dark:bg-slate-950 min-h-screen">
             <HeaderGestion
                 onVolver={() => navigate('/dashboard')}
                 onCalcularMora={calcularMoraMasiva}

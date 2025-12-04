@@ -4,7 +4,7 @@ import { formatCurrency, formatPorcentaje } from '../../utils';
 
 const EstadisticasMora: React.FC<EstadisticasMoraProps> = ({ efectividad }) => {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:-translate-y-1 hover:shadow-xl transition-all">
                 <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                     Mora Generada

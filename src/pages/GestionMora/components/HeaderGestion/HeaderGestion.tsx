@@ -7,7 +7,7 @@ const HeaderGestion: React.FC<HeaderGestionProps> = ({
     isLoading
 }) => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] items-center gap-5 mb-6 bg-white dark:bg-slate-800 px-6 py-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] items-center gap-4 mb-4 bg-white dark:bg-slate-800 px-5 py-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
             {/* Contenido del Header */}
             <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700 rounded-xl text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-600/40">

@@ -4,7 +4,7 @@ import { formatCurrency, formatFecha, formatPorcentaje } from '../../utils';
 
 const TablaReporteDetallado: React.FC<TablaReporteDetalladoProps> = ({ datos }) => {
     return (
-        <div className="bg-white dark:bg-slate-800 px-6 py-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+        <div className="bg-white dark:bg-slate-800 px-5 py-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
                 Reporte Detallado de Mora ({datos.length} cuotas)
             </h3>

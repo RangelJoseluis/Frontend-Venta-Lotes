@@ -5,7 +5,7 @@ import { formatCurrency } from '../../utils';
 
 const EstadisticasMora: React.FC<EstadisticasMoraProps> = ({ estadisticas }) => {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border-l-4 border-blue-500 dark:border-blue-400 flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all">
                 <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 text-white shadow-lg shadow-blue-500/30 dark:shadow-blue-600/40">
                     <AlertTriangle size={24} />
