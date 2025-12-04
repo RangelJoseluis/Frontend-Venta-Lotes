@@ -78,6 +78,18 @@ const LotePolygon = ({ lote, esDestacado = false, onSelectLote }: LotePolygonPro
                                 {lote.superficie} m²
                             </span>
                         </div>
+
+                        {/* Mostrar cliente si está vendido o en cuotas */}
+                        {(lote.estado === 'vendido' || lote.estado === 'en_cuotas') && lote.clienteNombre && (
+                            <div className="pt-2 mt-2 border-t border-slate-200">
+                                <div className="flex justify-between">
+                                    <span className="text-blue-600 font-medium">Cliente:</span>
+                                    <span className="font-semibold text-slate-900">
+                                        {lote.clienteNombre}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {onSelectLote && (
