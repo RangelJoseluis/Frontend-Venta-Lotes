@@ -14,7 +14,6 @@ import {
     AlertasEstado,
     TablaCuotasMora
 } from './components';
-import './GestionMora.css';
 
 const GestionMora: React.FC = () => {
     const navigate = useNavigate();
@@ -46,17 +45,19 @@ const GestionMora: React.FC = () => {
     // Mostrar loading inicial
     if (isLoading && !estadisticas) {
         return (
-            <div className="mora-container">
-                <div className="loading-container">
-                    <Loader className="spinner-large" size={56} />
-                    <p>Cargando información de mora...</p>
+            <div className="max-w-[1400px] mx-auto px-6 py-6 bg-fondo-pagina dark:bg-slate-950 min-h-screen">
+                <div className="flex flex-col items-center justify-center min-h-[500px] bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700">
+                    <Loader className="text-orange-500 dark:text-orange-400 animate-spin mb-5" size={56} />
+                    <p className="text-base font-medium text-slate-600 dark:text-slate-400">
+                        Cargando información de mora...
+                    </p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="mora-container">
+        <div className="max-w-[1400px] mx-auto px-6 py-6 bg-fondo-pagina dark:bg-slate-950 min-h-screen">
             <HeaderGestion
                 onVolver={() => navigate('/dashboard')}
                 onCalcularMora={calcularMoraMasiva}

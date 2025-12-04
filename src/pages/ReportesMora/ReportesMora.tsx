@@ -17,7 +17,6 @@ import {
     TablaReportePeriodo,
     TablaReporteDetallado
 } from './components';
-import './ReportesMora.css';
 
 const ReportesMora: React.FC = () => {
     const navigate = useNavigate();
@@ -61,7 +60,7 @@ const ReportesMora: React.FC = () => {
     const handleAplicarFiltros = () => cargarReporte();
 
     return (
-        <div className="mora-container">
+        <div className="max-w-[1400px] mx-auto px-6 py-6 bg-fondo-pagina dark:bg-slate-950 min-h-screen">
             <HeaderReportes
                 onVolver={handleVolver}
                 onActualizar={cargarReporte}
@@ -92,14 +91,16 @@ const ReportesMora: React.FC = () => {
             />
 
             {isLoading && (
-                <div className="loading-container">
-                    <Loader className="spinner-large" size={56} />
-                    <p>Cargando reporte...</p>
+                <div className="flex flex-col items-center justify-center min-h-[500px] bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700">
+                    <Loader className="text-orange-500 dark:text-orange-400 animate-spin mb-5" size={56} />
+                    <p className="text-base font-medium text-slate-600 dark:text-slate-400">
+                        Cargando reporte...
+                    </p>
                 </div>
             )}
 
             {!isLoading && !error && (
-                <div className="reporte-content">
+                <div className="flex flex-col gap-6">
                     {tipoReporte === 'cliente' && (
                         <TablaReporteClientes
                             datos={reporteClientes}
