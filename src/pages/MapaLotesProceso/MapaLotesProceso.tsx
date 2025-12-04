@@ -24,6 +24,7 @@ import Leyenda from './components/Leyenda';
 import FiltrosMapa from './components/FiltrosMapa';
 import type { FiltrosState } from './components/FiltrosMapa';
 import PanelDetalles from './components/PanelDetalles';
+import BuscadorLotes from './components/BuscadorLotes';
 
 const MapaLotesProceso = () => {
     const { user, isAuthenticated } = useAuthStore();
@@ -36,6 +37,7 @@ const MapaLotesProceso = () => {
 
     // Estado de selección y filtros
     const [loteSeleccionado, setLoteSeleccionado] = useState<LoteParaMapa | null>(null);
+    const [terminoBusqueda, setTerminoBusqueda] = useState('');
     const [filtros, setFiltros] = useState<FiltrosState>({
         estados: {
             disponible: true,
@@ -84,10 +86,18 @@ const MapaLotesProceso = () => {
     }, [rol]);
 
     /**
-     * Filtrar lotes según los filtros activos
+     * Filtrar lotes según los filtros activos y búsqueda
      */
     const lotesFiltrados = useMemo(() => {
         return lotes.filter((lote) => {
+            // Filtro por búsqueda (código)
+            if (terminoBusqueda) {
+                const busqueda = terminoBusqueda.toLowerCase();
+                if (!lote.codigo.toLowerCase().includes(busqueda)) {
+                    return false;
+                }
+            }
+
             // Filtro por estado
             if (!filtros.estados[lote.estado]) return false;
 
@@ -99,7 +109,7 @@ const MapaLotesProceso = () => {
 
             return true;
         });
-    }, [lotes, filtros]);
+    }, [lotes, filtros, terminoBusqueda]);
 
     const handleSelectLote = (lote: LoteParaMapa) => {
         setLoteSeleccionado(lote);
@@ -127,9 +137,15 @@ const MapaLotesProceso = () => {
                             </div>
                         </div>
 
-                        {/* Controles en el Header (Capas y Filtros) */}
+                        {/* Controles en el Header (Capas, Búsqueda y Filtros) */}
                         <div className="flex items-center gap-2">
                             <SelectorCapas tipoCapa={tipoCapa} onCambiarCapa={setTipoCapa} />
+                            <BuscadorLotes
+                                lotes={lotes}
+                                onBuscar={setTerminoBusqueda}
+                                terminoBusqueda={terminoBusqueda}
+                                resultados={lotesFiltrados.length}
+                            />
                             <FiltrosMapa
                                 onFiltrosChange={setFiltros}
                                 totalLotes={lotes.length}
