@@ -21,12 +21,12 @@ const SeccionVenta = ({ venta }: SeccionVentaProps) => {
 
       <div className="space-y-4">
         {/* Precio de Venta */}
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+        <div className="bg-slate-50 dark:bg-slate-700/30 p-4 rounded-lg border border-slate-200 dark:border-slate-600">
           <div className="flex items-center gap-2 mb-1">
-            <DollarSign size={16} className="text-green-600 dark:text-green-400" />
-            <span className="text-xs font-medium text-green-700 dark:text-green-400 uppercase tracking-wider">Precio de Venta</span>
+            <DollarSign size={16} className="text-slate-500 dark:text-slate-400" />
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Precio de Venta</span>
           </div>
-          <p className="text-2xl font-bold text-green-600 dark:text-green-400">{formatearPrecio(venta.precioVenta)}</p>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">{formatearPrecio(venta.precioVenta)}</p>
         </div>
 
         {/* Modalidad de Pago */}
@@ -42,14 +42,14 @@ const SeccionVenta = ({ venta }: SeccionVentaProps) => {
 
         {/* Información de cuotas (si aplica) */}
         {venta.modalidadPago === 'cuotas' && (
-          <div className="grid grid-cols-2 gap-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+          <div className="grid grid-cols-2 gap-4 p-3 bg-slate-50 dark:bg-slate-700/30 rounded-lg border border-slate-200 dark:border-slate-600">
             <div className="space-y-1">
-              <span className="text-xs font-medium text-blue-700 dark:text-blue-400 uppercase tracking-wider">Cuotas</span>
-              <p className="text-sm font-bold text-blue-900 dark:text-blue-200">{venta.cantidadCuotas}</p>
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Cuotas</span>
+              <p className="text-sm font-bold text-slate-900 dark:text-white">{venta.cantidadCuotas}</p>
             </div>
             <div className="space-y-1">
-              <span className="text-xs font-medium text-blue-700 dark:text-blue-400 uppercase tracking-wider">Monto Inicial</span>
-              <p className="text-sm font-bold text-blue-900 dark:text-blue-200">{formatearPrecio(venta.montoInicial)}</p>
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Monto Inicial</span>
+              <p className="text-sm font-bold text-slate-900 dark:text-white">{formatearPrecio(venta.montoInicial)}</p>
             </div>
           </div>
         )}

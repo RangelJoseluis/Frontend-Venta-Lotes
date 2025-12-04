@@ -37,7 +37,7 @@ const DetalleLote = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-fondo-pagina dark:bg-slate-950 flex items-center justify-center p-4">
         <div className="text-center">
           <Loader2 size={48} className="text-blue-600 dark:text-blue-400 animate-spin mx-auto mb-4" />
           <p className="text-slate-600 dark:text-slate-400 font-medium">{MENSAJES.CARGANDO}</p>
@@ -48,7 +48,7 @@ const DetalleLote = () => {
 
   if (error || !lote) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-fondo-pagina dark:bg-slate-950 flex items-center justify-center p-4">
         <div className="text-center max-w-md">
           <AlertCircle size={48} className="text-red-600 dark:text-red-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{MENSAJES.ERROR}</h2>
@@ -63,7 +63,7 @@ const DetalleLote = () => {
   // ============================================================================
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-fondo-pagina dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header con título, estado y botones de acción */}
         <HeaderDetalleLote lote={lote} venta={venta} />

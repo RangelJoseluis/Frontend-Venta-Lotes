@@ -10,7 +10,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex relative transition-colors duration-200">
+        <div className="min-h-screen bg-fondo-pagina dark:bg-slate-950 flex relative transition-colors duration-200">
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
             <div className={`

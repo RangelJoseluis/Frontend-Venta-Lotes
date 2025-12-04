@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-fondo-pagina: #FCEDEB;
+}
+
 /* Reset CSS personalizado - Preserva configuraciones específicas */
 @layer base {
   * {
@@ -26,3 +30,5 @@
     scrollbar-width: none;
   }
 }
+
+/* Forzar recarga de estilos */
