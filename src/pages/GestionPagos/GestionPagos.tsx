@@ -5,7 +5,6 @@
  */
 
 import React, { useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
     HeaderGestion,
     EstadisticasPagos,
@@ -13,15 +12,16 @@ import {
     TablaPagos,
     Paginacion,
     AlertasEstado,
-    ModalRegistrarPago
+    ModalRegistrarPago,
+    ModalDetallePago
 } from './components';
 import {
     usePagos,
     useFiltrosPagos
 } from './hooks';
+import type { Pago } from './types';
 
 const GestionPagos: React.FC = () => {
-    const navigate = useNavigate();
 
     // Hook de gestión de pagos
     const {
@@ -82,6 +82,15 @@ const GestionPagos: React.FC = () => {
     // Estado para el modal de registro
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
+    // Estado para el modal de detalles
+    const [modalDetalle, setModalDetalle] = React.useState<{
+        isOpen: boolean;
+        pago: Pago | null;
+    }>({
+        isOpen: false,
+        pago: null
+    });
+
     // Handlers
     const handleNuevoPago = () => {
         setIsModalOpen(true);
@@ -99,7 +108,20 @@ const GestionPagos: React.FC = () => {
     };
 
     const handleVerDetalle = (uid: string) => {
-        navigate(`/pagos/${uid}`);
+        const pago = pagos.find(p => p.uid === uid);
+        if (pago) {
+            setModalDetalle({
+                isOpen: true,
+                pago
+            });
+        }
+    };
+
+    const handleCerrarDetalle = () => {
+        setModalDetalle({
+            isOpen: false,
+            pago: null
+        });
     };
 
     const handlePaginaAnterior = () => {
@@ -175,6 +197,13 @@ const GestionPagos: React.FC = () => {
                 isOpen={isModalOpen}
                 onClose={handleCerrarModal}
                 onPagoRegistrado={handlePagoRegistrado}
+            />
+
+            {/* Modal de Detalles del Pago */}
+            <ModalDetallePago
+                isOpen={modalDetalle.isOpen}
+                pago={modalDetalle.pago}
+                onCerrar={handleCerrarDetalle}
             />
         </div>
     );
