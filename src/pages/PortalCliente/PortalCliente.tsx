@@ -1,9 +1,24 @@
 import React from 'react';
 import { useAuthStore } from '../../store/authStore';
-import { LayoutDashboard, Home, CreditCard, User, LogOut, Bell } from 'lucide-react';
+import { LayoutDashboard, Home, CreditCard, User, LogOut, Bell, AlertCircle } from 'lucide-react';
+import { useDatosCliente } from './hooks/useDatosCliente';
+import { MisLotes } from './components/MisLotes';
 
 const PortalCliente: React.FC = () => {
     const { user, logout } = useAuthStore();
+    const { ventas, loading, error } = useDatosCliente();
+
+    // Calcular estadísticas
+    const totalLotes = ventas.length;
+    const montoPendienteTotal = ventas.reduce((sum, v) => sum + (v.montoPendiente || 0), 0);
+
+    const formatearMoneda = (valor: number) => {
+        return new Intl.NumberFormat('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            minimumFractionDigits: 0
+        }).format(valor);
+    };
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 font-sans">
@@ -72,10 +87,18 @@ const PortalCliente: React.FC = () => {
                     </p>
                 </div>
 
-                {/* Grid de Resumen (Placeholders) */}
+                {/* Error Message */}
+                {error && (
+                    <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 rounded-xl flex items-center gap-3 text-red-700 dark:text-red-400">
+                        <AlertCircle size={20} />
+                        <span>{error}</span>
+                    </div>
+                )}
+
+                {/* Grid de Resumen */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                     {/* Card: Mis Lotes */}
-                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group cursor-pointer">
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group">
                         <div className="flex items-center justify-between mb-4">
                             <div className="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl group-hover:scale-110 transition-transform">
                                 <Home size={24} />
@@ -89,30 +112,26 @@ const PortalCliente: React.FC = () => {
                         </h3>
                         <div className="flex items-baseline gap-2">
                             <span className="text-3xl font-bold text-slate-800 dark:text-white">
-                                0
+                                {loading ? '...' : totalLotes}
                             </span>
                             <span className="text-sm text-slate-400">propiedades</span>
                         </div>
                     </div>
 
-                    {/* Card: Pagos Pendientes */}
-                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group cursor-pointer">
+                    {/* Card: Monto Pendiente */}
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group">
                         <div className="flex items-center justify-between mb-4">
-                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-xl group-hover:scale-110 transition-transform">
+                            <div className="p-3 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-xl group-hover:scale-110 transition-transform">
                                 <CreditCard size={24} />
                             </div>
-                            <span className="text-xs font-semibold px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full">
-                                Al día
-                            </span>
                         </div>
                         <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">
-                            Próximo Pago
+                            Total Pendiente
                         </h3>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-3xl font-bold text-slate-800 dark:text-white">
-                                $0.00
+                            <span className="text-2xl font-bold text-slate-800 dark:text-white">
+                                {loading ? '...' : formatearMoneda(montoPendienteTotal)}
                             </span>
-                            <span className="text-sm text-slate-400">COP</span>
                         </div>
                     </div>
 
@@ -127,21 +146,17 @@ const PortalCliente: React.FC = () => {
                             Mi Perfil
                         </h3>
                         <p className="text-sm text-slate-600 dark:text-slate-300">
-                            Actualizar datos personales y contraseña
+                            Actualizar datos personales
                         </p>
                     </div>
                 </div>
 
-                {/* Sección Vacía Inicial */}
-                <div className="bg-slate-100 dark:bg-slate-800/50 rounded-3xl border-2 border-dashed border-slate-300 dark:border-slate-700 p-12 text-center">
-                    <div className="max-w-md mx-auto">
-                        <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2">
-                            Próximamente verás tus lotes aquí
-                        </h3>
-                        <p className="text-slate-500 dark:text-slate-400">
-                            Estamos preparando la información de tus propiedades. Pronto podrás ver el detalle de tus lotes, historial de pagos y descargar tus recibos.
-                        </p>
-                    </div>
+                {/* Sección Mis Lotes */}
+                <div className="mb-10">
+                    <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
+                        Mis Propiedades
+                    </h3>
+                    <MisLotes ventas={ventas} loading={loading} />
                 </div>
             </main>
         </div>

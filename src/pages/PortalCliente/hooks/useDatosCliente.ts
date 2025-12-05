@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuthStore } from '../../../store/authStore';
 import { obtenerVentasPorCliente } from '../../../services/ventas.service';
-import type { Venta } from '../../../types';
+import type { VentaResumen } from '../../../types';
 
 interface UseDatosClienteReturn {
-    ventas: Venta[];
+    ventas: VentaResumen[];
     loading: boolean;
     error: string | null;
     refetch: () => Promise<void>;
@@ -16,7 +16,7 @@ interface UseDatosClienteReturn {
  */
 export const useDatosCliente = (): UseDatosClienteReturn => {
     const { user } = useAuthStore();
-    const [ventas, setVentas] = useState<Venta[]>([]);
+    const [ventas, setVentas] = useState<VentaResumen[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
