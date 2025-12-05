@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Map as MapIcon, Satellite } from 'lucide-react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import httpClient from '../../../services/http.service';
+import lotesMapaService from '../../../services/lotes-mapa.service';
 import type { LoteParaMapa, TipoCapaMapa } from '../../../types/mapa';
 import { TILES_CONFIG } from '../../../types/mapa';
 import { obtenerCentroZona, obtenerZoomZona } from '../../../config/zona.config';
@@ -40,33 +41,18 @@ export const ModalMapaSatelitalCliente: React.FC<ModalMapaSatelitalClienteProps>
             setLoading(true);
             setError(null);
 
-            // Obtener ventas del cliente (ya funciona en Portal Cliente)
+            // Obtener ventas del cliente
             const response = await httpClient.get('/ventas/mis-ventas');
             const ventas = response.data;
 
             console.log(`✅ ${ventas.length} venta(s) del cliente obtenidas`);
 
-            // Mapear ventas a formato LoteParaMapa
-            const lotesMapeados: LoteParaMapa[] = ventas.map((venta: any) => ({
-                uid: venta.lote.uid,
-                codigo: venta.lote.codigo,
-                superficie: parseFloat(venta.lote.superficieM2 || '0'),
-                precio: venta.precioVenta,
-                ubicacion: venta.lote.direccion || 'Sin dirección',
-                coordenadas: venta.lote.ubicacionX && venta.lote.ubicacionY
-                    ? `${venta.lote.ubicacionY},${venta.lote.ubicacionX}`
-                    : undefined,
-                geojson: venta.lote.geojson || undefined,
-                estado: venta.estado, // 'activa', 'completada', etc.
-                topografia: venta.lote.topografia,
-                estadoDocumentacion: venta.lote.estadoDocumentacion,
-                amueblado: venta.lote.amueblado,
-                esDelCliente: true,
-                modeloCasa: venta.lote.modeloCasa,
-                imagenesUrls: venta.lote.imagenesUrls,
-                creadoEn: venta.lote.creadoEn,
-                actualizadoEn: venta.lote.actualizadoEn
-            }));
+            // Mapear ventas a formato LoteParaMapa usando el servicio que ya parsea geojson
+            const lotesMapeados: LoteParaMapa[] = ventas.map((venta: any) => {
+                const loteMapeado = lotesMapaService.mapearLoteBackendAFrontend(venta.lote);
+                console.log('🔍 Lote mapeado:', loteMapeado);
+                return loteMapeado;
+            });
 
             setLotes(lotesMapeados);
             console.log(`🗺️ ${lotesMapeados.length} lote(s) mapeados para el mapa`);
