@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
 import { LayoutDashboard, Home, CreditCard, User, LogOut, Bell, AlertCircle, FileText } from 'lucide-react';
 import { useDatosCliente } from './hooks/useDatosCliente';
-import { MisLotes, MisPagos } from './components';
+import { MisLotes, MisPagos, EstadoCuenta } from './components';
 
-type Tab = 'lotes' | 'pagos' | 'perfil';
+type Tab = 'lotes' | 'pagos' | 'estado-cuenta' | 'perfil';
 
 const PortalCliente: React.FC = () => {
     const { user, logout } = useAuthStore();
@@ -183,6 +183,17 @@ const PortalCliente: React.FC = () => {
                         <FileText size={18} />
                         Mis Pagos
                     </button>
+                    <button
+                        onClick={() => setActiveTab('estado-cuenta')}
+                        className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all duration-200 flex items-center justify-center gap-2
+                            ${activeTab === 'estado-cuenta'
+                                ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-400 shadow'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-white/[0.12] hover:text-slate-800 dark:hover:text-white'
+                            }`}
+                    >
+                        <CreditCard size={18} />
+                        Estado de Cuenta
+                    </button>
                 </div>
 
                 {/* Contenido Dinámico */}
@@ -202,6 +213,15 @@ const PortalCliente: React.FC = () => {
                                 Historial de Pagos
                             </h3>
                             <MisPagos />
+                        </div>
+                    )}
+
+                    {activeTab === 'estado-cuenta' && (
+                        <div>
+                            <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
+                                Estado de Cuenta
+                            </h3>
+                            <EstadoCuenta />
                         </div>
                     )}
                 </div>

@@ -312,6 +312,32 @@ export interface PagosUsuarioResponse {
 }
 
 // ============================================================================
+// CUOTAS - RESUMEN Y RESPUESTAS
+// ============================================================================
+
+/**
+ * Resumen estadístico de cuotas del cliente
+ */
+export interface ResumenCuotas {
+  totalCuotas: number;
+  cuotasPagadas: number;
+  cuotasPendientes: number;
+  cuotasVencidas: number;
+  montoTotalCuotas: number;
+  montoPagado: number;
+  montoPendiente: number;
+  proximoVencimiento: string | null;
+}
+
+/**
+ * Respuesta de cuotas por usuario (Portal Cliente - Estado de Cuenta)
+ */
+export interface CuotasUsuarioResponse {
+  cuotas: Cuota[];
+  resumen: ResumenCuotas;
+}
+
+// ============================================================================
 // ESTADÍSTICAS
 // ============================================================================
 
