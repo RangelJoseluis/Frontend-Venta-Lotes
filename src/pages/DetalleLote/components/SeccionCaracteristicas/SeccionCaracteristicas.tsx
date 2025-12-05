@@ -52,8 +52,8 @@ const SeccionCaracteristicas = ({ lote }: SeccionCaracteristicasProps) => {
         </div>
         {modelo.estado && (
           <span className={`px-2 py-1 rounded text-xs font-medium ${modelo.estado === 'activo'
-              ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
-              : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+            : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
             }`}>
             {modelo.estado === 'activo' ? '✓ Activo' : '× Inactivo'}
           </span>
