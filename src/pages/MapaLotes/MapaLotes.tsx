@@ -35,6 +35,7 @@ const MapaLotes = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [tipoCapa, setTipoCapa] = useState<TipoCapaMapa>('satelite');
+    const [key, setKey] = useState(0); // Para forzar re-render del mapa
 
     // Estado de selección y filtros
     const [loteSeleccionado, setLoteSeleccionado] = useState<LoteParaMapa | null>(null);
@@ -85,6 +86,17 @@ const MapaLotes = () => {
     useEffect(() => {
         cargarLotes();
     }, [rol]);
+
+    // Escuchar cambios en la configuración de zona
+    useEffect(() => {
+        const handleZonaUpdate = () => {
+            setKey(prev => prev + 1); // Forzar re-render del MapContainer
+            console.log('🗺️ Mapa del dashboard actualizado con nueva configuración de zona');
+        };
+
+        window.addEventListener('zona-config-updated', handleZonaUpdate);
+        return () => window.removeEventListener('zona-config-updated', handleZonaUpdate);
+    }, []);
 
     /**
      * Filtrar lotes según los filtros activos y búsqueda
@@ -206,6 +218,7 @@ const MapaLotes = () => {
 
                         {!error && (
                             <MapContainer
+                                key={key}
                                 center={obtenerCentroZona()}
                                 zoom={obtenerZoomZona()}
                                 style={{ height: '100%', width: '100%' }}

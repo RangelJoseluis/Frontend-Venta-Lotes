@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ConfiguracionZona, MensajeConfig } from '../../shared/types';
-import { obtenerZonaPredeterminada, guardarZonaPredeterminada } from '../services/zona.service';
+import { obtenerZonaPredeterminada, guardarZonaPredeterminada } from '../../../../config/zona.config';
 
 export const useConfiguracionZona = () => {
   const [zona, setZona] = useState<ConfiguracionZona>(obtenerZonaPredeterminada());
