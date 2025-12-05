@@ -7,7 +7,6 @@ import type {
   EstadisticasPagos,
   EstadisticasLotes,
 } from '../../types';
-import './TabEstadisticas.css';
 
 interface TabEstadisticasProps {
   statsVentas: EstadisticasVentas | null;
@@ -23,11 +22,11 @@ const TabEstadisticas = ({
   statsLotes,
 }: TabEstadisticasProps) => {
   return (
-    <div className="estadisticas-section">
-      <h2 className="section-title">Estadísticas Generales</h2>
+    <div className="space-y-6">
+      <h2 className="text-xl font-semibold text-slate-800 dark:text-white">Estadísticas Generales</h2>
 
       {/* Grid de estadísticas */}
-      <div className="stats-grid-reportes">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Ventas */}
         <StatsCard
           title="Ventas"

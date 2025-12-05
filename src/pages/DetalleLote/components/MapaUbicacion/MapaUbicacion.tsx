@@ -1,10 +1,13 @@
-// Componente MapaUbicacion - Mapa con polígono o marcador del lote
+/**
+ * Componente MapaUbicacion - Mapa con polígono o marcador del lote
+ * Migrado a Tailwind CSS
+ */
+
 import { MapPin } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { CENTRO_MAPA_DEFAULT } from '../../constants';
 import type { Lote } from '../../types';
-import './MapaUbicacion.css';
 
 interface MapaUbicacionProps {
   lote: Lote;
@@ -18,26 +21,27 @@ const MapaUbicacion = ({ lote, centroMapa, puntosPoligono }: MapaUbicacionProps)
   const zoom = 19;
 
   return (
-    <div className="detalle-card">
-      <h2 className="card-title">
-        <MapPin size={20} />
+    <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+      <h2 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+        <MapPin size={20} className="text-blue-600 dark:text-blue-400" />
         Ubicación
       </h2>
-      <div className="mapa-container">
+
+      <div className="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
         <MapContainer
           center={centro}
           zoom={zoom}
           maxZoom={21}
           minZoom={10}
-          style={{ height: '400px', width: '100%', borderRadius: '8px' }}
+          style={{ height: '400px', width: '100%' }}
         >
-          {/* Mapa híbrido de Google (satélite + etiquetas integradas) - igual al mapa interactivo */}
+          {/* Mapa híbrido de Google (satélite + etiquetas integradas) */}
           <TileLayer
             attribution='&copy; Google'
             url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
             maxZoom={21}
           />
-          
+
           {puntosPoligono.length > 0 ? (
             <Polygon
               positions={puntosPoligono}
@@ -49,19 +53,20 @@ const MapaUbicacion = ({ lote, centroMapa, puntosPoligono }: MapaUbicacionProps)
               }}
             >
               <Popup>
-                <strong>Lote {lote.codigo}</strong>
-                <br />
-                {lote.manzana} - Lote {lote.numeroLote}
-                <br />
-                Superficie: {parseFloat(lote.superficieM2).toFixed(2)} m²
+                <div className="p-1">
+                  <p className="font-bold text-slate-900">{lote.codigo}</p>
+                  <p className="text-sm text-slate-600">{lote.manzana} - Lote {lote.numeroLote}</p>
+                  <p className="text-sm text-slate-600">Superficie: {parseFloat(lote.superficieM2).toFixed(2)} m²</p>
+                </div>
               </Popup>
             </Polygon>
           ) : centroMapa && (
             <Marker position={centroMapa}>
               <Popup>
-                <strong>Lote {lote.codigo}</strong>
-                <br />
-                {lote.manzana} - Lote {lote.numeroLote}
+                <div className="p-1">
+                  <p className="font-bold text-slate-900">{lote.codigo}</p>
+                  <p className="text-sm text-slate-600">{lote.manzana} - Lote {lote.numeroLote}</p>
+                </div>
               </Popup>
             </Marker>
           )}

@@ -68,6 +68,26 @@ export const pagosService = {
   },
 
   /**
+   * Obtener todos los pagos de un usuario (Portal Cliente)
+   * Endpoint: GET /pagos/usuario/:usuarioUid
+   * Requiere autenticación (cliente o admin)
+   */
+  async obtenerPorUsuario(usuarioUid: string): Promise<{
+    pagos: Pago[];
+    estadisticas: {
+      totalPagos: number;
+      montoTotal: number;
+      pagosMesActual: number;
+      montoMesActual: number;
+    };
+  }> {
+    const response = await httpClient.get(
+      `${API_CONFIG.BASE_URL}/pagos/usuario/${usuarioUid}`
+    );
+    return response.data;
+  },
+
+  /**
    * Obtener todos los pagos con filtros
    * Endpoint: GET /pagos
    * Requiere autenticación
@@ -113,7 +133,7 @@ export const pagosService = {
     const params = new URLSearchParams();
     params.append('pagina', pagina.toString());
     params.append('limite', limite.toString());
-    
+
     if (filtros?.metodoPago) params.append('metodoPago', filtros.metodoPago);
     if (filtros?.fechaDesde) params.append('fechaDesde', filtros.fechaDesde);
     if (filtros?.fechaHasta) params.append('fechaHasta', filtros.fechaHasta);

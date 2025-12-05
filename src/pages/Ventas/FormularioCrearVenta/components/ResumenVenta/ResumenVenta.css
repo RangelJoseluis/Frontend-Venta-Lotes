@@ -1,0 +1,131 @@
+/* Estilos para ResumenVenta */
+/* Resumen de cálculos de la venta */
+
+.formulario-summary {
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.formulario-summary-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 1.25rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.formulario-summary-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #059669;
+  flex-shrink: 0;
+}
+
+.formulario-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.formulario-summary-item {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.formulario-summary-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.formulario-summary-highlight {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  border-color: #3b82f6;
+}
+
+.formulario-summary-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.formulario-summary-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.formulario-summary-highlight .formulario-summary-value {
+  color: #1d4ed8;
+}
+
+/* Animación de entrada */
+.formulario-summary {
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-summary {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .formulario-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .formulario-summary-item {
+    padding: 0.75rem;
+  }
+  
+  .formulario-summary-value {
+    font-size: 1.125rem;
+  }
+}
+
+/* Estados especiales */
+.formulario-summary.error {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  border-color: #fca5a5;
+}
+
+.formulario-summary.error .formulario-summary-icon {
+  color: #ef4444;
+}
+
+.formulario-summary.success {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  border-color: #86efac;
+}
+
+.formulario-summary.success .formulario-summary-icon {
+  color: #16a34a;
+}

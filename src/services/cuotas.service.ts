@@ -6,12 +6,24 @@
 
 import httpClient from './http.service';
 import API_CONFIG from '../config/api.config';
-import type { Cuota } from '../types';
+import type { Cuota, CuotasUsuarioResponse } from '../types';
 
 /**
  * SERVICIO DE CUOTAS
  */
 export const cuotasService = {
+  /**
+   * Obtener cuotas por usuario UID (Portal Cliente - Estado de Cuenta)
+   * Endpoint: GET /cuotas/usuario/:usuarioUid
+   * Requiere autenticación
+   */
+  async obtenerPorUsuario(usuarioUid: string): Promise<CuotasUsuarioResponse> {
+    const response = await httpClient.get<CuotasUsuarioResponse>(
+      `${API_CONFIG.BASE_URL}/cuotas/usuario/${usuarioUid}`
+    );
+    return response.data;
+  },
+
   /**
    * Obtener cuotas de una venta
    * Endpoint: GET /cuotas/venta/:ventaUid

@@ -1,0 +1,134 @@
+/* Estilos para SeccionPago */
+/* Configuración de pago y financiación */
+
+/* Importar estilos base */
+@import '../SeccionCliente/SeccionCliente.css';
+
+/* Grid de 2 columnas para campos de pago */
+.formulario-grid-2 {
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Grupo de input con prefijo */
+.formulario-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.formulario-input-prefix {
+  position: absolute;
+  left: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+  font-size: 0.875rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.formulario-input-currency {
+  padding-left: 2rem !important;
+}
+
+/* Input base */
+.formulario-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.formulario-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.formulario-input::placeholder {
+  color: #9ca3af;
+}
+
+/* Select nativo */
+.formulario-select-native {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+  background: white;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.formulario-select-native:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Label con icono */
+.formulario-label-icon {
+  width: 1rem;
+  height: 1rem;
+  color: #64748b;
+}
+
+/* Icono específico para sección de pago */
+.seccion-pago .formulario-section-icon {
+  color: #059669; /* Verde para dinero */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .formulario-input-group {
+    width: 100%;
+  }
+}
+
+/* Estados de validación */
+.formulario-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 1px #ef4444;
+}
+
+.formulario-select-native.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 1px #ef4444;
+}
+
+/* Animaciones suaves */
+.formulario-field {
+  transition: opacity 0.3s ease;
+}
+
+.formulario-field.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

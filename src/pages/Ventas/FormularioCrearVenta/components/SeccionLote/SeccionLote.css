@@ -1,0 +1,14 @@
+/* Estilos para SeccionLote */
+/* Selector de lote con react-select - reutiliza estilos de SeccionCliente */
+
+/* Importar estilos base de SeccionCliente */
+@import '../SeccionCliente/SeccionCliente.css';
+
+/* Estilos específicos para SeccionLote si es necesario */
+.seccion-lote .formulario-section-icon {
+  color: #10b981; /* Verde para diferenciarlo del cliente */
+}
+
+.seccion-lote .formulario-help {
+  color: #059669;
+}

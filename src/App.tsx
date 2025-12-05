@@ -1,30 +1,31 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
+import Login from './pages/Login/Login';
+import Dashboard from './pages/Dashboard/Dashboard';
 import GestionLotes from './pages/GestionLotes';
 import NuevoLote from './pages/NuevoLote';
 import EditarLote from './pages/EditarLote';
 import DetalleLote from './pages/DetalleLote';
-import FormularioCrearVenta from './pages/FormularioCrearVenta';
+import { GestionVentas, FormularioCrearVenta } from './pages/Ventas';
 import RegistrarPago from './pages/RegistroPagos';
 import GestionDeUsuariosCliente from './pages/GestionDeUsuariosCliente';
 import Reportes from './pages/Reportes';
 import ModelosCasa from './pages/ModelosCasa';
-import MapaLotes from './pages/MapaLotes/MapaLotes';
-import ConfiguracionesLayout from './pages/ConfiguracionesLayout';
-import ConfiguracionZona from './pages/ConfiguracionZona';
-import ConfiguracionMora from './pages/ConfiguracionMora';
-import ConfiguracionSistema from './pages/ConfiguracionSistema';
-import GestionServicios from './pages/GestionServicios';
-import FormularioServicio from './pages/FormularioServicio';
-import GestionVentas from './pages/GestionVentas';
-import GestionPagos from './pages/GestionPagos';
+import MapaLotes from './pages/MapaLotes';
+import ConfiguracionesLayout from './pages/Configuraciones/ConfiguracionesLayout';
+import { ConfiguracionZona, ConfiguracionMora, ConfiguracionSistema } from './pages/Configuraciones/index';
+import GestionServicios from './pages/GestionServicios/GestionServicios';
+import GestionPagos from './pages/GestionPagos/GestionPagos';
 import GestionMora from './pages/GestionMora';
 import ReportesMora from './pages/ReportesMora';
 import Perfil from './pages/Perfil/Perfil';
+import PortalCliente from './pages/PortalCliente';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
+import RoleBasedRedirect from './components/RoleBasedRedirect';
 import { useAuthStore } from './store/authStore';
+import MainLayout from './components/Layout/MainLayout';
 
 /**
  * COMPONENTE PRINCIPAL DE LA APLICACIÓN
@@ -48,209 +49,55 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Ruta raíz - Redirige según autenticación */}
-        <Route 
-          path="/" 
-          element={
-            <Navigate to="/dashboard" replace />
-          } 
-        />
+        {/* Ruta pública - Home */}
+        <Route path="/" element={<Home />} />
 
         {/* Ruta pública - Login */}
         <Route path="/login" element={<Login />} />
 
-        {/* Rutas protegidas */}
+        {/* Ruta del Portal Cliente (sin MainLayout) */}
         <Route
-          path="/dashboard"
+          path="/portal-cliente"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <PortalCliente />
             </PrivateRoute>
           }
         />
 
+        {/* Rutas protegidas con Layout (Solo Admin) */}
         <Route
-          path="/lotes"
           element={
-            <PrivateRoute>
-              <GestionLotes />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/lotes/nuevo"
-          element={
-            <PrivateRoute>
-              <NuevoLote />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/lotes/:uid/editar"
-          element={
-            <PrivateRoute>
-              <EditarLote />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/lotes/:uid"
-          element={
-            <PrivateRoute>
-              <DetalleLote />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/crear-venta"
-          element={
-            <PrivateRoute>
-              <FormularioCrearVenta />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/registrar-pago"
-          element={
-            <PrivateRoute>
-              <RegistrarPago />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/clientes"
-          element={
-            <PrivateRoute>
-              <GestionDeUsuariosCliente />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/reportes"
-          element={
-            <PrivateRoute>
-              <Reportes />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/modelos-casa"
-          element={
-            <PrivateRoute>
-              <ModelosCasa />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/mapa"
-          element={
-            <PrivateRoute>
-              <MapaLotes />
-            </PrivateRoute>
-          }
-        />
-
-        {/* CRUD de Servicios */}
-        <Route
-          path="/servicios"
-          element={
-            <PrivateRoute>
-              <GestionServicios />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/servicios/nuevo"
-          element={
-            <PrivateRoute>
-              <FormularioServicio />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/servicios/:uid/editar"
-          element={
-            <PrivateRoute>
-              <FormularioServicio />
-            </PrivateRoute>
-          }
-        />
-
-        {/* CRUD de Ventas */}
-        <Route
-          path="/ventas"
-          element={
-            <PrivateRoute>
-              <GestionVentas />
-            </PrivateRoute>
-          }
-        />
-
-        {/* CRUD de Pagos */}
-        <Route
-          path="/pagos"
-          element={
-            <PrivateRoute>
-              <GestionPagos />
-            </PrivateRoute>
-          }
-        />
-
-        {/* Gestión de Mora */}
-        <Route
-          path="/gestion-mora"
-          element={
-            <PrivateRoute>
-              <GestionMora />
-            </PrivateRoute>
-          }
-        />
-
-        {/* Reportes de Mora */}
-        <Route
-          path="/reportes-mora"
-          element={
-            <PrivateRoute>
-              <ReportesMora />
-            </PrivateRoute>
-          }
-        />
-
-        {/* Perfil de Usuario */}
-        <Route
-          path="/perfil"
-          element={
-            <PrivateRoute>
-              <Perfil />
-            </PrivateRoute>
-          }
-        />
-
-        {/* Configuraciones con Sidebar Interno */}
-        <Route
-          path="/configuraciones"
-          element={
-            <PrivateRoute>
-              <ConfiguracionesLayout />
-            </PrivateRoute>
+            <AdminRoute>
+              <MainLayout />
+            </AdminRoute>
           }
         >
-          {/* Rutas Anidadas de Configuración */}
-          <Route index element={<ConfiguracionZona />} />
-          <Route path="zona" element={<ConfiguracionZona />} />
-          <Route path="mora" element={<ConfiguracionMora />} />
-          <Route path="negocio" element={<ConfiguracionSistema />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/lotes" element={<GestionLotes />} />
+          <Route path="/lotes/nuevo" element={<NuevoLote />} />
+          <Route path="/lotes/:uid/editar" element={<EditarLote />} />
+          <Route path="/lotes/:uid" element={<DetalleLote />} />
+          <Route path="/ventas/crear" element={<FormularioCrearVenta />} />
+          <Route path="/registrar-pago" element={<RegistrarPago />} />
+          <Route path="/clientes" element={<GestionDeUsuariosCliente />} />
+          <Route path="/reportes" element={<Reportes />} />
+          <Route path="/modelos-casa" element={<ModelosCasa />} />
+          <Route path="/mapa" element={<MapaLotes />} />
+          <Route path="/servicios" element={<GestionServicios />} />
+          <Route path="/ventas" element={<GestionVentas />} />
+          <Route path="/pagos" element={<GestionPagos />} />
+          <Route path="/gestion-mora" element={<GestionMora />} />
+          <Route path="/reportes-mora" element={<ReportesMora />} />
+          <Route path="/perfil" element={<Perfil />} />
+
+          {/* Configuraciones con Sidebar Interno */}
+          <Route path="/configuraciones" element={<ConfiguracionesLayout />}>
+            <Route index element={<ConfiguracionZona />} />
+            <Route path="zona" element={<ConfiguracionZona />} />
+            <Route path="mora" element={<ConfiguracionMora />} />
+            <Route path="negocio" element={<ConfiguracionSistema />} />
+          </Route>
         </Route>
 
         {/* Ruta 404 - Redirige al login */}

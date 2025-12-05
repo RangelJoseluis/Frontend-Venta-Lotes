@@ -1,0 +1,1 @@
+export { ModalDetallePago } from './ModalDetallePago';

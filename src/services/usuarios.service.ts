@@ -13,6 +13,7 @@ export interface Usuario {
   roles: string[];
   nombres: string;
   apellidos: string;
+  direccion?: string; // ✅ AGREGADO: campo dirección
   estado: 'activo' | 'inactivo';
   creadoEn: string;
   ultimoAcceso: string | null;
@@ -25,6 +26,7 @@ export interface CrearUsuarioDto {
   apellidos: string;
   cedula: string;
   telefono: string;
+  direccion?: string; // ✅ AGREGADO: campo dirección
 }
 
 export interface ActualizarUsuarioDto {
@@ -33,6 +35,7 @@ export interface ActualizarUsuarioDto {
   apellidos?: string;
   cedula?: string;
   telefono?: string;
+  direccion?: string; // ✅ AGREGADO: campo dirección
   estado?: 'activo' | 'inactivo';
 }
 
@@ -99,14 +102,42 @@ class UsuariosService {
   }
 
   /**
-   * Eliminar un usuario
+   * Eliminar un usuario (eliminación física - usar con precaución)
    */
   async eliminar(uid: string): Promise<void> {
     try {
       await httpClient.delete(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.USUARIOS}/${uid}`);
-      console.log('✅ Usuario eliminado');
+      console.log('✅ Usuario eliminado físicamente');
     } catch (error: any) {
       console.error('❌ Error al eliminar usuario:', error.response?.data || error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Desactivar un usuario (eliminación lógica - recomendado)
+   */
+  async desactivar(uid: string): Promise<Usuario> {
+    try {
+      const response = await httpClient.patch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.USUARIOS}/${uid}/deactivate`);
+      console.log('✅ Usuario desactivado:', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.error('❌ Error al desactivar usuario:', error.response?.data || error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Reactivar un usuario
+   */
+  async reactivar(uid: string): Promise<Usuario> {
+    try {
+      const response = await httpClient.patch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.USUARIOS}/${uid}/reactivate`);
+      console.log('✅ Usuario reactivado:', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.error('❌ Error al reactivar usuario:', error.response?.data || error.message);
       throw error;
     }
   }

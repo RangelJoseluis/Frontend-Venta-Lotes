@@ -30,11 +30,11 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('accessToken');
-    
+
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    
+
     return config;
   },
   (error: AxiosError) => {
@@ -52,18 +52,24 @@ httpClient.interceptors.response.use(
   },
   (error: AxiosError) => {
     // Si el token expiró o es inválido (401), redirigir al login
+    // EXCEPTO si el error viene del endpoint de login (credenciales incorrectas)
     if (error.response?.status === 401) {
-      console.warn('🔒 Token inválido o expirado (401). Redirigiendo al login...');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+      const isLoginEndpoint = error.config?.url?.includes('/auth/login');
+
+      if (!isLoginEndpoint) {
+        console.warn('🔒 Token inválido o expirado (401). Redirigiendo al login...');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
+      // Si es el endpoint de login, dejar que el error se propague normalmente
     }
-    
+
     // Si es 404 pero parece ser un problema de autenticación (backend protege rutas)
     if (error.response?.status === 404 && localStorage.getItem('accessToken')) {
       const errorMessage = (error.response?.data as any)?.message || '';
       const errorString = (error.response?.data as any)?.error || '';
-      
+
       // Si el mensaje indica problema de autenticación o acceso denegado
       if (
         errorMessage.toLowerCase().includes('unauthorized') ||
@@ -82,12 +88,12 @@ httpClient.interceptors.response.use(
         window.location.href = '/login';
       }
     }
-    
+
     // Si hay error de red
     if (!error.response) {
       console.error('Error de red: No se pudo conectar con el servidor');
     }
-    
+
     return Promise.reject(error);
   }
 );
@@ -109,11 +115,11 @@ export const getErrorMessage = (error: unknown): string => {
     const apiError = error.response?.data as ApiError;
     return apiError?.message || error.message || 'Error desconocido';
   }
-  
+
   if (error instanceof Error) {
     return error.message;
   }
-  
+
   return 'Error desconocido';
 };
 

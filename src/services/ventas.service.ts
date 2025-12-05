@@ -5,7 +5,7 @@
 
 import httpClient from './http.service';
 import API_CONFIG from '../config/api.config';
-import type { CrearVentaDto, Venta, VentasResponse } from '../types';
+import type { CrearVentaDto, Venta, VentasResponse, VentaResumen } from '../types';
 
 /**
  * Crear una nueva venta
@@ -43,10 +43,10 @@ export const obtenerVentaPorUid = async (uid: string): Promise<Venta> => {
 };
 
 /**
- * Obtener ventas por cliente
+ * Obtener ventas por cliente (devuelve VentaResumen con montoPendiente)
  */
-export const obtenerVentasPorCliente = async (clienteUid: string): Promise<Venta[]> => {
-  const response = await httpClient.get(`${API_CONFIG.ENDPOINTS.VENTAS}/cliente/${clienteUid}`);
+export const obtenerVentasPorCliente = async (usuarioUid: string): Promise<VentaResumen[]> => {
+  const response = await httpClient.get(`${API_CONFIG.ENDPOINTS.VENTAS}/usuario/${usuarioUid}`);
   return response.data;
 };
 

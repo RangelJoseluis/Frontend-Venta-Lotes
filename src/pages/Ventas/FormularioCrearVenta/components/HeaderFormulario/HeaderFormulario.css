@@ -1,0 +1,81 @@
+/* Estilos para HeaderFormulario */
+/* Encabezado del formulario de crear venta */
+
+.formulario-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.formulario-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.formulario-back-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.formulario-title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.formulario-title-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-radius: 0.75rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.formulario-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.formulario-subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0.25rem 0 0 0;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .formulario-title {
+    font-size: 1.5rem;
+  }
+  
+  .formulario-subtitle {
+    font-size: 0.875rem;
+  }
+}

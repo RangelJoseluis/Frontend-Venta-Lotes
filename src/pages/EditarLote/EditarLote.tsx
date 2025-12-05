@@ -34,13 +34,10 @@ import MapaEditor from './components/MapaEditor/MapaEditor';
 import { calcularSuperficie } from './utils/calculosLote';
 import { parsearGeoJson, crearGeoJsonDesdePoligono, calcularCentroPoligono } from './utils/geoJsonHelper';
 
-// CSS
-import '../NuevoLote/NuevoLote.css';
-
 const EditarLote = () => {
   const navigate = useNavigate();
   const { uid } = useParams<{ uid: string }>();
-  
+
   // Estados generales
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -185,7 +182,7 @@ const EditarLote = () => {
   const finalizarDibujo = () => {
     if (puntosPoligono.length >= 3) {
       setModoDibujo(false);
-      
+
       // Calcular centro del polígono
       // calcularCentroPoligono devuelve [lat, lng]
       // Backend espera: ubicacionX = lng, ubicacionY = lat
@@ -194,13 +191,13 @@ const EditarLote = () => {
         setUbicacionX(centro[1]); // lng
         setUbicacionY(centro[0]); // lat
       }
-      
+
       // Guardar GeoJSON
       const geojson = crearGeoJsonDesdePoligono(puntosPoligono);
       setValue('geojson', geojson);
       setValue('ubicacionX', centro?.[1]); // lng
       setValue('ubicacionY', centro?.[0]); // lat
-      
+
       console.log('✅ Polígono finalizado - Centro:', { lat: centro?.[0], lng: centro?.[1] });
     }
   };
@@ -274,139 +271,143 @@ const EditarLote = () => {
   // Estados de carga y error
   if (isLoading) {
     return (
-      <div className="nuevo-lote-container">
-        <div className="loading-overlay">
-          <div className="loading-spinner">
-            <Loader size={48} className="spinner-icon" />
-            <p>Cargando datos del lote...</p>
-          </div>
-        </div>
+      <div className="flex flex-col items-center justify-center py-16">
+        <Loader size={48} className="animate-spin text-blue-600 dark:text-blue-400" />
+        <p className="mt-4 text-slate-500 dark:text-slate-400">Cargando datos del lote...</p>
       </div>
     );
   }
 
   return (
-    <div className="nuevo-lote-container">
-      <div className="nuevo-lote-wrapper">
-        {/* Header */}
-        <div className="nuevo-lote-header">
-          <nav className="nuevo-lote-breadcrumb">
-            <button onClick={() => navigate('/lotes')}>
-              <ArrowLeft size={16} />
-              Gestión de Lotes
-            </button>
-            <span>/</span>
-            <span>Editar Lote</span>
-          </nav>
-          <h1 className="nuevo-lote-title">Editar Lote</h1>
-          <p className="nuevo-lote-subtitle">Actualiza la información del lote existente</p>
+    <div className="w-full">
+      {/* Header Compacto */}
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-1">
+          <button
+            onClick={() => navigate('/lotes')}
+            className="p-2 -ml-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all"
+            title="Volver a Gestión de Lotes"
+          >
+            <ArrowLeft size={24} />
+          </button>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white leading-none">
+              Editar Lote
+            </h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Gestión de Lotes / Actualizar Información
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Mensajes */}
+      {error && (
+        <div className="flex items-center gap-3 p-4 mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400">
+          <AlertCircle size={20} className="flex-shrink-0" />
+          <span>{error}</span>
+        </div>
+      )}
+
+      {success && (
+        <div className="flex items-center gap-3 p-4 mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-green-700 dark:text-green-400">
+          <CheckCircle size={20} className="flex-shrink-0" />
+          <span>¡Lote actualizado exitosamente! Redirigiendo...</span>
+        </div>
+      )}
+
+      {/* Formulario */}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <FormularioBasico
+          register={register}
+          errors={errors}
+          superficieM2={superficieM2}
+          setValue={setValue}
+          precioLista={precioLista}
+        />
+
+        <FormularioUbicacion
+          register={register}
+          errors={errors}
+        />
+
+        <FormularioCaracteristicas
+          register={register}
+          errors={errors}
+        />
+
+        <SelectorServicios
+          serviciosDisponibles={serviciosDisponibles}
+          serviciosSeleccionados={serviciosSeleccionados}
+          onToggleServicio={toggleServicio}
+        />
+
+        <SelectorModeloCasa
+          modelosCasaDisponibles={modelosCasaDisponibles}
+          modeloCasaSeleccionado={modeloCasaSeleccionado}
+          onChangeModelo={setModeloCasaSeleccionado}
+        />
+
+        <MapaEditor
+          modoDibujo={modoDibujo}
+          puntosPoligono={puntosPoligono}
+          ubicacionX={ubicacionX}
+          ubicacionY={ubicacionY}
+          onIniciarDibujo={iniciarDibujo}
+          onFinalizarDibujo={finalizarDibujo}
+          onCancelarDibujo={cancelarDibujo}
+          onLimpiarPoligono={limpiarPoligono}
+          onEliminarUltimoPunto={eliminarUltimoPunto}
+          onAgregarPunto={agregarPunto}
+        />
+
+        {/* Observaciones */}
+        <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6">
+          <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-white mb-4">
+            <MessageSquare size={20} className="text-blue-600 dark:text-blue-400" />
+            Información Adicional
+          </h2>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              Observaciones
+            </label>
+            <textarea
+              {...register('observaciones')}
+              placeholder="Información adicional sobre el lote..."
+              rows={4}
+              className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors resize-none"
+            />
+          </div>
         </div>
 
-        {/* Mensajes */}
-        {error && (
-          <div className="alert alert-error">
-            <AlertCircle size={20} />
-            <span>{error}</span>
-          </div>
-        )}
-
-        {success && (
-          <div className="alert alert-success">
-            <CheckCircle size={20} />
-            <span>¡Lote actualizado exitosamente! Redirigiendo...</span>
-          </div>
-        )}
-
-        {/* Formulario */}
-        <form onSubmit={handleSubmit(onSubmit)} className="nuevo-lote-form">
-          <FormularioBasico
-            register={register}
-            errors={errors}
-            superficieM2={superficieM2}
-            setValue={setValue}
-            precioLista={precioLista}
-          />
-
-          <FormularioUbicacion
-            register={register}
-            errors={errors}
-          />
-
-          <FormularioCaracteristicas
-            register={register}
-            errors={errors}
-          />
-
-          <SelectorServicios
-            serviciosDisponibles={serviciosDisponibles}
-            serviciosSeleccionados={serviciosSeleccionados}
-            onToggleServicio={toggleServicio}
-          />
-
-          <SelectorModeloCasa
-            modelosCasaDisponibles={modelosCasaDisponibles}
-            modeloCasaSeleccionado={modeloCasaSeleccionado}
-            onChangeModelo={setModeloCasaSeleccionado}
-          />
-
-          <MapaEditor
-            modoDibujo={modoDibujo}
-            puntosPoligono={puntosPoligono}
-            ubicacionX={ubicacionX}
-            ubicacionY={ubicacionY}
-            onIniciarDibujo={iniciarDibujo}
-            onFinalizarDibujo={finalizarDibujo}
-            onCancelarDibujo={cancelarDibujo}
-            onLimpiarPoligono={limpiarPoligono}
-            onEliminarUltimoPunto={eliminarUltimoPunto}
-            onAgregarPunto={agregarPunto}
-          />
-
-          {/* Observaciones */}
-          <div className="form-section">
-            <h2 className="form-section-title">
-              <MessageSquare size={20} />
-              Información Adicional
-            </h2>
-            <div className="form-field">
-              <label className="form-label">Observaciones</label>
-              <textarea
-                {...register('observaciones')}
-                placeholder="Información adicional sobre el lote..."
-                className="form-textarea"
-              />
-            </div>
-          </div>
-
-          {/* Botones */}
-          <div className="form-actions">
-            <button
-              type="button"
-              onClick={() => navigate('/lotes')}
-              className="btn btn-cancel"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="btn btn-submit"
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="spinner" />
-                  Actualizando...
-                </>
-              ) : (
-                <>
-                  <Save size={20} />
-                  Guardar Cambios
-                </>
-              )}
-            </button>
-          </div>
-        </form>
-      </div>
+        {/* Botones */}
+        <div className="flex flex-col sm:flex-row gap-3 justify-end pt-4 border-t border-slate-200 dark:border-slate-700">
+          <button
+            type="button"
+            onClick={() => navigate('/lotes')}
+            className="px-6 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader size={20} className="animate-spin" />
+                Actualizando...
+              </>
+            ) : (
+              <>
+                <Save size={20} />
+                Guardar Cambios
+              </>
+            )}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

@@ -1,0 +1,98 @@
+/* Estilos principales para FormularioCrearVenta modularizado */
+/* Layout y estructura general del formulario */
+
+.formulario-crear-venta {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem 1rem;
+}
+
+.formulario-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.formulario-form {
+  padding: 2rem;
+}
+
+.formulario-footer {
+  background: #f8fafc;
+  padding: 1rem 2rem;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.formulario-footer p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Espaciado entre secciones */
+.formulario-section + .formulario-section {
+  margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-crear-venta {
+    padding: 1rem 0.5rem;
+  }
+  
+  .formulario-container {
+    border-radius: 0.5rem;
+    margin: 0;
+  }
+  
+  .formulario-form {
+    padding: 1.5rem;
+  }
+  
+  .formulario-footer {
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario-crear-venta {
+    padding: 0.5rem;
+  }
+  
+  .formulario-form {
+    padding: 1rem;
+  }
+  
+  .formulario-footer {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Animaciones globales */
+.formulario-container {
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estados de carga global */
+.formulario-crear-venta.loading {
+  pointer-events: none;
+}
+
+.formulario-crear-venta.loading .formulario-form {
+  opacity: 0.7;
+}

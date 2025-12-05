@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import { Bell, X, AlertTriangle, Calendar, TrendingUp } from 'lucide-react';
 import { notificacionesService } from '../../services/notificaciones.service';
 import type { Notificacion } from '../../services/notificaciones.service';
-import './NotificacionesPanel.css';
 
 export default function NotificacionesPanel() {
   const navigate = useNavigate();
@@ -67,16 +66,16 @@ export default function NotificacionesPanel() {
     }
   };
 
-  const getColorByPrioridad = (prioridad: Notificacion['prioridad']) => {
+  const getColorClasses = (prioridad: Notificacion['prioridad']) => {
     switch (prioridad) {
       case 'urgente':
-        return 'urgente';
+        return 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400';
       case 'media':
-        return 'media';
+        return 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400';
       case 'baja':
-        return 'baja';
+        return 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400';
       default:
-        return 'media';
+        return 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400';
     }
   };
 
@@ -104,16 +103,18 @@ export default function NotificacionesPanel() {
   };
 
   return (
-    <div className="notificaciones-panel">
+    <div className="relative">
       {/* Botón de notificaciones */}
       <button
-        className="notif-button"
+        className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors duration-200"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Notificaciones"
       >
         <Bell size={20} />
         {contador > 0 && (
-          <span className="notif-badge">{contador > 99 ? '99+' : contador}</span>
+          <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-red-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center shadow-sm animate-pulse">
+            {contador > 99 ? '99+' : contador}
+          </span>
         )}
       </button>
 
@@ -121,51 +122,55 @@ export default function NotificacionesPanel() {
       {isOpen && (
         <>
           {/* Overlay */}
-          <div className="notif-overlay" onClick={() => setIsOpen(false)} />
+          <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
 
           {/* Panel */}
-          <div className="notif-dropdown">
+          <div className="absolute top-full right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 z-50 overflow-hidden flex flex-col max-h-[600px] transition-colors duration-200">
             {/* Header */}
-            <div className="notif-header">
-              <h3>Notificaciones</h3>
-              <button className="notif-close" onClick={() => setIsOpen(false)}>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50">
+              <h3 className="font-bold text-slate-800 dark:text-white">Notificaciones</h3>
+              <button
+                className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
                 <X size={18} />
               </button>
             </div>
 
             {/* Lista de notificaciones */}
-            <div className="notif-lista">
+            <div className="flex-1 overflow-y-auto max-h-[400px]">
               {isLoading ? (
-                <div className="notif-loading">
-                  <div className="spinner-small"></div>
-                  <p>Cargando...</p>
+                <div className="flex flex-col items-center justify-center py-8 text-slate-500 dark:text-slate-400 gap-3">
+                  <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-sm">Cargando...</p>
                 </div>
               ) : notificaciones.length === 0 ? (
-                <div className="notif-vacio">
-                  <Bell size={48} className="bell-empty" />
-                  <p>No hay notificaciones</p>
+                <div className="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-500 gap-3">
+                  <Bell size={40} className="opacity-50" />
+                  <p className="text-sm">No hay notificaciones</p>
                 </div>
               ) : (
                 notificaciones.map((notif) => (
                   <div
                     key={notif.uid}
-                    className={`notif-item ${getColorByPrioridad(notif.prioridad)} ${
-                      notif.leida ? 'leida' : ''
-                    }`}
+                    className={`flex gap-3 px-4 py-3 border-b border-slate-50 dark:border-slate-700/50 cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 relative ${notif.leida ? 'opacity-60' : ''
+                      }`}
                     onClick={handleClickNotificacion}
                   >
-                    <div className={`notif-icon ${getColorByPrioridad(notif.prioridad)}`}>
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${getColorClasses(notif.prioridad)}`}>
                       {getIconByTipo(notif.tipo)}
                     </div>
-                    <div className="notif-content">
-                      <div className="notif-titulo">{notif.titulo}</div>
-                      <div className="notif-mensaje">{notif.mensaje}</div>
-                      <div className="notif-footer">
-                        <span className="notif-cliente">{notif.clienteNombre}</span>
-                        <span className="notif-tiempo">{formatearTiempo(notif.fechaCreacion)}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-semibold text-slate-800 dark:text-white mb-1">{notif.titulo}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-300 leading-snug mb-2 line-clamp-2">{notif.mensaje}</div>
+                      <div className="flex items-center justify-between gap-2 text-[11px] text-slate-400 dark:text-slate-500">
+                        <span className="font-medium truncate">{notif.clienteNombre}</span>
+                        <span className="flex-shrink-0">{formatearTiempo(notif.fechaCreacion)}</span>
                       </div>
                     </div>
-                    {!notif.leida && <div className="notif-dot"></div>}
+                    {!notif.leida && (
+                      <div className="absolute top-4 right-4 w-2 h-2 bg-blue-500 rounded-full"></div>
+                    )}
                   </div>
                 ))
               )}
@@ -173,9 +178,9 @@ export default function NotificacionesPanel() {
 
             {/* Footer */}
             {notificaciones.length > 0 && (
-              <div className="notif-footer-panel">
+              <div className="p-3 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
                 <button
-                  className="notif-ver-todas"
+                  className="w-full py-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors border border-transparent hover:border-blue-100 dark:hover:border-blue-900/30"
                   onClick={() => {
                     navigate('/gestion-mora');
                     setIsOpen(false);

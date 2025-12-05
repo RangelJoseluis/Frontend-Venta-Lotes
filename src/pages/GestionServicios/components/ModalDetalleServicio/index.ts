@@ -1,0 +1,1 @@
+export { ModalDetalleServicio } from './ModalDetalleServicio';

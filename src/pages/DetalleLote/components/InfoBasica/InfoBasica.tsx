@@ -1,8 +1,11 @@
-// Componente InfoBasica - Información básica del lote
-import { FileText, CheckCircle } from 'lucide-react';
+/**
+ * Componente InfoBasica - Información básica del lote
+ * Migrado a Tailwind CSS
+ */
+
+import { FileText, CheckCircle, X } from 'lucide-react';
 import { formatearPrecio } from '../../utils/formatters';
 import type { Lote } from '../../types';
-import './InfoBasica.css';
 
 interface InfoBasicaProps {
   lote: Lote;
@@ -10,75 +13,104 @@ interface InfoBasicaProps {
 
 const InfoBasica = ({ lote }: InfoBasicaProps) => {
   return (
-    <div className="detalle-card">
-      <h2 className="card-title">
-        <FileText size={20} />
+    <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+      <h2 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+        <FileText size={20} className="text-blue-600 dark:text-blue-400" />
         Información Básica
       </h2>
-      <div className="info-grid">
-        <div className="info-item">
-          <span className="info-label">Código</span>
-          <span className="info-value">{lote.codigo}</span>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Código */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Código</span>
+          <p className="text-sm font-semibold text-slate-900 dark:text-white">{lote.codigo}</p>
         </div>
-        <div className="info-item">
-          <span className="info-label">Precio de Lista</span>
-          <span className="info-value precio">{formatearPrecio(lote.precioLista)}</span>
+
+        {/* Precio de Lista */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Precio de Lista</span>
+          <p className="text-sm font-bold text-green-600 dark:text-green-400">{formatearPrecio(lote.precioLista)}</p>
         </div>
-        <div className="info-item">
-          <span className="info-label">Superficie</span>
-          <span className="info-value">{parseFloat(lote.superficieM2).toFixed(2)} m²</span>
+
+        {/* Superficie */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Superficie</span>
+          <p className="text-sm font-semibold text-slate-900 dark:text-white">{parseFloat(lote.superficieM2).toFixed(2)} m²</p>
         </div>
-        <div className="info-item">
-          <span className="info-label">Dimensiones</span>
-          <span className="info-value">
+
+        {/* Dimensiones */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Dimensiones</span>
+          <p className="text-sm font-semibold text-slate-900 dark:text-white">
             {parseFloat(lote.anchoM).toFixed(2)}m × {parseFloat(lote.largoM).toFixed(2)}m
-          </span>
+          </p>
         </div>
-        <div className="info-item">
-          <span className="info-label">Dirección</span>
-          <span className="info-value">{lote.direccion}</span>
+
+        {/* Dirección */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Dirección</span>
+          <p className="text-sm font-semibold text-slate-900 dark:text-white">{lote.direccion}</p>
         </div>
-        <div className="info-item">
-          <span className="info-label">Manzana</span>
-          <span className="info-value">{lote.manzana}</span>
+
+        {/* Manzana */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Manzana</span>
+          <p className="text-sm font-semibold text-slate-900 dark:text-white">{lote.manzana}</p>
         </div>
-        <div className="info-item">
-          <span className="info-label">Número de Lote</span>
-          <span className="info-value">{lote.numeroLote}</span>
+
+        {/* Número de Lote */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Número de Lote</span>
+          <p className="text-sm font-semibold text-slate-900 dark:text-white">{lote.numeroLote}</p>
         </div>
-        <div className="info-item">
-          <span className="info-label">Topografía</span>
-          <span className="info-value">{lote.topografia}</span>
+
+        {/* Topografía */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Topografía</span>
+          <p className="text-sm font-semibold text-slate-900 dark:text-white capitalize">{lote.topografia}</p>
         </div>
+
+        {/* Orientación (opcional) */}
         {lote.orientacion && (
-          <div className="info-item">
-            <span className="info-label">Orientación</span>
-            <span className="info-value">{lote.orientacion}</span>
+          <div className="space-y-1">
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Orientación</span>
+            <p className="text-sm font-semibold text-slate-900 dark:text-white">{lote.orientacion}</p>
           </div>
         )}
+
+        {/* Vista (opcional) */}
         {lote.vista && (
-          <div className="info-item">
-            <span className="info-label">Vista</span>
-            <span className="info-value">{lote.vista}</span>
+          <div className="space-y-1">
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Vista</span>
+            <p className="text-sm font-semibold text-slate-900 dark:text-white">{lote.vista}</p>
           </div>
         )}
-        <div className="info-item">
-          <span className="info-label">Amueblado</span>
-          <span className="info-value">
+
+        {/* Amueblado */}
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Amueblado</span>
+          <p className="text-sm font-semibold flex items-center gap-1">
             {lote.amueblado ? (
-              <span style={{ color: '#10b981' }}>
-                <CheckCircle size={16} style={{ display: 'inline', marginRight: '0.25rem' }} />
-                Sí
-              </span>
+              <>
+                <CheckCircle size={16} className="text-green-600 dark:text-green-400" />
+                <span className="text-green-600 dark:text-green-400">Sí</span>
+              </>
             ) : (
-              <span style={{ color: '#64748b' }}>No</span>
+              <>
+                <X size={16} className="text-slate-400 dark:text-slate-500" />
+                <span className="text-slate-500 dark:text-slate-400">No</span>
+              </>
             )}
-          </span>
+          </p>
         </div>
+
+        {/* Observaciones (ancho completo si existe) */}
         {lote.observaciones && (
-          <div className="info-item full-width">
-            <span className="info-label">Observaciones</span>
-            <span className="info-value">{lote.observaciones}</span>
+          <div className="sm:col-span-2 lg:col-span-3 space-y-1">
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Observaciones</span>
+            <p className="text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
+              {lote.observaciones}
+            </p>
           </div>
         )}
       </div>

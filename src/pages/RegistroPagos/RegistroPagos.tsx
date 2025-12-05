@@ -23,7 +23,6 @@ import SeccionVenta from './components/SeccionVenta/SeccionVenta';
 import SeccionCuota from './components/SeccionCuota/SeccionCuota';
 import SeccionPago from './components/SeccionPago/SeccionPago';
 import PantallaExito from './components/PantallaExito/PantallaExito';
-import './RegistroPagos.css';
 
 export default function RegistroPagos() {
   const navigate = useNavigate();
@@ -110,14 +109,14 @@ export default function RegistroPagos() {
 
   // Renderizar formulario principal
   return (
-    <div className="pago-container">
-      <div className="pago-wrapper">
+    <div className="w-full">
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
         <Header onBack={handleVolver} />
 
         {/* Formulario */}
-        <div className="pago-card">
-          <form onSubmit={handleSubmit} className="pago-form">
+        <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+          <form onSubmit={handleSubmit} className="p-6 space-y-8">
             {/* Sección: Selección de Venta */}
             <SeccionVenta
               ventas={ventas}
@@ -151,21 +150,21 @@ export default function RegistroPagos() {
 
             {/* Mensajes de Error */}
             {(error || errorVentas) && (
-              <div className="alert alert-error">
-                <AlertCircle size={20} />
+              <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400">
+                <AlertCircle size={20} className="flex-shrink-0" />
                 <div>
-                  <strong>Error al procesar el pago</strong>
-                  <p>{error || errorVentas}</p>
+                  <strong className="block text-sm font-semibold">Error al procesar el pago</strong>
+                  <p className="text-sm">{error || errorVentas}</p>
                 </div>
               </div>
             )}
 
             {/* Botones de Acción */}
-            <div className="form-actions">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
               <button
                 type="button"
                 onClick={handleVolver}
-                className="btn btn-cancel"
+                className="px-6 py-2.5 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 disabled={isSubmitting}
               >
                 Cancelar
@@ -173,11 +172,11 @@ export default function RegistroPagos() {
               <button
                 type="submit"
                 disabled={isSubmitting || !formData.cuotaUid || !formData.monto}
-                className="btn btn-submit"
+                className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {isSubmitting ? (
                   <>
-                    <div className="spinner" />
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     Procesando...
                   </>
                 ) : (

@@ -48,6 +48,9 @@ export interface Lote {
   // Propiedades del backend
   superficieM2: number; // Backend usa superficieM2
   precioLista: number; // Backend usa precioLista
+  direccion: string;
+  manzana: string;
+  numeroLote: string;
   // Propiedades legacy (mantener para compatibilidad)
   superficie?: number;
   precio?: number;
@@ -248,12 +251,14 @@ export interface CrearPagoResponse {
 export interface VentaResumen {
   uid: string;
   lote: {
+    uid: string;
     codigo: string;
     superficieM2: string;
     estado: string;
     modeloCasa?: {
       nombre: string;
       descripcion?: string;
+      imagenes?: string[];
     };
   };
   cliente: {
@@ -282,6 +287,54 @@ export interface VentasResponse {
   pagina: number;
   limite: number;
   totalPaginas: number;
+}
+
+// ============================================================================
+// PAGOS - ESTADÍSTICAS Y RESPUESTAS
+// ============================================================================
+
+/**
+ * Estadísticas de pagos del cliente
+ */
+export interface EstadisticasPagosCliente {
+  totalPagos: number;
+  montoTotal: number;
+  pagosMesActual: number;
+  montoMesActual: number;
+}
+
+/**
+ * Respuesta de pagos por usuario (Portal Cliente)
+ */
+export interface PagosUsuarioResponse {
+  pagos: Pago[];
+  estadisticas: EstadisticasPagosCliente;
+}
+
+// ============================================================================
+// CUOTAS - RESUMEN Y RESPUESTAS
+// ============================================================================
+
+/**
+ * Resumen estadístico de cuotas del cliente
+ */
+export interface ResumenCuotas {
+  totalCuotas: number;
+  cuotasPagadas: number;
+  cuotasPendientes: number;
+  cuotasVencidas: number;
+  montoTotalCuotas: number;
+  montoPagado: number;
+  montoPendiente: number;
+  proximoVencimiento: string | null;
+}
+
+/**
+ * Respuesta de cuotas por usuario (Portal Cliente - Estado de Cuenta)
+ */
+export interface CuotasUsuarioResponse {
+  cuotas: Cuota[];
+  resumen: ResumenCuotas;
 }
 
 // ============================================================================
@@ -438,12 +491,12 @@ export type CategoriaServicio = 'utilities' | 'comunicaciones' | 'seguridad' | '
 /**
  * Tipo de servicio
  */
-export type TipoServicio = 'publico' | 'privado' | 'opcional' | 'basico';
+export type TipoServicio = 'publico' | 'privado' | 'opcional' | 'basico' | 'esencial' | 'temporal';
 
 /**
  * Estado del servicio
  */
-export type EstadoServicio = 'activo' | 'inactivo';
+export type EstadoServicio = 'activo' | 'inactivo' | 'suspendido';
 
 /**
  * Servicio completo
@@ -455,8 +508,8 @@ export interface Servicio {
   descripcion: string;
   categoria: CategoriaServicio;
   tipo: TipoServicio;
-  costoMensual: number;
-  esEsencial: boolean;
+  costoMensualBase: number;
+  esencial: boolean;
   proveedor?: string;
   estado: EstadoServicio;
   creadoEn: string;
