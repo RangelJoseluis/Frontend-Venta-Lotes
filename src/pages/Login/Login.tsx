@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail } from 'lucide-react';
+import { Mail, ArrowLeft } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import type { LoginCredentials } from '../../types';
 import { useLoginForm } from './hooks/useLoginForm';
@@ -62,6 +62,15 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900">
       <LoginBackground />
+
+      {/* Botón de regreso al Home */}
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-6 left-6 z-20 flex items-center gap-2 p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-lg transition-all duration-200 border border-white/20"
+        aria-label="Volver al inicio"
+      >
+        <ArrowLeft size={20} />
+      </button>
 
       <div className="w-full max-w-md relative z-10 animate-in slide-in-from-bottom-8 fade-in duration-700">
         <LoginHeader />
