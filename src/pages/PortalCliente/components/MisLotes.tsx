@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Home, MapPin, ChevronRight } from 'lucide-react';
 import type { VentaResumen } from '../../../types';
+import { ModalDetalleLote } from './ModalDetalleLote';
 
 interface MisLotesProps {
     ventas: VentaResumen[];
@@ -8,6 +9,7 @@ interface MisLotesProps {
 }
 
 export const MisLotes: React.FC<MisLotesProps> = ({ ventas, loading }) => {
+    const [ventaSeleccionada, setVentaSeleccionada] = useState<VentaResumen | null>(null);
     if (loading) {
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -140,13 +142,22 @@ export const MisLotes: React.FC<MisLotesProps> = ({ ventas, loading }) => {
                         </div>
 
                         {/* Botón Ver Detalles */}
-                        <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-sm group-hover:shadow-md">
+                        <button
+                            onClick={() => setVentaSeleccionada(venta)}
+                            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-sm group-hover:shadow-md"
+                        >
                             <span>Ver Detalles</span>
                             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
                     </div>
                 </div>
             ))}
+
+            {/* Modal de Detalles */}
+            <ModalDetalleLote
+                venta={ventaSeleccionada}
+                onClose={() => setVentaSeleccionada(null)}
+            />
         </div>
     );
 };
