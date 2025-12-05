@@ -251,6 +251,7 @@ export interface CrearPagoResponse {
 export interface VentaResumen {
   uid: string;
   lote: {
+    uid: string;
     codigo: string;
     superficieM2: string;
     estado: string;
