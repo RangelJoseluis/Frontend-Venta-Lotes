@@ -1,3 +1,4 @@
+import React from 'react';
 import { X, Calendar, DollarSign, Tag, FileText, CheckCircle, XCircle, AlertCircle, Building2 } from 'lucide-react';
 import type { Servicio } from '../../types';
 
@@ -21,7 +22,6 @@ export const ModalDetalleServicio = ({ isOpen, servicio, onCerrar }: ModalDetall
     };
 
     const formatearMoneda = (valor: number) => {
-        // Validar que sea un número válido
         if (isNaN(valor) || valor === null || valor === undefined) {
             return 'No disponible';
         }
@@ -39,7 +39,7 @@ export const ModalDetalleServicio = ({ isOpen, servicio, onCerrar }: ModalDetall
             suspendido: 'bg-yellow-100 text-yellow-800 border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700'
         };
 
-        const iconos: Record<typeof servicio.estado, JSX.Element> = {
+        const iconos: Record<typeof servicio.estado, React.ReactElement> = {
             activo: <CheckCircle className="w-4 h-4" />,
             inactivo: <XCircle className="w-4 h-4" />,
             suspendido: <AlertCircle className="w-4 h-4" />
@@ -55,10 +55,12 @@ export const ModalDetalleServicio = ({ isOpen, servicio, onCerrar }: ModalDetall
 
     const getTipoBadge = () => {
         const estilos: Record<typeof servicio.tipo, string> = {
-            esencial: 'bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700',
+            publico: 'bg-teal-100 text-teal-800 border-teal-300 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-700',
+            privado: 'bg-pink-100 text-pink-800 border-pink-300 dark:bg-pink-900/30 dark:text-pink-300 dark:border-pink-700',
             opcional: 'bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700',
-            temporal: 'bg-orange-100 text-orange-800 border-orange-300 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700',
-            publico: 'bg-teal-100 text-teal-800 border-teal-300 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-700'
+            basico: 'bg-slate-100 text-slate-800 border-slate-300 dark:bg-slate-900/30 dark:text-slate-300 dark:border-slate-700',
+            esencial: 'bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700',
+            temporal: 'bg-orange-100 text-orange-800 border-orange-300 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700'
         };
 
         return (
@@ -71,7 +73,7 @@ export const ModalDetalleServicio = ({ isOpen, servicio, onCerrar }: ModalDetall
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
-                {/* Header - Más compacto */}
+                {/* Header */}
                 <div className="relative bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-3 flex-shrink-0">
                     <button
                         onClick={onCerrar}
@@ -85,7 +87,7 @@ export const ModalDetalleServicio = ({ isOpen, servicio, onCerrar }: ModalDetall
                     </h2>
                 </div>
 
-                {/* Content - Con scroll interno */}
+                {/* Content */}
                 <div className="flex-1 overflow-y-auto p-6">
                     {/* Nombre y Estado */}
                     <div className="mb-5">
@@ -177,7 +179,7 @@ export const ModalDetalleServicio = ({ isOpen, servicio, onCerrar }: ModalDetall
                     )}
                 </div>
 
-                {/* Footer - Fijo en la parte inferior */}
+                {/* Footer */}
                 <div className="px-6 py-3 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700 flex justify-end flex-shrink-0">
                     <button
                         onClick={onCerrar}

@@ -442,12 +442,12 @@ export type CategoriaServicio = 'utilities' | 'comunicaciones' | 'seguridad' | '
 /**
  * Tipo de servicio
  */
-export type TipoServicio = 'publico' | 'privado' | 'opcional' | 'basico';
+export type TipoServicio = 'publico' | 'privado' | 'opcional' | 'basico' | 'esencial' | 'temporal';
 
 /**
  * Estado del servicio
  */
-export type EstadoServicio = 'activo' | 'inactivo';
+export type EstadoServicio = 'activo' | 'inactivo' | 'suspendido';
 
 /**
  * Servicio completo
