@@ -116,7 +116,7 @@ const TablaServicios: React.FC<TablaServiciosProps> = ({
                                 {/* Columna: COSTO */}
                                 <td className="px-4 py-4 align-middle">
                                     <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                                        {formatearCosto(servicio.costoMensual || 0)}
+                                        {formatearCosto(servicio.costoMensualBase || 0)}
                                     </span>
                                 </td>
 

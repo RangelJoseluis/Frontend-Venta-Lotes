@@ -458,8 +458,8 @@ export interface Servicio {
   descripcion: string;
   categoria: CategoriaServicio;
   tipo: TipoServicio;
-  costoMensual: number;
-  esEsencial: boolean;
+  costoMensualBase: number;
+  esencial: boolean;
   proveedor?: string;
   estado: EstadoServicio;
   creadoEn: string;

@@ -65,8 +65,8 @@ const FormularioServicio: React.FC<FormularioServicioProps> = ({
         descripcion: servicio.descripcion,
         categoria: servicio.categoria,
         tipo: servicio.tipo,
-        costoMensualBase: servicio.costoMensual || 0,
-        esencial: servicio.esEsencial || false,
+        costoMensualBase: servicio.costoMensualBase || 0,
+        esencial: servicio.esencial || false,
         proveedor: servicio.proveedor || ''
       });
     } catch (error) {
@@ -101,6 +101,9 @@ const FormularioServicio: React.FC<FormularioServicioProps> = ({
     try {
       setGuardando(true);
 
+      // Debug: verificar datos que se envían
+      console.log('Datos a enviar:', formData);
+
       if (esEdicion && servicioUid) {
         await serviciosService.actualizar(servicioUid, formData);
       } else {
@@ -123,14 +126,24 @@ const FormularioServicio: React.FC<FormularioServicioProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
 
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox'
-        ? (e.target as HTMLInputElement).checked
-        : type === 'number'
-          ? parseFloat(value) || 0
-          : value
-    }));
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData(prev => ({
+        ...prev,
+        [name]: checked
+      }));
+    } else if (type === 'number') {
+      const numValue = value === '' ? 0 : parseFloat(value);
+      setFormData(prev => ({
+        ...prev,
+        [name]: isNaN(numValue) ? 0 : numValue
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   if (cargando) {

@@ -7,9 +7,11 @@ import {
     TablaServicios,
     FormularioServicio,
     ModalConfirmacion,
+    ModalDetalleServicio,
     Paginacion
 } from './components';
 import { useServicios, useFiltrosServicios } from './hooks';
+import type { Servicio } from './types';
 
 const GestionServicios: React.FC = () => {
     const {
@@ -41,6 +43,13 @@ const GestionServicios: React.FC = () => {
         servicioUid: null,
         servicioNombre: ''
     });
+    const [modalDetalle, setModalDetalle] = useState<{
+        isOpen: boolean;
+        servicio: Servicio | null;
+    }>({
+        isOpen: false,
+        servicio: null
+    });
 
     // Cargar servicios al montar y cuando cambien los filtros
     useEffect(() => {
@@ -52,9 +61,9 @@ const GestionServicios: React.FC = () => {
         const totalServicios = servicios.length;
         const serviciosActivos = servicios.filter(s => s.estado === 'activo').length;
         const serviciosInactivos = servicios.filter(s => s.estado === 'inactivo').length;
-        const serviciosEsenciales = servicios.filter(s => s.esEsencial).length;
+        const serviciosEsenciales = servicios.filter(s => s.esencial).length;
         const costoPromedioMensual = servicios.length > 0
-            ? servicios.reduce((sum, s) => sum + (s.costoMensual || 0), 0) / servicios.length
+            ? servicios.reduce((sum, s) => sum + (s.costoMensualBase || 0), 0) / servicios.length
             : 0;
 
         return {
@@ -80,8 +89,20 @@ const GestionServicios: React.FC = () => {
     };
 
     const handleVerDetalle = (uid: string) => {
-        // TODO: Implementar vista de detalle
-        console.log('Ver detalle:', uid);
+        const servicio = servicios.find(s => s.uid === uid);
+        if (servicio) {
+            setModalDetalle({
+                isOpen: true,
+                servicio
+            });
+        }
+    };
+
+    const handleCerrarDetalle = () => {
+        setModalDetalle({
+            isOpen: false,
+            servicio: null
+        });
     };
 
     const handleEliminarServicio = (uid: string) => {
@@ -185,6 +206,13 @@ const GestionServicios: React.FC = () => {
                 mensaje={`¿Estás seguro de que deseas eliminar el servicio "${modalEliminar.servicioNombre}"? Esta acción no se puede deshacer.`}
                 onConfirmar={confirmarEliminar}
                 onCancelar={cancelarEliminar}
+            />
+
+            {/* Modal de detalles del servicio */}
+            <ModalDetalleServicio
+                isOpen={modalDetalle.isOpen}
+                servicio={modalDetalle.servicio}
+                onCerrar={handleCerrarDetalle}
             />
         </div>
     );

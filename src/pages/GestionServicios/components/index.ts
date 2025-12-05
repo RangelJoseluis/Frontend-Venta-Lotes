@@ -6,4 +6,5 @@ export { default as FiltrosServicios } from './FiltrosServicios';
 export { default as TablaServicios } from './TablaServicios';
 export { default as FormularioServicio } from './FormularioServicio';
 export { default as ModalConfirmacion } from './ModalConfirmacion';
+export { ModalDetalleServicio } from './ModalDetalleServicio';
 export { default as Paginacion } from './Paginacion';

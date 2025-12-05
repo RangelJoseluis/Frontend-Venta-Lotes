@@ -52,8 +52,8 @@ export const useFormularioServicio = (
                 descripcion: servicio.descripcion,
                 categoria: servicio.categoria,
                 tipo: servicio.tipo,
-                costoMensualBase: servicio.costoMensual || 0,
-                esencial: servicio.esEsencial || false,
+                costoMensualBase: servicio.costoMensualBase || 0,
+                esencial: servicio.esencial || false,
                 proveedor: servicio.proveedor || ''
             });
         } catch (err: any) {
