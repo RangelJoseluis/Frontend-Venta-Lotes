@@ -258,6 +258,7 @@ export interface VentaResumen {
     modeloCasa?: {
       nombre: string;
       descripcion?: string;
+      imagenes?: string[];
     };
   };
   cliente: {
