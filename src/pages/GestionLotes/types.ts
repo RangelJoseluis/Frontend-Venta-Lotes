@@ -65,7 +65,9 @@ export interface ModalConfirmacionProps {
 export interface PaginacionProps {
     paginaActual: number;
     totalPaginas: number;
-    onCambioPagina: (pagina: number) => void;
+    onCambioPagina?: (pagina: number) => void;
+    onPaginaAnterior?: () => void;
+    onPaginaSiguiente?: () => void;
 }
 
 // ============================================================================

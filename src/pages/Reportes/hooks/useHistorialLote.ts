@@ -24,8 +24,8 @@ export const useHistorialLote = () => {
       setErrorHistorial(null);
 
       console.log('🔄 Cargando historial del lote:', loteUid);
-      const data = await lotesHistorialService.obtenerHistorialLote(loteUid);
-      
+      const data = await lotesHistorialService.obtenerHistorialPorLote(loteUid);
+
       console.log('✅ Historial cargado:', data);
       setHistorialLote(data);
     } catch (err) {

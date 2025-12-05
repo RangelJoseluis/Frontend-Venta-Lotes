@@ -1,7 +1,9 @@
 // Hook personalizado para gestionar filtros de mora
 import { useState, useMemo } from 'react';
-import type { CuotaConMora } from '../../services/mora.service';
+// import type { CuotaConMora } from '../../services/mora.service';
 import type { UseFiltrosMoraReturn } from '../types';
+
+type CuotaConMora = any; // Tipo temporal hasta que se implemente el servicio
 
 export const useFiltrosMora = (cuotas: CuotaConMora[]): UseFiltrosMoraReturn => {
     const [filtroCliente, setFiltroCliente] = useState('');

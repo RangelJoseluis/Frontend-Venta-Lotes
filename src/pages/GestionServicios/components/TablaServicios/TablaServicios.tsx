@@ -109,7 +109,7 @@ const TablaServicios: React.FC<TablaServiciosProps> = ({
                                 {/* Columna: TIPO */}
                                 <td className="px-4 py-4 align-middle">
                                     <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide ${getTipoColor(servicio.tipo)}`}>
-                                        {TIPOS_SERVICIO[servicio.tipo]}
+                                        {(TIPOS_SERVICIO as any)[servicio.tipo] || servicio.tipo}
                                     </span>
                                 </td>
 

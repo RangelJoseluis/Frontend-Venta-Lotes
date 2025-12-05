@@ -106,7 +106,7 @@ const MapaLotesPublico: React.FC = () => {
                 {/* Renderizar lotes */}
                 {lotes.map((lote) => {
                     // Parsear geojson si viene como string
-                    let geojsonParsed = lote.geojson;
+                    let geojsonParsed: any = lote.geojson;
                     if (typeof geojsonParsed === 'string') {
                         try {
                             geojsonParsed = JSON.parse(geojsonParsed);
