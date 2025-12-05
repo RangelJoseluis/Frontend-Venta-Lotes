@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
 import { LayoutDashboard, Home, CreditCard, User, LogOut, Bell, AlertCircle, FileText } from 'lucide-react';
 import { useDatosCliente } from './hooks/useDatosCliente';
-import { MisLotes, MisPagos, EstadoCuenta } from './components';
+import { MisLotes, MisPagos, EstadoCuenta, MiPerfil } from './components';
 
 type Tab = 'lotes' | 'pagos' | 'estado-cuenta' | 'perfil';
 
@@ -62,9 +62,13 @@ const PortalCliente: React.FC = () => {
                                         Cliente
                                     </p>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 font-bold border-2 border-white dark:border-slate-800 shadow-sm">
+                                <button
+                                    onClick={() => setActiveTab('perfil')}
+                                    className="h-10 w-10 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 font-bold border-2 border-white dark:border-slate-800 shadow-sm hover:scale-110 transition-transform cursor-pointer"
+                                    title="Ver Mi Perfil"
+                                >
                                     {user?.nombres?.charAt(0)}{user?.apellidos?.charAt(0)}
-                                </div>
+                                </button>
                                 <button
                                     onClick={logout}
                                     className="p-2 text-slate-400 hover:text-red-500 transition-colors ml-2"
@@ -194,6 +198,17 @@ const PortalCliente: React.FC = () => {
                         <CreditCard size={18} />
                         Estado de Cuenta
                     </button>
+                    <button
+                        onClick={() => setActiveTab('perfil')}
+                        className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all duration-200 flex items-center justify-center gap-2
+                            ${activeTab === 'perfil'
+                                ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-400 shadow'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-white/[0.12] hover:text-slate-800 dark:hover:text-white'
+                            }`}
+                    >
+                        <User size={18} />
+                        Mi Perfil
+                    </button>
                 </div>
 
                 {/* Contenido Dinámico */}
@@ -222,6 +237,15 @@ const PortalCliente: React.FC = () => {
                                 Estado de Cuenta
                             </h3>
                             <EstadoCuenta />
+                        </div>
+                    )}
+
+                    {activeTab === 'perfil' && (
+                        <div>
+                            <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
+                                Mi Perfil
+                            </h3>
+                            <MiPerfil />
                         </div>
                     )}
                 </div>
