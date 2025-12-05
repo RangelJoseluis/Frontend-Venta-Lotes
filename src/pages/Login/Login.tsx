@@ -16,7 +16,7 @@ import { LoginFooter } from './components/LoginFooter';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, isAuthenticated, isLoading, error, clearError } = useAuthStore();
+  const { login, user, isAuthenticated, isLoading, error, clearError } = useAuthStore();
   const { register, handleSubmit, formState: { errors } } = useLoginForm();
 
   // Forzar tema claro en el login (independiente del dashboard)
@@ -30,11 +30,20 @@ const Login = () => {
     };
   }, []);
 
+  // Redirigir según el rol del usuario después del login
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
+    if (isAuthenticated && user) {
+      // Verificar si el usuario tiene rol de admin
+      const isAdmin = user.roles?.includes('admin');
+
+      // Redirigir según el rol
+      if (isAdmin) {
+        navigate('/dashboard');
+      } else {
+        navigate('/portal-cliente');
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, user, navigate]);
 
   useEffect(() => {
     return () => {

@@ -19,7 +19,10 @@ import GestionPagos from './pages/GestionPagos/GestionPagos';
 import GestionMora from './pages/GestionMora';
 import ReportesMora from './pages/ReportesMora';
 import Perfil from './pages/Perfil/Perfil';
+import PortalCliente from './pages/PortalCliente';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
+import RoleBasedRedirect from './components/RoleBasedRedirect';
 import { useAuthStore } from './store/authStore';
 import MainLayout from './components/Layout/MainLayout';
 
@@ -45,23 +48,28 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Ruta raíz - Redirige según autenticación */}
-        <Route
-          path="/"
-          element={
-            <Navigate to="/dashboard" replace />
-          }
-        />
+        {/* Ruta raíz - Redirige según rol del usuario */}
+        <Route path="/" element={<RoleBasedRedirect />} />
 
         {/* Ruta pública - Login */}
         <Route path="/login" element={<Login />} />
 
-        {/* Rutas protegidas con Layout */}
+        {/* Ruta del Portal Cliente (sin MainLayout) */}
         <Route
+          path="/portal-cliente"
           element={
             <PrivateRoute>
-              <MainLayout />
+              <PortalCliente />
             </PrivateRoute>
+          }
+        />
+
+        {/* Rutas protegidas con Layout (Solo Admin) */}
+        <Route
+          element={
+            <AdminRoute>
+              <MainLayout />
+            </AdminRoute>
           }
         >
           <Route path="/dashboard" element={<Dashboard />} />
