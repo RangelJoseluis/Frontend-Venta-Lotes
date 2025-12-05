@@ -198,17 +198,6 @@ const PortalCliente: React.FC = () => {
                         <CreditCard size={18} />
                         Estado de Cuenta
                     </button>
-                    <button
-                        onClick={() => setActiveTab('perfil')}
-                        className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all duration-200 flex items-center justify-center gap-2
-                            ${activeTab === 'perfil'
-                                ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-400 shadow'
-                                : 'text-slate-600 dark:text-slate-400 hover:bg-white/[0.12] hover:text-slate-800 dark:hover:text-white'
-                            }`}
-                    >
-                        <User size={18} />
-                        Mi Perfil
-                    </button>
                 </div>
 
                 {/* Contenido Dinámico */}
