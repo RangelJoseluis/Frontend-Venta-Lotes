@@ -290,6 +290,28 @@ export interface VentasResponse {
 }
 
 // ============================================================================
+// PAGOS - ESTADÍSTICAS Y RESPUESTAS
+// ============================================================================
+
+/**
+ * Estadísticas de pagos del cliente
+ */
+export interface EstadisticasPagosCliente {
+  totalPagos: number;
+  montoTotal: number;
+  pagosMesActual: number;
+  montoMesActual: number;
+}
+
+/**
+ * Respuesta de pagos por usuario (Portal Cliente)
+ */
+export interface PagosUsuarioResponse {
+  pagos: Pago[];
+  estadisticas: EstadisticasPagosCliente;
+}
+
+// ============================================================================
 // ESTADÍSTICAS
 // ============================================================================
 

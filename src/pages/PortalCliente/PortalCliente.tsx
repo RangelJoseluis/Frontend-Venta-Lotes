@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
-import { LayoutDashboard, Home, CreditCard, User, LogOut, Bell, AlertCircle } from 'lucide-react';
+import { LayoutDashboard, Home, CreditCard, User, LogOut, Bell, AlertCircle, FileText } from 'lucide-react';
 import { useDatosCliente } from './hooks/useDatosCliente';
-import { MisLotes } from './components/MisLotes';
+import { MisLotes, MisPagos } from './components';
+
+type Tab = 'lotes' | 'pagos' | 'perfil';
 
 const PortalCliente: React.FC = () => {
     const { user, logout } = useAuthStore();
     const { ventas, loading, error } = useDatosCliente();
+    const [activeTab, setActiveTab] = useState<Tab>('lotes');
 
     // Calcular estadísticas
     const totalLotes = ventas.length;
@@ -95,68 +98,112 @@ const PortalCliente: React.FC = () => {
                     </div>
                 )}
 
-                {/* Grid de Resumen */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                    {/* Card: Mis Lotes */}
-                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl group-hover:scale-110 transition-transform">
-                                <Home size={24} />
+                {/* Grid de Resumen (Solo visible en Dashboard/Lotes) */}
+                {activeTab === 'lotes' && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                        {/* Card: Mis Lotes */}
+                        <div
+                            onClick={() => setActiveTab('lotes')}
+                            className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-all group cursor-pointer ring-2 ring-transparent hover:ring-blue-500/20"
+                        >
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl group-hover:scale-110 transition-transform">
+                                    <Home size={24} />
+                                </div>
+                                <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">
+                                    Activos
+                                </span>
                             </div>
-                            <span className="text-xs font-semibold px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">
-                                Activos
-                            </span>
+                            <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">
+                                Mis Lotes
+                            </h3>
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-3xl font-bold text-slate-800 dark:text-white">
+                                    {loading ? '...' : totalLotes}
+                                </span>
+                                <span className="text-sm text-slate-400">propiedades</span>
+                            </div>
                         </div>
-                        <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">
-                            Mis Lotes
-                        </h3>
-                        <div className="flex items-baseline gap-2">
-                            <span className="text-3xl font-bold text-slate-800 dark:text-white">
-                                {loading ? '...' : totalLotes}
-                            </span>
-                            <span className="text-sm text-slate-400">propiedades</span>
-                        </div>
-                    </div>
 
-                    {/* Card: Monto Pendiente */}
-                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="p-3 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-xl group-hover:scale-110 transition-transform">
-                                <CreditCard size={24} />
+                        {/* Card: Monto Pendiente */}
+                        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-3 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-xl group-hover:scale-110 transition-transform">
+                                    <CreditCard size={24} />
+                                </div>
+                            </div>
+                            <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">
+                                Total Pendiente
+                            </h3>
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-2xl font-bold text-slate-800 dark:text-white">
+                                    {loading ? '...' : formatearMoneda(montoPendienteTotal)}
+                                </span>
                             </div>
                         </div>
-                        <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">
-                            Total Pendiente
-                        </h3>
-                        <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-slate-800 dark:text-white">
-                                {loading ? '...' : formatearMoneda(montoPendienteTotal)}
-                            </span>
-                        </div>
-                    </div>
 
-                    {/* Card: Perfil */}
-                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group cursor-pointer">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="p-3 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-xl group-hover:scale-110 transition-transform">
-                                <User size={24} />
+                        {/* Card: Perfil */}
+                        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow group cursor-pointer">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="p-3 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-xl group-hover:scale-110 transition-transform">
+                                    <User size={24} />
+                                </div>
                             </div>
+                            <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">
+                                Mi Perfil
+                            </h3>
+                            <p className="text-sm text-slate-600 dark:text-slate-300">
+                                Actualizar datos personales
+                            </p>
                         </div>
-                        <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">
-                            Mi Perfil
-                        </h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-300">
-                            Actualizar datos personales
-                        </p>
                     </div>
+                )}
+
+                {/* Navegación de Pestañas */}
+                <div className="flex space-x-1 rounded-xl bg-slate-200/50 dark:bg-slate-800/50 p-1 mb-8 max-w-md">
+                    <button
+                        onClick={() => setActiveTab('lotes')}
+                        className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all duration-200 flex items-center justify-center gap-2
+                            ${activeTab === 'lotes'
+                                ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-400 shadow'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-white/[0.12] hover:text-slate-800 dark:hover:text-white'
+                            }`}
+                    >
+                        <Home size={18} />
+                        Mis Lotes
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('pagos')}
+                        className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all duration-200 flex items-center justify-center gap-2
+                            ${activeTab === 'pagos'
+                                ? 'bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-400 shadow'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-white/[0.12] hover:text-slate-800 dark:hover:text-white'
+                            }`}
+                    >
+                        <FileText size={18} />
+                        Mis Pagos
+                    </button>
                 </div>
 
-                {/* Sección Mis Lotes */}
-                <div className="mb-10">
-                    <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
-                        Mis Propiedades
-                    </h3>
-                    <MisLotes ventas={ventas} loading={loading} />
+                {/* Contenido Dinámico */}
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    {activeTab === 'lotes' && (
+                        <div>
+                            <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
+                                Mis Propiedades
+                            </h3>
+                            <MisLotes ventas={ventas} loading={loading} />
+                        </div>
+                    )}
+
+                    {activeTab === 'pagos' && (
+                        <div>
+                            <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">
+                                Historial de Pagos
+                            </h3>
+                            <MisPagos />
+                        </div>
+                    )}
                 </div>
             </main>
         </div>
