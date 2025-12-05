@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Home, MapPin, ChevronRight, Map } from 'lucide-react';
+import { Home, MapPin, ChevronRight, Map, Satellite } from 'lucide-react';
 import type { VentaResumen } from '../../../types';
 import { ModalDetalleLote } from './ModalDetalleLote';
 import { ModalMapaCliente } from './ModalMapaCliente';
+import { ModalMapaSatelitalCliente } from './ModalMapaSatelitalCliente';
 
 interface MisLotesProps {
     ventas: VentaResumen[];
@@ -11,7 +12,8 @@ interface MisLotesProps {
 
 export const MisLotes: React.FC<MisLotesProps> = ({ ventas, loading }) => {
     const [ventaSeleccionada, setVentaSeleccionada] = useState<VentaResumen | null>(null);
-    const [isMapaOpen, setIsMapaOpen] = useState(false);
+    const [isMapaVisualOpen, setIsMapaVisualOpen] = useState(false);
+    const [isMapaSatelitalOpen, setIsMapaSatelitalOpen] = useState(false);
     if (loading) {
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -74,14 +76,21 @@ export const MisLotes: React.FC<MisLotesProps> = ({ ventas, loading }) => {
 
     return (
         <div>
-            {/* Botón Ver Mapa */}
-            <div className="mb-6">
+            {/* Botones de Mapas */}
+            <div className="mb-6 flex gap-3">
                 <button
-                    onClick={() => setIsMapaOpen(true)}
+                    onClick={() => setIsMapaVisualOpen(true)}
                     className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
                 >
                     <Map className="w-5 h-5" />
-                    Ver Mapa de Mis Lotes
+                    Ver Mapa Visual
+                </button>
+                <button
+                    onClick={() => setIsMapaSatelitalOpen(true)}
+                    className="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                >
+                    <Satellite className="w-5 h-5" />
+                    Ver Mapa Satelital
                 </button>
             </div>
 
@@ -175,11 +184,17 @@ export const MisLotes: React.FC<MisLotesProps> = ({ ventas, loading }) => {
                 onClose={() => setVentaSeleccionada(null)}
             />
 
-            {/* Modal del Mapa */}
+            {/* Modal del Mapa Visual */}
             <ModalMapaCliente
-                isOpen={isMapaOpen}
-                onClose={() => setIsMapaOpen(false)}
+                isOpen={isMapaVisualOpen}
+                onClose={() => setIsMapaVisualOpen(false)}
                 ventas={ventas}
+            />
+
+            {/* Modal del Mapa Satelital */}
+            <ModalMapaSatelitalCliente
+                isOpen={isMapaSatelitalOpen}
+                onClose={() => setIsMapaSatelitalOpen(false)}
             />
         </div>
     );

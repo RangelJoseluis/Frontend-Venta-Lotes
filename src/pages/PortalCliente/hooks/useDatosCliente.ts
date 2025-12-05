@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuthStore } from '../../../store/authStore';
-import { obtenerVentasPorCliente } from '../../../services/ventas.service';
+import httpClient from '../../../services/http.service';
 import type { VentaResumen } from '../../../types';
 
 interface UseDatosClienteReturn {
@@ -30,9 +30,9 @@ export const useDatosCliente = (): UseDatosClienteReturn => {
             setLoading(true);
             setError(null);
 
-            // Obtener las ventas del cliente actual
-            const ventasData = await obtenerVentasPorCliente(user.uid);
-            setVentas(ventasData);
+            // Usar el nuevo endpoint /mis-ventas que obtiene las ventas del cliente autenticado
+            const response = await httpClient.get<VentaResumen[]>('/ventas/mis-ventas');
+            setVentas(response.data);
         } catch (err) {
             console.error('Error al cargar datos del cliente:', err);
             setError('No se pudieron cargar tus datos. Por favor, intenta de nuevo.');

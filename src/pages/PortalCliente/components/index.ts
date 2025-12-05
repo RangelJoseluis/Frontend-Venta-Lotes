@@ -6,3 +6,4 @@ export { EstadoCuenta } from './EstadoCuenta';
 export { TablaCuotas } from './TablaCuotas';
 export { MiPerfil } from './MiPerfil';
 export { ModalMapaCliente } from './ModalMapaCliente';
+export { ModalMapaSatelitalCliente } from './ModalMapaSatelitalCliente';

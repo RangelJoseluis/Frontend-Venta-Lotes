@@ -44,26 +44,34 @@ export const useAuthStore = create<AuthState>((set) => ({
    */
   login: async (credentials: LoginCredentials) => {
     set({ isLoading: true, error: null });
-    
+
     try {
       const response = await authService.login(credentials);
-      
+
+      console.log('🎯 [authStore] Login exitoso, actualizando estado...');
+      console.log('👤 [authStore] Usuario:', response.usuario);
+      console.log('🔑 [authStore] Roles:', response.usuario?.roles);
+
       set({
         user: response.usuario,
         isAuthenticated: true,
         isLoading: false,
         error: null,
       });
+
+      console.log('✅ [authStore] Estado actualizado correctamente');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Error al iniciar sesión';
-      
+
+      console.error('❌ [authStore] Error en login:', errorMessage);
+
       set({
         user: null,
         isAuthenticated: false,
         isLoading: false,
         error: errorMessage,
       });
-      
+
       throw error;
     }
   },
@@ -73,7 +81,7 @@ export const useAuthStore = create<AuthState>((set) => ({
    */
   logout: () => {
     authService.logout();
-    
+
     set({
       user: null,
       isAuthenticated: false,
@@ -88,7 +96,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   checkAuth: () => {
     const user = authService.getCurrentUser();
     const isAuthenticated = authService.isAuthenticated();
-    
+
     set({
       user,
       isAuthenticated,
