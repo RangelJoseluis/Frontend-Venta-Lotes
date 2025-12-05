@@ -75,11 +75,19 @@ export const MisLotes: React.FC<MisLotesProps> = ({ ventas, loading }) => {
                     key={venta.uid}
                     className="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300 group cursor-pointer"
                 >
-                    {/* Imagen del lote (placeholder) */}
+                    {/* Imagen del lote/modelo de casa */}
                     <div className="h-40 bg-gradient-to-br from-blue-500 to-indigo-600 relative overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <Home className="w-16 h-16 text-white/30" />
-                        </div>
+                        {venta.lote.modeloCasa?.imagenes && venta.lote.modeloCasa.imagenes.length > 0 ? (
+                            <img
+                                src={venta.lote.modeloCasa.imagenes[0]}
+                                alt={`Modelo ${venta.lote.modeloCasa.nombre}`}
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <Home className="w-16 h-16 text-white/30" />
+                            </div>
+                        )}
                         <div className="absolute top-3 right-3">
                             {getEstadoBadge(venta.estado)}
                         </div>
