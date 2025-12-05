@@ -15,13 +15,26 @@ const MapaLotesPublico: React.FC = () => {
     const [lotes, setLotes] = useState<LoteParaMapa[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    const centroZona = obtenerCentroZona();
-    const zoomZona = obtenerZoomZona();
+    const [centroZona, setCentroZona] = useState(obtenerCentroZona());
+    const [zoomZona, setZoomZona] = useState(obtenerZoomZona());
+    const [key, setKey] = useState(0); // Para forzar re-render del mapa
 
     // Cargar lotes disponibles para invitados
     useEffect(() => {
         cargarLotesDisponibles();
+    }, []);
+
+    // Escuchar cambios en la configuración de zona
+    useEffect(() => {
+        const handleZonaUpdate = () => {
+            setCentroZona(obtenerCentroZona());
+            setZoomZona(obtenerZoomZona());
+            setKey(prev => prev + 1); // Forzar re-render del MapContainer
+            console.log('🗺️ Mapa público actualizado con nueva configuración de zona');
+        };
+
+        window.addEventListener('zona-config-updated', handleZonaUpdate);
+        return () => window.removeEventListener('zona-config-updated', handleZonaUpdate);
     }, []);
 
     const cargarLotesDisponibles = async () => {
@@ -78,6 +91,7 @@ const MapaLotesPublico: React.FC = () => {
         <div className="relative h-[500px]">
             {/* Mapa */}
             <MapContainer
+                key={key}
                 center={centroZona}
                 zoom={zoomZona}
                 className="h-full w-full rounded-xl"

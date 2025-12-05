@@ -19,13 +19,13 @@ export interface ConfiguracionZona {
     latitud: number;   // Coordenada Y (Norte-Sur)
     longitud: number;  // Coordenada X (Este-Oeste)
   };
-  
+
   // Nivel de zoom inicial
   zoom: number;  // 15 = ciudad, 17 = barrio, 19 = calle
-  
+
   // Nombre descriptivo de la zona
   nombre: string;
-  
+
   // Límites opcionales de la zona (para restringir el mapa)
   limites?: {
     norte: number;
@@ -50,7 +50,7 @@ export const ZONA_PREDETERMINADA: ConfiguracionZona = {
   },
   zoom: 18,  // Zoom cercano para ver lotes (máximo 22)
   nombre: "Urbanización Principal - Valledupar",
-  
+
   // Límites opcionales (funcionalidad activa, polígono oculto visualmente con CSS)
   limites: {
     norte: 11.380,   // Límite norte
@@ -66,7 +66,7 @@ export const ZONA_PREDETERMINADA: ConfiguracionZona = {
 export const obtenerZonaPredeterminada = (): ConfiguracionZona => {
   // Aquí podrías leer de localStorage si el admin cambió la configuración
   const zonaGuardada = localStorage.getItem('zona_configurada');
-  
+
   if (zonaGuardada) {
     try {
       return JSON.parse(zonaGuardada);
@@ -74,7 +74,7 @@ export const obtenerZonaPredeterminada = (): ConfiguracionZona => {
       console.warn('Error al leer zona guardada, usando predeterminada');
     }
   }
-  
+
   return ZONA_PREDETERMINADA;
 };
 
@@ -84,6 +84,9 @@ export const obtenerZonaPredeterminada = (): ConfiguracionZona => {
 export const guardarZonaPredeterminada = (zona: ConfiguracionZona): void => {
   localStorage.setItem('zona_configurada', JSON.stringify(zona));
   console.log('✅ Zona predeterminada guardada:', zona.nombre);
+
+  // Disparar evento personalizado para que los mapas se actualicen
+  window.dispatchEvent(new CustomEvent('zona-config-updated', { detail: zona }));
 };
 
 /**
@@ -91,11 +94,11 @@ export const guardarZonaPredeterminada = (zona: ConfiguracionZona): void => {
  */
 export const estaDentroDeZona = (lat: number, lng: number): boolean => {
   const zona = obtenerZonaPredeterminada();
-  
+
   if (!zona.limites) {
     return true; // Sin límites, todo es válido
   }
-  
+
   return (
     lat <= zona.limites.norte &&
     lat >= zona.limites.sur &&

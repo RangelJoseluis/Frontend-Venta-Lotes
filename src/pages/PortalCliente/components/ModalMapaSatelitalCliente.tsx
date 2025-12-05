@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Map as MapIcon, Satellite } from 'lucide-react';
+import { X, Satellite } from 'lucide-react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import httpClient from '../../../services/http.service';
 import lotesMapaService from '../../../services/lotes-mapa.service';
@@ -28,6 +28,7 @@ export const ModalMapaSatelitalCliente: React.FC<ModalMapaSatelitalClienteProps>
     const [error, setError] = useState<string | null>(null);
     const [tipoCapa, setTipoCapa] = useState<TipoCapaMapa>('satelite');
     const [loteSeleccionado, setLoteSeleccionado] = useState<LoteParaMapa | null>(null);
+    const [key, setKey] = useState(0); // Para forzar re-render del mapa
 
     // Cargar lotes del cliente cuando se abre el modal
     useEffect(() => {
@@ -35,6 +36,17 @@ export const ModalMapaSatelitalCliente: React.FC<ModalMapaSatelitalClienteProps>
             cargarLotesCliente();
         }
     }, [isOpen]);
+
+    // Escuchar cambios en la configuración de zona
+    useEffect(() => {
+        const handleZonaUpdate = () => {
+            setKey(prev => prev + 1); // Forzar re-render del MapContainer
+            console.log('🗺️ Mapa del cliente actualizado con nueva configuración de zona');
+        };
+
+        window.addEventListener('zona-config-updated', handleZonaUpdate);
+        return () => window.removeEventListener('zona-config-updated', handleZonaUpdate);
+    }, []);
 
     const cargarLotesCliente = async () => {
         try {
@@ -175,7 +187,6 @@ export const ModalMapaSatelitalCliente: React.FC<ModalMapaSatelitalClienteProps>
                             {!error && !loading && lotes.length === 0 && (
                                 <div className="absolute inset-0 z-50 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center">
                                     <div className="text-center">
-                                        <MapIcon className="w-16 h-16 text-slate-400 mx-auto mb-4" />
                                         <p className="text-slate-600 dark:text-slate-300 font-medium">
                                             No tienes lotes registrados
                                         </p>
@@ -185,6 +196,7 @@ export const ModalMapaSatelitalCliente: React.FC<ModalMapaSatelitalClienteProps>
 
                             {!error && lotes.length > 0 && (
                                 <MapContainer
+                                    key={key}
                                     center={obtenerCentroZona()}
                                     zoom={obtenerZoomZona()}
                                     style={{ height: '100%', width: '100%' }}
